@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de Administración - Casa Abierta PCB</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html#inicio"><i class="fas fa-home me-2"></i>Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Servicios</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contacto"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-bars me-2"></i>Más
+            </a>
+
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="index.html#galeria"><i class="fas fa-images me-2"></i>Galería</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item active" href="admin-panel.html"><i class="fas fa-cog me-2"></i>Panel de Administración</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item btn btn-primary" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
+                  <i class="fas fa-arrow-left me-2"></i>Regresar a PCB System
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="theme-toggle" type="button">
+              <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Panel Content -->
+  <section class="admin-panel py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0"><i class="fas fa-cog me-3"></i>Panel de Administración</h1>
+            <button id="logout-btn" class="btn btn-outline-danger">
+              <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+            </button>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-address-book fa-3x text-primary mb-3"></i>
+                  <h5 class="card-title">Editar Información de Contacto</h5>
+                  <p class="card-text">Modificar la dirección, teléfono, email y horario de contacto que aparecen en la página principal.</p>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactModal">Editar Contacto</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-images fa-3x text-success mb-3"></i>
+                  <h5 class="card-title">Gestión de Imágenes</h5>
+                  <p class="card-text">Agregar, ocultar, mostrar o eliminar imágenes de las galerías.</p>
+                  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#imagesModal">Administrar Imágenes</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-edit fa-3x text-warning mb-3"></i>
+                  <h5 class="card-title">Editar Textos Institucionales</h5>
+                  <p class="card-text">Modificar el texto de “Sobre Casa Abierta” y “Mensaje del Director”.</p>
+                  <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#textsModal">Editar Textos</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-calendar fa-3x text-info mb-3"></i>
+                  <h5 class="card-title">Fechas de Casas Abiertas</h5>
+                  <p class="card-text">Agregar o eliminar fechas de próximas Casas Abiertas.</p>
+                  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#fechasModal">Administrar Fechas</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal contacto -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contactModalLabel">Editar Información de Contacto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="contact-edit-form">
+            <div class="mb-3">
+              <label for="edit-address" class="form-label">Dirección</label>
+              <input type="text" class="form-control" id="edit-address" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-phone" class="form-label">Teléfono</label>
+              <input type="text" class="form-control" id="edit-phone" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="edit-email" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-hours" class="form-label">Horario</label>
+              <input type="text" class="form-control" id="edit-hours" required>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="save-contact-btn">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal imágenes -->
+  <div class="modal fade" id="imagesModal" tabindex="-1" aria-labelledby="imagesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imagesModalLabel">Gestión de Imágenes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="workshop-select" class="form-label">Seleccionar Taller/Sección</label>
+            <select class="form-select" id="workshop-select">
+              <option value="">Seleccione un taller...</option>
+              <option value="computec">Computec</option>
+              <option value="artes-culinarias">Artes Culinarias</option>
+              <option value="cosmetologia">Cosmetología</option>
+              <option value="elaboracion-agricolas">Elaboración de Productos Agrícolas</option>
+              <option value="mercadeo">Mercadeo</option>
+              <option value="seguridad-publica">Seguridad Pública</option>
+              <option value="enfermeria">Enfermería</option>
+            </select>
+          </div>
+
+          <div class="card mb-4" id="upload-section" style="display: none;">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0"><i class="fas fa-upload me-2"></i>Agregar Nueva Imagen</h5>
+            </div>
+
+            <div class="card-body">
+              <div class="alert alert-info">
+                <h6><i class="fas fa-info-circle me-2"></i>Hay dos maneras de agregar imágenes:</h6>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="card bg-light">
+                    <div class="card-header">
+                      <h6 class="mb-0"><i class="fas fa-folder-open me-2"></i>Método 1: Subir archivo desde tu dispositivo</h6>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="mb-3">
+                        <label for="image-file" class="form-label">Seleccionar imagen</label>
+                        <input type="file" class="form-control" id="image-file" accept="image/*">
+                      </div>
+
+                      <div class="mb-3" id="local-preview-container" style="display: none;">
+                        <label class="form-label">Vista previa:</label>
+                        <div class="text-center">
+                          <img id="local-preview-image" src="" alt="Vista previa" style="max-width: 100%; max-height: 200px; border-radius: 10px;">
+                        </div>
+                      </div>
+
+                      <button type="button" class="btn btn-primary" id="upload-local-btn">
+                        <i class="fas fa-upload me-2"></i>Subir imagen local
+                      </button>
+
+                      <small class="d-block mt-2 text-muted">
+                        <i class="fas fa-database me-1"></i>La imagen se guardará en Supabase como texto base64. Para muchas imágenes grandes, usa mejor URL.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h6 class="mb-0"><i class="fas fa-link me-2"></i>Método 2: Usar URL de imagen</h6>
+                    </div>
+
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <div class="col-12">
+                          <label for="image-url" class="form-label">URL de la Imagen</label>
+                          <input type="url" class="form-control" id="image-url" placeholder="https://ejemplo.com/imagen.jpg">
+                        </div>
+
+                        <div class="col-12">
+                          <label for="image-title" class="form-label">Título opcional</label>
+                          <input type="text" class="form-control" id="image-title" placeholder="Ejemplo: Estudiantes en acción">
+                        </div>
+
+                        <div class="col-12">
+                          <button type="button" class="btn btn-success" id="add-image-btn">
+                            <i class="fas fa-plus-circle me-2"></i>Agregar desde URL
+                          </button>
+
+                          <button type="button" class="btn btn-outline-secondary ms-2" id="test-image-btn">
+                            <i class="fas fa-eye me-2"></i>Vista Previa
+                          </button>
+                        </div>
+
+                        <div class="col-12" id="preview-container" style="display: none;">
+                          <div class="card">
+                            <div class="card-header">
+                              <h6 class="mb-0">Vista Previa</h6>
+                            </div>
+                            <div class="card-body text-center">
+                              <img id="preview-image" src="" alt="Vista previa" style="max-width: 100%; max-height: 300px; border-radius: 10px;">
+                              <p id="preview-error" class="text-danger mt-2" style="display: none;">No se pudo cargar la imagen</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div id="images-grid" class="row g-3">
+            <p class="text-muted w-100 text-center">Selecciona un taller para ver y gestionar sus imágenes.</p>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal textos -->
+  <div class="modal fade" id="textsModal" tabindex="-1" aria-labelledby="textsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="textsModalLabel">Editar Textos Institucionales</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="texts-edit-form">
+            <div class="mb-3">
+              <label for="edit-director-name" class="form-label">Nombre del Director/Directora</label>
+              <input type="text" class="form-control" id="edit-director-name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-director-title" class="form-label">Título</label>
+              <input type="text" class="form-control" id="edit-director-title" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-director" class="form-label">Mensaje del Director/Directora</label>
+              <textarea class="form-control" id="edit-director" rows="5" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-about" class="form-label">Sobre Casa Abierta</label>
+              <textarea class="form-control" id="edit-about" rows="5" required></textarea>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-warning" id="save-texts-btn">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal fechas -->
+  <div class="modal fade" id="fechasModal" tabindex="-1" aria-labelledby="fechasModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fechasModalLabel">Fechas de Próximas Casas Abiertas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+              <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Agregar Nueva Fecha</h5>
+            </div>
+
+            <div class="card-body">
+              <form id="add-fecha-form">
+                <div class="mb-3">
+                  <label for="nueva-fecha" class="form-label">Fecha</label>
+                  <input type="date" class="form-control" id="nueva-fecha" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="nuevo-titulo" class="form-label">Título del Evento</label>
+                  <input type="text" class="form-control" id="nuevo-titulo" placeholder="Casa Abierta 2026" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="nueva-ubicacion" class="form-label">Ubicación / Hora</label>
+                  <input type="text" class="form-control" id="nueva-ubicacion" placeholder="Escuela Pablo Colón Berdecia / 8:00 AM" required>
+                </div>
+
+                <div class="mb-3">
+                  <label for="nueva-descripcion" class="form-label">Descripción opcional</label>
+                  <textarea class="form-control" id="nueva-descripcion" rows="3" placeholder="Detalles adicionales"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-info text-white">
+                  <i class="fas fa-plus me-2"></i>Agregar Fecha
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header bg-secondary text-white">
+              <h5 class="mb-0"><i class="fas fa-list me-2"></i>Fechas Agregadas</h5>
+            </div>
+            <div class="card-body">
+              <div id="fechas-list" class="list-group"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer py-4">
+    <div class="container text-center">
+      <p>&copy; 2026 Casa Abierta PCB. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Librerías -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Configuración Supabase -->
+  <script>
+    const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Va0Mrn75UmXOBuNh7pgWcA_NysoWD80";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
+
+  <script>
+    const DEFAULT_CONTACT = {
+      id: 1,
+      address: "Carretera 156 salida hacia Comerío, Barranquitas, P. R.",
+      phone: "+1 787-857-2897",
+      email: "de58390@miescuela.pr",
+      schedule: "Lunes - Viernes: 7:30 AM - 2:30 PM"
+    };
+
+    const DEFAULT_TEXTS = {
+      id: 1,
+      director_name: "Israel López Rivera",
+      director_title: "Director Escolar",
+      director_message: "Bienvenidos a Casa Abierta 2026. En la Escuela Superior Ocupacional Pablo Colón Berdecia, nos enorgullece ofrecer educación de calidad que prepara a nuestros estudiantes para el éxito profesional. Nuestros programas están diseñados para desarrollar tanto habilidades técnicas como valores éticos, formando ciudadanos responsables y competentes en sus campos de especialización.",
+      about_open_house: "Casa Abierta es el evento anual de puertas abiertas de la Escuela Superior Ocupacional Pablo Colón Berdecia, donde presentamos nuestros programas vocacionales a estudiantes interesados en adquirir habilidades prácticas para el mundo laboral."
+    };
+
+    let localImageData = null;
+
+    function showError(message, error) {
+      console.error(message, error || "");
+      alert(message);
+    }
+
+    async function loadContactData() {
+      const { data, error } = await supabaseClient
+        .from("contact_info")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+      const contact = data || DEFAULT_CONTACT;
+
+      if (error) {
+        console.error("Error cargando contacto:", error);
+      }
+
+      document.getElementById("edit-address").value = contact.address || "";
+      document.getElementById("edit-phone").value = contact.phone || "";
+      document.getElementById("edit-email").value = contact.email || "";
+      document.getElementById("edit-hours").value = contact.schedule || "";
+    }
+
+    async function saveContactData() {
+      const address = document.getElementById("edit-address").value.trim();
+      const phone = document.getElementById("edit-phone").value.trim();
+      const email = document.getElementById("edit-email").value.trim();
+      const schedule = document.getElementById("edit-hours").value.trim();
+
+      if (!address || !phone || !email || !schedule) {
+        alert("Todos los campos son obligatorios.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("contact_info")
+        .upsert({ id: 1, address, phone, email, schedule, updated_at: new Date().toISOString() });
+
+      if (error) {
+        showError("Error al guardar la información de contacto.", error);
+        return;
+      }
+
+      alert("Información de contacto actualizada exitosamente.");
+      bootstrap.Modal.getInstance(document.getElementById("contactModal")).hide();
+    }
+
+    async function loadTextsData() {
+      const { data, error } = await supabaseClient
+        .from("institutional_texts")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+      const texts = data || DEFAULT_TEXTS;
+
+      if (error) {
+        console.error("Error cargando textos:", error);
+      }
+
+      document.getElementById("edit-director-name").value = texts.director_name || "";
+      document.getElementById("edit-director-title").value = texts.director_title || "";
+      document.getElementById("edit-director").value = texts.director_message || "";
+      document.getElementById("edit-about").value = texts.about_open_house || "";
+    }
+
+    async function saveTextsData() {
+      const director_name = document.getElementById("edit-director-name").value.trim();
+      const director_title = document.getElementById("edit-director-title").value.trim();
+      const director_message = document.getElementById("edit-director").value.trim();
+      const about_open_house = document.getElementById("edit-about").value.trim();
+
+      if (!director_name || !director_title || !director_message || !about_open_house) {
+        alert("Todos los campos son obligatorios.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("institutional_texts")
+        .upsert({
+          id: 1,
+          director_name,
+          director_title,
+          director_message,
+          about_open_house,
+          updated_at: new Date().toISOString()
+        });
+
+      if (error) {
+        showError("Error al guardar los textos institucionales.", error);
+        return;
+      }
+
+      alert("Textos institucionales actualizados exitosamente.");
+      bootstrap.Modal.getInstance(document.getElementById("textsModal")).hide();
+    }
+
+    async function loadWorkshopImages(section) {
+      const grid = document.getElementById("images-grid");
+      grid.innerHTML = '<p class="text-muted w-100 text-center">Cargando imágenes...</p>';
+
+      const { data, error } = await supabaseClient
+        .from("gallery_images")
+        .select("*")
+        .eq("section", section)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        grid.innerHTML = '<p class="text-danger w-100 text-center">Error cargando imágenes.</p>';
+        console.error("Error cargando imágenes:", error);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<p class="text-muted w-100 text-center">No hay imágenes en este taller.</p>';
+        return;
+      }
+
+      grid.innerHTML = "";
+
+      data.forEach((img) => {
+        const col = document.createElement("div");
+        col.className = "col-6 col-md-3";
+        col.innerHTML = `
+          <div class="card h-100">
+            <img src="${img.image_url}" class="card-img-top" alt="${img.title || 'Imagen'}" style="height: 150px; object-fit: cover;">
+            <div class="card-body p-2 text-center">
+              <small class="d-block mb-2">${img.title || img.section}</small>
+              <button class="btn btn-sm ${img.is_visible ? 'btn-danger' : 'btn-success'}" onclick="toggleImageVisibility(${img.id}, ${img.is_visible})">
+                ${img.is_visible ? 'Ocultar' : 'Mostrar'}
+              </button>
+              <button class="btn btn-sm btn-outline-danger ms-1" onclick="deleteImage(${img.id})" title="Eliminar imagen">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    async function addImageFromUrl() {
+      const section = document.getElementById("workshop-select").value;
+      const image_url = document.getElementById("image-url").value.trim();
+      const title = document.getElementById("image-title").value.trim();
+
+      if (!section) {
+        alert("Selecciona un taller primero.");
+        return;
+      }
+
+      if (!image_url) {
+        alert("Escribe la URL de la imagen.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("gallery_images")
+        .insert([{ section, image_url, title, is_visible: true }]);
+
+      if (error) {
+        showError("Error al agregar la imagen.", error);
+        return;
+      }
+
+      document.getElementById("image-url").value = "";
+      document.getElementById("image-title").value = "";
+      document.getElementById("preview-container").style.display = "none";
+
+      await loadWorkshopImages(section);
+      alert("Imagen agregada exitosamente.");
+    }
+
+    function previewImage() {
+      const imageUrl = document.getElementById("image-url").value.trim();
+      const previewContainer = document.getElementById("preview-container");
+      const previewImage = document.getElementById("preview-image");
+      const previewError = document.getElementById("preview-error");
+
+      if (!imageUrl) {
+        alert("Escribe una URL primero.");
+        return;
+      }
+
+      previewImage.src = imageUrl;
+      previewContainer.style.display = "block";
+      previewError.style.display = "none";
+
+      previewImage.onload = function() {
+        previewError.style.display = "none";
+      };
+
+      previewImage.onerror = function() {
+        previewError.style.display = "block";
+      };
+    }
+
+    function handleLocalFileSelect() {
+      const fileInput = document.getElementById("image-file");
+      const previewContainer = document.getElementById("local-preview-container");
+      const previewImage = document.getElementById("local-preview-image");
+      const file = fileInput.files[0];
+
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert("Selecciona un archivo de imagen válido.");
+        fileInput.value = "";
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        alert("La imagen es muy grande. Usa una imagen de máximo 2MB.");
+        fileInput.value = "";
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        localImageData = e.target.result;
+        previewImage.src = localImageData;
+        previewContainer.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function addLocalImage() {
+      const section = document.getElementById("workshop-select").value;
+      const title = document.getElementById("image-title").value.trim() || "Imagen local";
+
+      if (!section) {
+        alert("Selecciona un taller primero.");
+        return;
+      }
+
+      if (!localImageData) {
+        alert("Selecciona una imagen primero.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("gallery_images")
+        .insert([{ section, image_url: localImageData, title, is_visible: true }]);
+
+      if (error) {
+        showError("Error al subir la imagen local.", error);
+        return;
+      }
+
+      document.getElementById("image-file").value = "";
+      document.getElementById("local-preview-container").style.display = "none";
+      localImageData = null;
+
+      await loadWorkshopImages(section);
+      alert("Imagen agregada exitosamente.");
+    }
+
+    async function toggleImageVisibility(id, currentVisibility) {
+      const section = document.getElementById("workshop-select").value;
+
+      const { error } = await supabaseClient
+        .from("gallery_images")
+        .update({ is_visible: !currentVisibility })
+        .eq("id", id);
+
+      if (error) {
+        showError("Error al cambiar la visibilidad de la imagen.", error);
+        return;
+      }
+
+      await loadWorkshopImages(section);
+    }
+
+    async function deleteImage(id) {
+      const section = document.getElementById("workshop-select").value;
+
+      if (!confirm("¿Estás seguro de que deseas eliminar esta imagen?")) return;
+
+      const { error } = await supabaseClient
+        .from("gallery_images")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        showError("Error al eliminar la imagen.", error);
+        return;
+      }
+
+      await loadWorkshopImages(section);
+    }
+
+    async function loadFechasList() {
+      const list = document.getElementById("fechas-list");
+      list.innerHTML = '<p class="text-muted text-center p-3">Cargando fechas...</p>';
+
+      const { data, error } = await supabaseClient
+        .from("open_house_dates")
+        .select("*")
+        .order("event_date", { ascending: true });
+
+      if (error) {
+        list.innerHTML = '<p class="text-danger text-center p-3">Error cargando fechas.</p>';
+        console.error("Error cargando fechas:", error);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        list.innerHTML = '<p class="text-muted text-center p-3">No hay fechas agregadas.</p>';
+        return;
+      }
+
+      list.innerHTML = "";
+
+      data.forEach(function(casa) {
+        const item = document.createElement("div");
+        item.className = "list-group-item d-flex justify-content-between align-items-center";
+        item.innerHTML = `
+          <div>
+            <strong>${casa.event_date}</strong> - ${casa.title}<br>
+            <small class="text-muted">${casa.event_time || ''}</small><br>
+            <small>${casa.description || ''}</small>
+          </div>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteFecha(${casa.id})">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    async function addFecha(e) {
+      e.preventDefault();
+
+      const event_date = document.getElementById("nueva-fecha").value;
+      const title = document.getElementById("nuevo-titulo").value.trim();
+      const event_time = document.getElementById("nueva-ubicacion").value.trim();
+      const description = document.getElementById("nueva-descripcion").value.trim();
+
+      if (!event_date || !title || !event_time) {
+        alert("Fecha, título y ubicación/hora son obligatorios.");
+        return;
+      }
+
+      const { error } = await supabaseClient
+        .from("open_house_dates")
+        .insert([{ title, event_date, event_time, description, is_active: true }]);
+
+      if (error) {
+        showError("Error al agregar la fecha.", error);
+        return;
+      }
+
+      document.getElementById("add-fecha-form").reset();
+      await loadFechasList();
+      alert("Fecha agregada exitosamente.");
+    }
+
+    async function deleteFecha(id) {
+      if (!confirm("¿Eliminar esta fecha?")) return;
+
+      const { error } = await supabaseClient
+        .from("open_house_dates")
+        .delete()
+        .eq("id", id);
+
+      if (error) {
+        showError("Error al eliminar la fecha.", error);
+        return;
+      }
+
+      await loadFechasList();
+    }
+
+    async function checkAuthentication() {
+      const { data, error } = await supabaseClient.auth.getSession();
+
+      if (error || !data.session) {
+        window.location.href = "admin-login.html";
+        return false;
+      }
+
+      return true;
+    }
+
+    async function logout() {
+      await supabaseClient.auth.signOut();
+      window.location.href = "admin-login.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", async function() {
+      const isAllowed = await checkAuthentication();
+      if (!isAllowed) return;
+
+      document.getElementById("contactModal").addEventListener("show.bs.modal", loadContactData);
+      document.getElementById("save-contact-btn").addEventListener("click", saveContactData);
+
+      document.getElementById("textsModal").addEventListener("show.bs.modal", loadTextsData);
+      document.getElementById("save-texts-btn").addEventListener("click", saveTextsData);
+
+      document.getElementById("workshop-select").addEventListener("change", function() {
+        const section = this.value;
+        const uploadSection = document.getElementById("upload-section");
+        const grid = document.getElementById("images-grid");
+
+        if (section) {
+          uploadSection.style.display = "block";
+          loadWorkshopImages(section);
+        } else {
+          uploadSection.style.display = "none";
+          grid.innerHTML = '<p class="text-muted w-100 text-center">Selecciona un taller para ver y gestionar sus imágenes.</p>';
+        }
+      });
+
+      document.getElementById("add-image-btn").addEventListener("click", addImageFromUrl);
+      document.getElementById("test-image-btn").addEventListener("click", previewImage);
+      document.getElementById("image-file").addEventListener("change", handleLocalFileSelect);
+      document.getElementById("upload-local-btn").addEventListener("click", addLocalImage);
+
+      document.getElementById("fechasModal").addEventListener("show.bs.modal", loadFechasList);
+      document.getElementById("add-fecha-form").addEventListener("submit", addFecha);
+
+      const logoutBtn = document.getElementById("logout-btn");
+      if (logoutBtn) logoutBtn.addEventListener("click", logout);
+    });
+
+    setInterval(async function() {
+      await checkAuthentication();
+    }, 5 * 60 * 1000);
+  </script>
+  <script>
+    (function() {
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const body = document.body;
+
+      if (!themeToggle || !themeIcon) return;
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+      }
+
+      themeToggle.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains("dark-mode");
+
+        if (isDark) {
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

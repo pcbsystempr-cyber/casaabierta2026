@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Casa Abierta Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-gradient);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .login-container { width: 100%; max-width: 420px; padding: 20px; }
+    
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      animation: slideUp 0.5s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .login-header {
+      background: var(--primary-color);
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+    }
+    
+    .login-header .logo {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+    }
+    
+    .login-header h1 { font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
+    .login-header p { font-size: 0.9rem; opacity: 0.8; }
+    
+    .login-body { padding: 30px; }
+    
+    .form-group { margin-bottom: 20px; }
+    
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .form-control {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 12px 15px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+      outline: none;
+    }
+    
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn-login:hover { background: #2980b9; transform: translateY(-2px); }
+    .btn-login:disabled { background: #bdc3c7; cursor: not-allowed; }
+    
+    .btn-login .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    .error-message {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c00;
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .error-message.show { display: flex; }
+    
+    .login-footer {
+      text-align: center;
+      padding: 20px;
+      background: #f8f9fa;
+      border-top: 1px solid #eee;
+    }
+    
+    .login-footer a { color: var(--secondary-color); text-decoration: none; font-weight: 500; }
+    
+    /* Toast */
+    .toast-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .toast-notification.show { transform: translateX(0); }
+    .toast-success { background: #27ae60; }
+    .toast-error { background: #e74c3c; }
+    
+    @media (max-width: 480px) {
+      .login-header { padding: 25px 15px; }
+      .login-body { padding: 25px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo">
+          <i class="fas fa-school fa-2x"></i>
+        </div>
+        <h1>Casa Abierta</h1>
+        <p>Panel de Administración</p>
+      </div>
+      
+      <div class="login-body">
+        <div id="errorMessage" class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="errorText"></span>
+        </div>
+        
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope me-2"></i>Usuario</label>
+            <input type="text" class="form-control" id="email" placeholder="admin" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock me-2"></i>Contraseña</label>
+            <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+          </div>
+          
+          <button type="submit" class="btn-login" id="loginBtn">
+            <span id="btnText"><i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión</span>
+          </button>
+        </form>
+      </div>
+      
+      <div class="login-footer">
+        <a href="../index.html">
+          <i class="fas fa-arrow-left me-1"></i>Volver al sitio principal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // SISTEMA DE AUTENTICACIÓN LOCAL
+    // ============================================
+    
+    // Credenciales hardcodeadas (hasheadas con simple hash para demo)
+    const USERS = {
+      'admin': hashPassword('Admin123!'),
+      'hackerpcb3@gmail.com': hashPassword('C0mpu73c#2026'),
+      'isaac': hashPassword('casaabierta')
+    };
+    
+    // Función simple de hash (para simular hash de contraseña)
+    function hashPassword(password) {
+      let hash = 0;
+      for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return hash.toString(16);
+    }
+    
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      document.getElementById('errorText').textContent = message;
+      errorDiv.classList.add('show');
+      setTimeout(() => errorDiv.classList.remove('show'), 5000);
+    }
+    
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast-notification toast-${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><span>${message}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+    
+    function setLoading(loading) {
+      const btn = document.getElementById('loginBtn');
+      document.getElementById('btnText').innerHTML = loading 
+        ? '<div class="spinner"></div> Verificando...' 
+        : '<i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión';
+      btn.disabled = loading;
+    }
+    
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      
+      if (!username || !password) {
+        showError('Por favor, complete todos los campos');
+        return;
+      }
+      
+      setLoading(true);
+      
+      // Simular delay
+      await new Promise(r => setTimeout(r, 800));
+      
+      // Verificar credenciales
+      const hashedInput = hashPassword(password);
+      const validUser = USERS[username] === hashedInput || USERS[username.toLowerCase()] === hashedInput;
+      
+      if (validUser) {
+        // Guardar sesión
+        localStorage.setItem('casaAbiertaAdmin', 'true');
+        localStorage.setItem('casaAbiertaUser', username);
+        
+        showToast('¡Bienvenido!', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+      } else {
+        showError('Usuario o contraseña incorrectos');
+        setLoading(false);
+      }
+    });
+    
+    // Verificar si ya está logueado
+    if (localStorage.getItem('casaAbiertaAdmin') === 'true') {
+      window.location.href = 'dashboard.html';
+    }
+  </script>
+  <script>
+    (function() {
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const body = document.body;
+
+      if (!themeToggle || !themeIcon) return;
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+      }
+
+      themeToggle.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains("dark-mode");
+
+        if (isDark) {
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

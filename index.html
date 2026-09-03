@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casa Abierta - "¡Acho, la Pablo es otra cosa!"</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#inicio">
+              <i class="fas fa-home me-2"></i>Inicio
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#servicios">
+              <i class="fas fa-cogs me-2"></i>Servicios
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#nosotros">
+              <i class="fas fa-users me-2"></i>Nosotros
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#contacto">
+              <i class="fas fa-envelope me-2"></i>Contacto
+            </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-bars me-2"></i>Más
+            </a>
+
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="admin-login.html">
+                  <i class="fas fa-cog me-2"></i>Panel de Administración
+                </a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <a class="dropdown-item" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
+                  <i class="fas fa-arrow-left me-2"></i>Regresar a PCB System
+                </a>
+              </li>
+            </ul>
+
+          </li>
+
+          <li class="nav-item">
+            <button class="nav-link" id="theme-toggle" type="button">
+              <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <img src="LOGO6.png" alt="Logo CompuTec" class="header-gif">
+      <h1>"Acho, la Pablo es otra cosa..."</h1>
+      <h1>¡Casa Abierta PCB!</h1>
+      <p>“Descubre tu futuro hoy" ¡Ven y visítanos!</p>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section class="services" id="servicios">
+    <div class="container">
+      <h2>Talleres Vocacionales</h2>
+
+      <div id="talleresCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="0" class="active"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="1"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="2"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="3"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="4"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="5"></button>
+          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="6"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <a href="computec.html" class="d-block w-100">
+              <img src="galeria_computec/images2.jpeg" class="d-block w-100 talleres-carousel-img" alt="Computec">
+            </a>
+            <div class="carousel-caption">
+              <h5>Computec</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="mercadeo.html" class="d-block w-100">
+              <img src="galeria_mercadeo/15eb8f1b-2b2e-4880-a0b6-84fef1af550c.jpg" class="d-block w-100 talleres-carousel-img" alt="Mercadeo">
+            </a>
+            <div class="carousel-caption">
+              <h5>Mercadeo</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="enfermeria.html" class="d-block w-100">
+              <img src="galeria_enfermeria/image.jpeg" class="d-block w-100 talleres-carousel-img" alt="Enfermería">
+            </a>
+            <div class="carousel-caption">
+              <h5>Enfermería</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="cosmetologia.html" class="d-block w-100">
+              <img src="galeria_cosmetologia/images6.jpeg" class="d-block w-100 talleres-carousel-img" alt="Cosmetología">
+            </a>
+            <div class="carousel-caption">
+              <h5>Cosmetología</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="artes-culinarias.html" class="d-block w-100">
+              <img src="galeria_artes_culinarias/images2.jpg" class="d-block w-100 talleres-carousel-img" alt="Artes Culinarias">
+            </a>
+            <div class="carousel-caption">
+              <h5>Artes Culinarias</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="elaboracion-agricolas.html" class="d-block w-100">
+              <img src="galeria_agricolas/images40.jpeg" class="d-block w-100 talleres-carousel-img" alt="Elaboración de Productos Agrícolas">
+            </a>
+            <div class="carousel-caption">
+              <h5>Elaboración de Productos Agrícolas</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <a href="seguridad-publica.html" class="d-block w-100">
+              <img src="galeria_seguridad/seguridad-1.jpg" class="d-block w-100 talleres-carousel-img" alt="Seguridad Pública">
+            </a>
+            <div class="carousel-caption">
+              <h5>Seguridad Pública</h5>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#talleresCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#talleresCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Próximas Casas Abiertas -->
+  <section class="proximas-casas" id="proximas-casas">
+    <div class="container">
+      <h2>Próximas Casas Abiertas</h2>
+      <div class="proximas-grid" id="proximas-grid">
+        <p class="text-center text-black">Cargando fechas...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about" id="nosotros">
+    <div class="container">
+      <h2>Sobre Casa Abierta</h2>
+
+      <p id="about-text">
+        La Casa Abierta de la Escuela Superior Ocupacional Pablo Colón Berdecia es una experiencia única diseñada para mostrar la excelencia académica y las oportunidades que ofrece nuestra institución.
+      </p>
+
+      <p>"Descubre tu futuro hoy: ¡Ven a nuestra Casa Abierta!"</p>
+    </div>
+  </section>
+
+
+
+  <!-- Director -->
+  <section class="director-section" id="director">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+
+        <div class="col-lg-4 col-md-5 text-center mb-4 mb-md-0">
+          <div class="director-photo">
+            <img src="galeria/imagesdirector1.JPG" alt="Director Escolar" class="img-fluid">
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-7">
+          <div class="director-info">
+            <h3>Mensaje del Director</h3>
+            <h2 id="director-name">Israel López Rivera</h2>
+            <p class="director-title" id="director-title">Director Escolar</p>
+
+            <p class="director-message" id="director-message">
+              Bienvenidos a Casa Abierta PCB.
+            </p>
+
+            <div class="director-signature">
+              <i class="fas fa-signature"></i>
+              <span id="director-signature">Israel López Rivera</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section class="contact" id="contacto">
+    <div class="container">
+      <h2>Contáctanos</h2>
+
+      <div class="row">
+        <div class="col-lg-5 col-md-10">
+          <div class="contact-form">
+
+            <form id="contact-form">
+              <input type="hidden" name="_subject" value="Nuevo mensaje - Casa Abierta PCB">
+
+              <div class="mb-3">
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre completo" required>
+              </div>
+
+              <div class="mb-3">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+              </div>
+
+              <div class="mb-3">
+                <input type="tel" name="telefono" id="telefono" class="form-control" placeholder="Teléfono">
+              </div>
+
+              <div class="mb-3">
+                <textarea name="mensaje" id="mensaje" class="form-control" rows="5" placeholder="Mensaje" required></textarea>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-submit" id="submit-btn">Enviar Mensaje</button>
+              </div>
+            </form>
+
+            <div id="form-status" class="mt-3 text-center"></div>
+          </div>
+        </div>
+
+        <div class="col-lg-5 col-md-10">
+          <div class="contact-info">
+
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>
+                <strong>Dirección:</strong>
+                <span id="contact-address">Cargando...</span>
+              </p>
+            </div>
+
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <p>
+                <strong>Teléfono:</strong>
+                <a href="#" class="contact-link" id="contact-phone">Cargando...</a>
+              </p>
+            </div>
+
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>
+                <strong>Email:</strong>
+                <span id="contact-email">Cargando...</span>
+              </p>
+            </div>
+
+            <div class="contact-item">
+              <i class="fas fa-clock"></i>
+              <p>
+                <strong>Horario:</strong>
+                <span id="contact-hours">Cargando...</span>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h3>Casa Abierta</h3>
+    <p>Un espacio donde la educación y la comunidad se unen para crear oportunidades ilimitadas.</p>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Computec® Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- LIBRERÍAS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- CONFIGURACIÓN SUPABASE -->
+  <script>
+    const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z2FzbG1jZXlmb2hpeGx2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzMzNjYsImV4cCI6MjA5MjcwOTM2Nn0.FRoH_Lf_i1FlZX8zxxagLycLbdjxd5foehhoNCPsePA";
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
+
+  <!-- CÓDIGO PRINCIPAL -->
+  <script>
+    async function cargarContacto() {
+      const { data, error } = await supabaseClient
+        .from("contact_info")
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+      if (error) {
+        console.error("Error cargando contacto:", error);
+        return;
+      }
+
+      document.getElementById("contact-address").textContent = data.address;
+      document.getElementById("contact-phone").textContent = data.phone;
+      document.getElementById("contact-phone").href = "tel:" + data.phone.replace(/\D/g, "");
+      document.getElementById("contact-email").textContent = data.email;
+      document.getElementById("contact-hours").textContent = data.schedule;
+    }
+
+    async function cargarTextosInstitucionales() {
+      const { data, error } = await supabaseClient
+        .from("institutional_texts")
+        .select("*")
+        .eq("id", 1)
+        .single();
+
+      if (error) {
+        console.error("Error cargando textos:", error);
+        return;
+      }
+
+      document.getElementById("about-text").textContent = data.about_open_house;
+      document.getElementById("director-name").textContent = data.director_name;
+      document.getElementById("director-title").textContent = data.director_title;
+      document.getElementById("director-message").textContent = data.director_message;
+      document.getElementById("director-signature").textContent = data.director_name;
+    }
+
+    async function cargarProximasCasas() {
+      const grid = document.getElementById("proximas-grid");
+
+      const { data, error } = await supabaseClient
+        .from("open_house_dates")
+        .select("*")
+        .eq("is_active", true)
+        .order("event_date", { ascending: true });
+
+      if (error) {
+        console.error("Error cargando fechas:", error);
+        grid.innerHTML = '<p class="text-center text-white">Error cargando fechas.</p>';
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<p class="text-center text-white">No hay fechas programadas. ¡Vuelve pronto!</p>';
+        return;
+      }
+
+      grid.innerHTML = "";
+
+      data.forEach(function(casa) {
+        const div = document.createElement("div");
+        div.className = "casa-fecha";
+
+        div.innerHTML = `
+          <div class="fecha">${casa.event_date}</div>
+          <div class="titulo">${casa.title}</div>
+          <div class="ubicacion">${casa.event_time || ""}</div>
+          <p>${casa.description || ""}</p>
+          <a href="#contacto" class="btn-inscribirse">Más información</a>
+        `;
+
+        grid.appendChild(div);
+      });
+    }
+
+
+
+    document.addEventListener("DOMContentLoaded", async function() {
+      await cargarContacto();
+      await cargarTextosInstitucionales();
+      await cargarProximasCasas();
+    });
+
+    emailjs.init("mDtiMAcklOZwMjVPL");
+
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById("submit-btn");
+      const formStatus = document.getElementById("form-status");
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Enviando...";
+      formStatus.style.display = "block";
+      formStatus.innerHTML = '<span style="color: #ffc107;">Enviando mensaje...</span>';
+
+      const templateParams = {
+        to_email: "computec.pcb@gmail.com",
+        from_name: document.getElementById("nombre").value,
+        from_email: document.getElementById("email").value,
+        telefono: document.getElementById("telefono").value,
+        message: document.getElementById("mensaje").value
+      };
+
+      emailjs.send("service_aqtuyls", "template_7p2gs13", templateParams)
+        .then(function() {
+          formStatus.innerHTML = '<span style="color: #28a745;">¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.</span>';
+          document.getElementById("contact-form").reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enviar Mensaje";
+        })
+        .catch(function(error) {
+          console.error("Error EmailJS:", error);
+          formStatus.innerHTML = '<span style="color: #dc3545;">Error al enviar el mensaje. Intenta de nuevo.</span>';
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Enviar Mensaje";
+        });
+    });
+
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      body.classList.add("dark-mode");
+      themeIcon.classList.remove("fa-moon");
+      themeIcon.classList.add("fa-sun");
+    }
+
+    themeToggle.addEventListener("click", function() {
+      body.classList.toggle("dark-mode");
+      const isDark = body.classList.contains("dark-mode");
+
+      if (isDark) {
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+        localStorage.setItem("theme", "dark");
+      } else {
+        themeIcon.classList.remove("fa-sun");
+        themeIcon.classList.add("fa-moon");
+        localStorage.setItem("theme", "light");
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Casa Abierta Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0033A0;
+      --secondary-color: #0066CC;
+      --success-color: #27AE60;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+      --light-color: #ECF0F1;
+      --sidebar-width: 260px;
+      --sidebar-collapsed: 70px;
+      --topbar-height: 60px;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #E3F2FD 0%, #F8F9FA 100%);
+      min-height: 100vh;
+    }
+    
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sidebar.collapsed { width: var(--sidebar-collapsed); }
+    
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .sidebar-header .logo {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .sidebar-header .brand { font-size: 1.2rem; font-weight: 600; }
+    .sidebar.collapsed .sidebar-header .brand, .sidebar.collapsed .sidebar-header .user-info { display: none; }
+    
+    .sidebar-nav { flex: 1; padding: 15px 10px; overflow-y: auto; }
+    
+    .nav-item { margin-bottom: 5px; }
+    
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 15px;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+    .nav-link.active { background: var(--primary-color); color: white; }
+    
+    .sidebar.collapsed .nav-link span { display: none; }
+    
+    .sidebar-footer { padding: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      background: var(--secondary-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .user-name { font-weight: 600; font-size: 0.9rem; }
+    
+    .btn-logout {
+      width: 100%;
+      padding: 10px;
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-logout:hover { background: var(--danger-color); color: white; }
+    
+    /* MAIN CONTENT */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+      transition: margin-left 0.3s ease;
+    }
+    
+    .sidebar.collapsed ~ .main-content { margin-left: var(--sidebar-collapsed); }
+    
+    .topbar {
+      height: var(--topbar-height);
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 25px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .topbar-left { display: flex; align-items: center; gap: 15px; }
+    
+    .toggle-sidebar {
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    
+    .toggle-sidebar:hover { background: #f0f0f0; }
+    .page-title { font-size: 1.3rem; font-weight: 600; color: var(--primary-color); }
+    .topbar-date { color: #666; font-size: 0.9rem; }
+    
+    .content-area { padding: 25px; }
+    
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      border: none;
+      margin-bottom: 25px;
+    }
+    
+    .card-header {
+      background: none;
+      border-bottom: 1px solid #eee;
+      padding: 20px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-body { padding: 25px; }
+    
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .stat-icon.blue { background: rgba(0, 51, 160, 0.1); color: var(--primary-color); }
+    .stat-icon.green { background: rgba(39, 174, 96, 0.1); color: var(--success-color); }
+    .stat-icon.orange { background: rgba(243, 156, 18, 0.1); color: var(--warning-color); }
+    .stat-icon.red { background: rgba(231, 76, 60, 0.1); color: var(--danger-color); }
+    
+    .stat-info h3 { font-size: 1.8rem; font-weight: 700; color: var(--primary-color); margin-bottom: 5px; }
+    .stat-info p { color: #666; font-size: 0.9rem; margin: 0; }
+    
+    /* Forms */
+    .form-label { font-weight: 500; color: var(--primary-color); margin-bottom: 8px; }
+    
+    .form-control, .form-select {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 12px 15px;
+    }
+    
+    .btn { padding: 10px 20px; border-radius: 10px; font-weight: 500; }
+    .btn-primary { background: var(--primary-color); border: none; }
+    .btn-success { background: var(--success-color); border: none; }
+    .btn-danger { background: var(--danger-color); border: none; }
+    .btn-warning { background: var(--warning-color); border: none; color: white; }
+    .btn-sm { padding: 5px 10px; font-size: 0.85rem; }
+    
+    /* Tables */
+    .table { margin: 0; }
+    .table thead th { background: var(--light-color); border-bottom: 2px solid #eee; font-weight: 600; padding: 15px; }
+    .table tbody td { padding: 15px; vertical-align: middle; border-bottom: 1px solid #eee; }
+    .table tbody tr:hover { background: var(--light-color); }
+    
+    .badge-priority { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; }
+    .badge-alta { background: rgba(231, 76, 60, 0.1); color: var(--danger-color); }
+    .badge-media { background: rgba(243, 156, 18, 0.1); color: var(--warning-color); }
+    .badge-baja { background: rgba(39, 174, 96, 0.1); color: var(--success-color); }
+    
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+    .gallery-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    .gallery-preview-item { aspect-ratio: 1; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .gallery-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    
+    .gallery-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    
+    .gallery-overlay button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-view { background: white; color: var(--primary-color); }
+    .btn-delete { background: var(--danger-color); color: white; }
+    
+    .upload-area {
+      border: 2px dashed #ddd;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+    }
+    
+    .upload-area:hover { border-color: var(--secondary-color); background: rgba(52, 152, 219, 0.05); }
+    .upload-area i { font-size: 48px; color: #ccc; margin-bottom: 15px; }
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--secondary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    /* NUEVA GALERÍA ADMIN */
+    .gallery-grid-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; max-height: 70vh; overflow-y: auto; padding: 10px; }
+    .gallery-grid-admin .gallery-item-admin { aspect-ratio: 4/3; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.15); cursor: pointer; background: #f8f9fa; }
+    .gallery-grid-admin .gallery-item-admin img { width: 100%; height: 100%; max-height: 180px; object-fit: contain; object-position: center; transition: transform 0.3s; }
+    .gallery-grid-admin .gallery-item-admin:hover img { transform: scale(1.05); }
+    .gallery-grid-admin .gallery-overlay-admin { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0; transition: opacity 0.3s; }
+    .gallery-grid-admin .gallery-item-admin:hover .gallery-overlay-admin { opacity: 1; }
+    .gallery-grid-admin .gallery-overlay-admin button { width: 35px; height: 35px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+    .gallery-grid-admin .gallery-overlay-admin button:hover { transform: scale(1.1); }
+    .gallery-grid-admin .btn-edit { background: var(--secondary-color); color: white; }
+    .gallery-grid-admin .btn-replace { background: #f39c12; color: white; }
+    .gallery-grid-admin .btn-delete-item { background: #e74c3c; color: white; }
+    .upload-area-admin { border: 3px dashed var(--secondary-color); border-radius: 15px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; background: rgba(52, 152, 219, 0.05); }
+    .upload-area-admin:hover { background: rgba(39, 174, 96, 0.1); border-color: var(--success-color); }
+    .upload-area-admin.dragover { background: rgba(39, 174, 96, 0.2); border-color: var(--success-color); }
+    
+    /* Tarjetas de talleres en admin */
+    .admin-taller-card { border: none; border-radius: 15px; overflow: hidden; transition: all 0.3s; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .admin-taller-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,51,160,0.2); }
+    .admin-taller-card img { height: 120px; object-fit: cover; }
+    .admin-taller-card .card-body { padding: 15px; }
+    .admin-taller-card .badge-fotos { background: var(--success-color); color: white; font-size: 0.75rem; }
+    
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    .toast-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      z-index: 9999;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .toast-notification.show { transform: translateX(0); }
+    .toast-success { background: var(--success-color); }
+    .toast-error { background: var(--danger-color); }
+    
+    .modal-content { border: none; border-radius: 15px; }
+    .modal-header { border-bottom: 1px solid #eee; padding: 20px 25px; }
+    .modal-title { font-weight: 600; color: var(--primary-color); }
+    .modal-body { padding: 25px; }
+    .modal-footer { border-top: 1px solid #eee; padding: 15px 25px; }
+    
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.3s ease; }
+    
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    
+    @media (max-width: 992px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .main-content { margin-left: 0; }
+      .overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 999; }
+      .overlay.show { display: block; }
+    }
+    
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .content-area { padding: 15px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+  
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo"><i class="fas fa-school"></i></div>
+      <span class="brand">Casa Abierta</span>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="nav-item">
+        <a href="#" class="nav-link active" data-section="inicio">
+          <i class="fas fa-home"></i><span>Inicio</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link" data-section="galeria">
+          <i class="fas fa-images"></i><span>Galería</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link" data-section="contacto">
+          <i class="fas fa-address-book"></i><span>Contacto</span>
+        </a>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar"><i class="fas fa-user"></i></div>
+        <div class="user-name" id="userName">Admin</div>
+      </div>
+      <button class="btn-logout" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i><span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+  
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="toggle-sidebar" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <h1 class="page-title" id="pageTitle">Panel de Control</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-date" id="currentDate"></span>
+      </div>
+    </header>
+    
+    <div class="content-area">
+      
+      <!-- INICIO -->
+      <section class="section active" id="section-inicio">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon blue"><i class="fas fa-bullhorn"></i></div>
+            <div class="stat-info"><h3 id="statAnuncios">0</h3><p>Anuncios Activos</p></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange"><i class="fas fa-images"></i></div>
+            <div class="stat-info"><h3 id="statImagenes">0</h3><p>Imágenes en Galería</p></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title"><i class="fas fa-tachometer-alt"></i>Bienvenido al Panel de Administración</h5>
+          </div>
+          <div class="card-body">
+            <p>Desde aquí puedes gestionar todo el contenido de la página de Casa Abierta:</p>
+            <div class="row mt-4">
+              <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="stat-icon blue" style="width: 50px; height: 50px; font-size: 20px;"><i class="fas fa-bullhorn"></i></div>
+                  <div><strong>Anuncios</strong><p class="text-muted mb-0 small">Crea y gestiona anuncios importantes</p></div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="stat-icon orange" style="width: 50px; height: 50px; font-size: 20px;"><i class="fas fa-image"></i></div>
+                  <div><strong>Galería</strong><p class="text-muted mb-0 small">Sube fotos de la escuela</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- CONTACTO -->
+      <section class="section" id="section-contacto">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title"><i class="fas fa-address-book"></i>Información de Contacto</h5>
+            <button class="btn btn-primary" onclick="saveContactInfo()">
+              <i class="fas fa-save me-2"></i>Guardar Cambios
+            </button>
+          </div>
+          <div class="card-body">
+            <form id="contactInfoForm">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Dirección</label>
+                  <input type="text" class="form-control" id="contactAddress" placeholder="Carretera 156 salida hacia Comerío, Barranquitas, P. R.">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Teléfono</label>
+                  <input type="tel" class="form-control" id="contactPhone" placeholder="+1 787-857-2897">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Correo Electrónico</label>
+                  <input type="email" class="form-control" id="contactEmail" placeholder="de58390@miescuela.pr">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Horario de Atención</label>
+                  <input type="text" class="form-control" id="contactSchedule" placeholder="Lunes - Viernes: 7:30 AM - 2:30 PM">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+      
+      <!-- GALERÍA -->
+      <section class="section" id="section-galeria">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title"><i class="fas fa-images"></i>Galería de Imágenes por Talleres</h5>
+            <button class="btn btn-warning btn-sm" onclick="resetGalleryData()" title="Resetear galería">
+              <i class="fas fa-redo me-1"></i>Resetear Imágenes
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Vista de Talleres (siempre visible) -->
+            <div id="adminTalleresView">
+              <div class="row g-4" id="adminTalleresGrid"></div>
+            </div>
+            
+            <!-- Vista de Galería por Taller (se muestra al hacer click) -->
+            <div id="adminGalleryView" style="display: none;">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 id="adminCurrentTallerName" class="mb-0"></h5>
+                <button class="btn btn-secondary" onclick="showTalleresAdmin()">
+                  <i class="fas fa-arrow-left me-2"></i>Volver a Talleres
+                </button>
+              </div>
+              
+              <!-- Grid de Imágenes -->
+              <div class="gallery-grid-admin mb-4" id="adminGalleryGrid"></div>
+              
+              <!-- Área de Upload -->
+              <div class="upload-area-admin" id="adminDropZone">
+                <i class="fas fa-cloud-upload-alt fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                <h5>Subir Imágenes</h5>
+                <p class="text-muted mb-0">Arrastra imágenes aquí o haz clic para seleccionar</p>
+                <input type="file" id="adminFileInput" multiple accept="image/*" style="display: none;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Modal Editar Imagen -->
+      <div class="modal fade" id="adminEditModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Editar Imagen</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="adminEditImageId">
+              <div class="mb-3">
+                <label class="form-label">Título</label>
+                <input type="text" class="form-control" id="adminEditTitle">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea class="form-control" id="adminEditDesc" rows="2"></textarea>
+              </div>
+              <img id="adminEditPreview" style="max-width: 100%; border-radius: 10px;">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" onclick="adminSaveEdit()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Eliminar -->
+      <div class="modal fade" id="adminDeleteModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-danger">¿Eliminar Imagen?</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+              <img id="adminDeletePreview" style="max-width: 150px; border-radius: 10px;">
+              <p class="mt-2">Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-danger" onclick="adminConfirmDelete()">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Reemplazar -->
+      <div class="modal fade" id="adminReplaceModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-exchange-alt me-2"></i>Cambiar Imagen</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="adminReplaceImageId">
+              <div class="mb-3">
+                <label class="form-label">Nueva imagen</label>
+                <input type="file" class="form-control" id="adminReplaceFile" accept="image/*">
+              </div>
+              <div class="row">
+                <div class="col-6 text-center">
+                  <small>Actual</small><br>
+                  <img id="adminCurrentImg" style="max-width: 100px; border-radius: 5px;">
+                </div>
+                <div class="col-6 text-center">
+                  <small>Nueva</small><br>
+                  <img id="adminNewImg" style="max-width: 100px; border-radius: 5px; display: none;">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" onclick="adminConfirmReplace()">Confirmar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Modal Anuncios -->
+  <div class="modal fade" id="announcementModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="announcementModalTitle">Nuevo Anuncio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="announcementForm">
+            <input type="hidden" id="announcementId">
+            <div class="mb-3">
+              <label class="form-label">Título</label>
+              <input type="text" class="form-control" id="announcementTitle" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Descripción</label>
+              <textarea class="form-control" id="announcementDescription" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prioridad</label>
+              <select class="form-select" id="announcementPriority">
+                <option value="baja">Baja</option>
+                <option value="media" selected>Media</option>
+                <option value="alta">Alta</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveAnnouncement()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // ============================================
+    // SISTEMA LOCAL (LOCALSTORAGE)
+    // ============================================
+    
+    // Datos iniciales con imágenes existentes del proyecto
+    const defaultData = {
+      announcements: [
+        { id: 1, title: 'Casa Abierta 2026', description: 'Les damos la bienvenida a nuestra Casa Abierta anual', priority: 'alta', active: true, created_at: new Date().toISOString() },
+        { id: 2, title: 'Nuevos talleres disponibles', description: 'Consulta nuestros nuevos programas técnicos', priority: 'media', active: true, created_at: new Date().toISOString() }
+      ],
+      events: [
+        { id: 1, title: 'Casa Abierta', description: 'Día de puertas abiertas para estudiantes y padres', event_date: '2026-04-15T09:00', event_type: 'visita', active: true },
+        { id: 2, title: 'Taller de Computación', description: 'Demo de nuestros programas técnicos', event_date: '2026-04-20T10:00', event_type: 'taller', active: true }
+      ],
+      gallery: {
+        general: [
+          { name: 'Escuela', url: 'galeria/image.jpeg' },
+          { name: 'Estudiantes', url: 'galeria/image1.jpeg' },
+          { name: 'Actividad', url: 'galeria/image2.jpeg' },
+          { name: 'Evento', url: 'galeria/image3.jpeg' },
+          { name: 'Imagen 4', url: 'galeria/image4.jpeg' },
+          { name: 'Imagen 5', url: 'galeria/image5.jpeg' },
+          { name: 'Imagen 6', url: 'galeria/image6.jpeg' },
+          { name: 'Imagen 7', url: 'galeria/image7.jpeg' },
+          { name: 'Imagen 8', url: 'galeria/image8.jpeg' },
+          { name: 'Imagen 9', url: 'galeria/image9.jpeg' },
+          { name: 'Imagen 10', url: 'galeria/image10.jpeg' },
+          { name: 'Imagen 11', url: 'galeria/images11.jpeg' },
+          { name: 'Imagen 12', url: 'galeria/images12.jpeg' },
+          { name: 'Imagen 13', url: 'galeria/images13.jpeg' },
+          { name: 'Imagen 14', url: 'galeria/images14.jpeg' },
+          { name: 'Imagen 15', url: 'galeria/images15.jpeg' },
+          { name: 'Imagen 16', url: 'galeria/images16.jpeg' },
+          { name: 'Imagen 17', url: 'galeria/images17.jpeg' },
+          { name: 'Imagen 18', url: 'galeria/images18.jpeg' },
+          { name: 'Imagen 19', url: 'galeria/images19.jpeg' },
+          { name: 'Imagen 20', url: 'galeria/images20.jpeg' },
+          { name: 'Imagen 21', url: 'galeria/images21.jpeg' },
+          { name: 'Imagen 22', url: 'galeria/images22.jpeg' },
+          { name: 'Imagen 23', url: 'galeria/images23.jpeg' },
+          { name: 'Director PCB', url: 'galeria/directorpcb.jpeg' },
+          { name: 'Director 1', url: 'galeria/imagesdirector1.JPG' },
+          { name: 'WhatsApp Image', url: 'galeria/WhatsApp Image 2025-10-30 at 7.58.15 AM.jpeg' }
+        ],
+        computec: [
+          { name: 'Logo', url: 'galeria_computec/LogoLimpio4.png' },
+          { name: 'Computec 1', url: 'galeria_computec/images17.jpeg' },
+          { name: 'Computec 2', url: 'galeria_computec/images15.jpeg' },
+          { name: 'Computec 3', url: 'galeria_computec/images13.jpeg' },
+          { name: 'Computec 4', url: 'galeria_computec/images16.jpeg' },
+          { name: 'Computec 5', url: 'galeria_computec/images12.jpeg' },
+          { name: 'Computec 6', url: 'galeria_computec/images22.jpeg' },
+          { name: 'Computec 7', url: 'galeria_computec/images23.jpeg' },
+          { name: 'Computec 8', url: 'galeria_computec/images21.jpeg' },
+          { name: 'Computec 9', url: 'galeria_computec/images20.jpeg' },
+          { name: 'Computec 10', url: 'galeria_computec/images24.jpeg' },
+          { name: 'Computec 11', url: 'galeria_computec/images25.jpeg' },
+          { name: 'Computec 12', url: 'galeria_computec/images2.jpeg' },
+          { name: 'Computec 13', url: 'galeria_computec/images19.jpeg' },
+          { name: 'Computec 14', url: 'galeria_computec/images18.jpeg' },
+          { name: 'Computec 15', url: 'galeria_computec/images11.jpeg' },
+          { name: 'Computec 16', url: 'galeria_computec/images26.jpeg' }
+        ],
+        'artes-culinarias': [
+          { name: 'Artes 1', url: 'galeria_artes_culinarias/image8.jpeg' },
+          { name: 'Artes 2', url: 'galeria_artes_culinarias/images1.jpeg' },
+          { name: 'Artes 3', url: 'galeria_artes_culinarias/images3.jpeg' },
+          { name: 'Artes 4', url: 'galeria_artes_culinarias/images4.jpeg' },
+          { name: 'Artes 5', url: 'galeria_artes_culinarias/images5.jpeg' },
+          { name: 'Artes 6', url: 'galeria_artes_culinarias/images6.jpeg' },
+          { name: 'Artes 7', url: 'galeria_artes_culinarias/images7.jpeg' },
+          { name: 'Artes 8', url: 'galeria_artes_culinarias/images8.jpg' },
+          { name: 'Artes 9', url: 'galeria_artes_culinarias/images11.jpg' },
+          { name: 'Artes 10', url: 'galeria_artes_culinarias/images12.jpg' },
+          { name: 'Artes 11', url: 'galeria_artes_culinarias/images13.jpg' },
+          { name: 'Artes 12', url: 'galeria_artes_culinarias/images14.jpg' },
+          { name: 'Artes 13', url: 'galeria_artes_culinarias/images15.jpg' },
+          { name: 'Artes 14', url: 'galeria_artes_culinarias/images16.jpg' },
+          { name: 'Artes 15', url: 'galeria_artes_culinarias/images17.jpg' },
+          { name: 'Artes 16', url: 'galeria_artes_culinarias/images18.jpg' },
+          { name: 'Artes 17', url: 'galeria_artes_culinarias/images19.jpg' },
+          { name: 'Artes 18', url: 'galeria_artes_culinarias/images20.jpg' },
+          { name: 'Artes 19', url: 'galeria_artes_culinarias/images21.jpg' },
+          { name: 'Artes 20', url: 'galeria_artes_culinarias/images22.jpg' },
+          { name: 'Artes 21', url: 'galeria_artes_culinarias/images23.jpg' },
+          { name: 'Artes 22', url: 'galeria_artes_culinarias/images24.jpg' },
+          { name: 'Artes 23', url: 'galeria_artes_culinarias/images25.jpg' },
+          { name: 'Artes 24', url: 'galeria_artes_culinarias/images26.jpg' },
+          { name: 'Artes 25', url: 'galeria_artes_culinarias/images27.jpg' },
+          { name: 'Artes 26', url: 'galeria_artes_culinarias/images2.jpg' }
+        ],
+        cosmetologia: [
+          { name: 'Cosmetología 1', url: 'galeria_cosmetologia/images3.jpeg' },
+          { name: 'Cosmetología 2', url: 'galeria_cosmetologia/images1.jpeg' },
+          { name: 'Cosmetología 3', url: 'galeria_cosmetologia/images4.jpeg' },
+          { name: 'Cosmetología 4', url: 'galeria_cosmetologia/images6.jpeg' },
+          { name: 'Cosmetología 5', url: 'galeria_cosmetologia/images7.jpeg' },
+          { name: 'Cosmetología 6', url: 'galeria_cosmetologia/images8.jpeg' },
+          { name: 'Cosmetología 7', url: 'galeria_cosmetologia/images9.jpeg' },
+          { name: 'Cosmetología 8', url: 'galeria_cosmetologia/images10.jpeg' },
+          { name: 'Cosmetología 9', url: 'galeria_cosmetologia/images13.jpeg' },
+          { name: 'Cosmetología 10', url: 'galeria_cosmetologia/images14.jpeg' },
+          { name: 'Cosmetología 11', url: 'galeria_cosmetologia/images30.jpeg' },
+          { name: 'Cosmetología 12', url: 'galeria_cosmetologia/images31.jpeg' },
+          { name: 'Cosmetología 13', url: 'galeria_cosmetologia/images32.jpeg' },
+          { name: 'Cosmetología 14', url: 'galeria_cosmetologia/images33.jpeg' },
+          { name: 'Cosmetología 15', url: 'galeria_cosmetologia/images34.jpeg' },
+          { name: 'Cosmetología 16', url: 'galeria_cosmetologia/images5.jpeg' },
+          { name: 'Cosmetología 17', url: 'galeria_cosmetologia/images1.png' },
+          { name: 'Cosmetología 18', url: 'galeria_cosmetologia/images2.jpg' },
+          { name: 'Cosmetología 19', url: 'galeria_cosmetologia/images11.jpg' },
+          { name: 'Cosmetología 20', url: 'galeria_cosmetologia/images12.jpg' }
+        ],
+        enfermeria: [
+          { name: 'Enfermería 1', url: 'galeria_enfermeria/image.jpeg' },
+          { name: 'Enfermería 2', url: 'galeria_enfermeria/image1.jpeg' },
+          { name: 'Enfermería 3', url: 'galeria_enfermeria/image2.jpeg' },
+          { name: 'Enfermería 4', url: 'galeria_enfermeria/image3.jpeg' },
+          { name: 'Enfermería 5', url: 'galeria_enfermeria/image4.jpeg' },
+          { name: 'Enfermería 6', url: 'galeria_enfermeria/image5.jpeg' },
+          { name: 'Enfermería 7', url: 'galeria_enfermeria/image6.jpeg' },
+          { name: 'Enfermería 8', url: 'galeria_enfermeria/image7.jpeg' },
+          { name: 'Enfermería 9', url: 'galeria_enfermeria/image8.jpeg' },
+          { name: 'Enfermería 10', url: 'galeria_enfermeria/image9.jpeg' },
+          { name: 'Enfermería 11', url: 'galeria_enfermeria/image10.jpeg' }
+        ],
+        mercadeo: [
+          { name: 'Mercadeo 1', url: 'galeria_mercadeo/images1.PNG' },
+          { name: 'Mercadeo 2', url: 'galeria_mercadeo/images2.PNG' },
+          { name: 'Mercadeo 3', url: 'galeria_mercadeo/images3.JPG' },
+          { name: 'Mercadeo 4', url: 'galeria_mercadeo/images4.JPG' },
+          { name: 'Mercadeo 5', url: 'galeria_mercadeo/images5.JPG' },
+          { name: 'Mercadeo 6', url: 'galeria_mercadeo/images6.JPG' },
+          { name: 'Mercadeo 7', url: 'galeria_mercadeo/images7.JPG' },
+          { name: 'Mercadeo 8', url: 'galeria_mercadeo/images8.JPG' },
+          { name: 'Mercadeo 9', url: 'galeria_mercadeo/images1.JPG' },
+          { name: 'Mercadeo 10', url: 'galeria_mercadeo/images2.JPG' },
+          { name: 'Mercadeo 11', url: 'galeria_mercadeo/image10.jpeg' },
+          { name: 'Mercadeo Logo', url: 'galeria_mercadeo/imageslogo.png' }
+        ],
+        'elaboracion-agricolas': [
+          { name: 'Agrícola 1', url: 'galeria_agricolas/images1.jpeg' },
+          { name: 'Agrícola 2', url: 'galeria_agricolas/images2.jpeg' },
+          { name: 'Agrícola 3', url: 'galeria_agricolas/images3.jpeg' },
+          { name: 'Agrícola 4', url: 'galeria_agricolas/images4.jpeg' },
+          { name: 'Agrícola 5', url: 'galeria_agricolas/images5.jpeg' },
+          { name: 'Agrícola 6', url: 'galeria_agricolas/images6.jpeg' },
+          { name: 'Agrícola 7', url: 'galeria_agricolas/images12.jpeg' },
+          { name: 'Agrícola 8', url: 'galeria_agricolas/images30.jpeg' },
+          { name: 'Agrícola 9', url: 'galeria_agricolas/images31.jpeg' },
+          { name: 'Agrícola 10', url: 'galeria_agricolas/images32.jpeg' },
+          { name: 'Agrícola 11', url: 'galeria_agricolas/images33.jpeg' },
+          { name: 'Agrícola 12', url: 'galeria_agricolas/images34.jpeg' },
+          { name: 'Agrícola 13', url: 'galeria_agricolas/images35.jpeg' },
+          { name: 'Agrícola 14', url: 'galeria_agricolas/images36.jpeg' },
+          { name: 'Agrícola 15', url: 'galeria_agricolas/images38.jpeg' },
+          { name: 'Agrícola 16', url: 'galeria_agricolas/images39.jpeg' },
+          { name: 'Agrícola 17', url: 'galeria_agricolas/images40.jpeg' },
+          { name: 'Agrícola 18', url: 'galeria_agricolas/images41.jpeg' },
+          { name: 'Agrícola 19', url: 'galeria_agricolas/images90.jpeg' },
+          { name: 'Agrícola 20', url: 'galeria_agricolas/image7.jpeg' },
+          { name: 'Agrícola 21', url: 'galeria_agricolas/images1.jpg' },
+          { name: 'Agrícola 22', url: 'galeria_agricolas/images2.jpg' },
+          { name: 'Agrícola 23', url: 'galeria_agricolas/images3.jpg' },
+          { name: 'Agrícola 24', url: 'galeria_agricolas/images4.jpg' },
+          { name: 'Agrícola 25', url: 'galeria_agricolas/images10.jpg' },
+          { name: 'Agrícola 26', url: 'galeria_agricolas/images11.jpg' },
+          { name: 'Agrícola Logo', url: 'galeria_agricolas/imageslogo.jpg' }
+        ],
+        'seguridad-publica': [
+          { name: 'Seguridad 1', url: 'galeria_seguridad/seguridad-1.jpg' },
+          { name: 'Seguridad 2', url: 'galeria_seguridad/policia-1-e1616090693117.jpg' },
+          { name: 'Seguridad 3', url: 'galeria_seguridad/seguridad-publica-seguridad-ciudadana.jpg' },
+          { name: 'Academia', url: 'galeria_seguridad/Academia-Nacional-de-Seguridad-Publica.png' }
+        ]
+      },
+      contactInfo: {
+        direccion: 'Carretera 156 salida hacia Comerío, Barranquitas, P. R.',
+        telefono: '+1 787-857-2897',
+        email: 'de58390@miescuela.pr',
+        horario: 'Lunes - Viernes: 7:30 AM - 2:30 PM'
+      }
+    };
+    
+    // Inicializar datos
+    function initData() {
+      const stored = localStorage.getItem('casaAbiertaData');
+      let data;
+      
+      if (!stored) {
+        data = defaultData;
+      } else {
+        data = JSON.parse(stored);
+        // Siempre asegurar que la galería tenga datos
+        if (!data.gallery) {
+          data.gallery = {};
+        }
+        
+        // Verificar cada sección - si falta, agregar desde defaultData
+        Object.keys(defaultData.gallery).forEach(section => {
+          // Si la sección no existe o está vacía, usar los datos por defecto
+          if (!data.gallery[section] || !Array.isArray(data.gallery[section]) || data.gallery[section].length === 0) {
+            data.gallery[section] = JSON.parse(JSON.stringify(defaultData.gallery[section]));
+          }
+        });
+      }
+      
+      localStorage.setItem('casaAbiertaData', JSON.stringify(data));
+    }
+    
+    // Función para resetear la galería a los datos por defecto
+    function resetGalleryData() {
+      const data = getData();
+      data.gallery = JSON.parse(JSON.stringify(defaultData.gallery));
+      saveData(data);
+      showToast('Galería reseteada correctamente', 'success');
+      loadAdminGalleryImages(currentGallerySection);
+    }
+    
+    function getData() {
+      return JSON.parse(localStorage.getItem('casaAbiertaData') || '{}');
+    }
+    
+    function saveData(data) {
+      localStorage.setItem('casaAbiertaData', JSON.stringify(data));
+    }
+    
+    // Verificar autenticación
+    function checkAuth() {
+      if (localStorage.getItem('casaAbiertaAdmin') !== 'true') {
+        window.location.href = 'login.html';
+        return false;
+      }
+      const user = localStorage.getItem('casaAbiertaUser');
+      if (user) document.getElementById('userName').textContent = user;
+      return true;
+    }
+    
+    function logout() {
+      localStorage.removeItem('casaAbiertaAdmin');
+      localStorage.removeItem('casaAbiertaUser');
+      window.location.href = 'login.html';
+    }
+    
+    // Navegación
+    function setupNavigation() {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          navigateTo(link.dataset.section);
+        });
+      });
+    }
+    
+    function navigateTo(section) {
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.section === section);
+      });
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.toggle('active', sec.id === `section-${section}`);
+      });
+      
+      const titles = { inicio: 'Panel de Control', galeria: 'Galería de Imágenes', contacto: 'Información de Contacto' };
+      document.getElementById('pageTitle').textContent = titles[section];
+      
+      switch(section) {
+        case 'inicio': loadDashboardStats(); break;
+        case 'galeria': loadGallery(); break;
+        case 'contacto': loadContactInfo(); break;
+      }
+      
+      if (window.innerWidth < 992) {
+        document.getElementById('sidebar').classList.remove('mobile-open');
+        document.getElementById('overlay').classList.remove('show');
+      }
+    }
+    
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      if (window.innerWidth < 992) {
+        sidebar.classList.toggle('mobile-open');
+        document.getElementById('overlay').classList.toggle('show');
+      } else {
+        sidebar.classList.toggle('collapsed');
+      }
+    }
+    
+    // Dashboard Stats
+    function loadDashboardStats() {
+      const data = getData();
+      document.getElementById('statAnuncios').textContent = data.announcements?.filter(a => a.active).length || 0;
+      document.getElementById('statEventos').textContent = data.events?.filter(e => e.active).length || 0;
+      document.getElementById('statImagenes').textContent = data.gallery?.length || 0;
+    }
+    
+    // ANUNCIOS
+    function loadAnnouncements() {
+      const data = getData();
+      const tbody = document.getElementById('announcementsBody');
+      tbody.innerHTML = (data.announcements || []).map(a => `
+        <tr>
+          <td><strong>${a.title}</strong></td>
+          <td>${a.description ? a.description.substring(0, 50) + '...' : '-'}</td>
+          <td><span class="badge-priority badge-${a.priority}">${a.priority}</span></td>
+          <td>${a.active ? '<span class="text-success">Activo</span>' : '<span class="text-muted">Inactivo</span>'}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" onclick="editAnnouncement(${a.id})"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteAnnouncement(${a.id})"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    
+    function openAnnouncementModal(id = null) {
+      const modal = new bootstrap.Modal(document.getElementById('announcementModal'));
+      document.getElementById('announcementForm').reset();
+      document.getElementById('announcementId').value = '';
+      
+      if (id) {
+        const data = getData();
+        const a = data.announcements.find(x => x.id === id);
+        if (a) {
+          document.getElementById('announcementModalTitle').textContent = 'Editar Anuncio';
+          document.getElementById('announcementId').value = a.id;
+          document.getElementById('announcementTitle').value = a.title;
+          document.getElementById('announcementDescription').value = a.description || '';
+          document.getElementById('announcementPriority').value = a.priority;
+        }
+      } else {
+        document.getElementById('announcementModalTitle').textContent = 'Nuevo Anuncio';
+      }
+      modal.show();
+    }
+    
+    function editAnnouncement(id) { openAnnouncementModal(id); }
+    
+    function saveAnnouncement() {
+      const id = document.getElementById('announcementId').value;
+      const title = document.getElementById('announcementTitle').value;
+      const description = document.getElementById('announcementDescription').value;
+      const priority = document.getElementById('announcementPriority').value;
+      
+      if (!title) { showToast('El título es requerido', 'error'); return; }
+      
+      const data = getData();
+      if (id) {
+        const idx = data.announcements.findIndex(x => x.id == id);
+        if (idx > -1) data.announcements[idx] = { ...data.announcements[idx], title, description, priority };
+        showToast('Anuncio actualizado', 'success');
+      } else {
+        const newId = Math.max(0, ...data.announcements.map(x => x.id)) + 1;
+        data.announcements.push({ id: newId, title, description, priority, active: true, created_at: new Date().toISOString() });
+        showToast('Anuncio creado', 'success');
+      }
+      
+      saveData(data);
+      bootstrap.Modal.getInstance(document.getElementById('announcementModal')).hide();
+      loadAnnouncements();
+    }
+    
+    function deleteAnnouncement(id) {
+      if (!confirm('¿Eliminar este anuncio?')) return;
+      const data = getData();
+      data.announcements = data.announcements.filter(x => x.id !== id);
+      saveData(data);
+      loadAnnouncements();
+      showToast('Anuncio eliminado', 'success');
+    }
+    
+    // GALERÍA
+    let currentGallerySection = 'general';
+    
+    function loadGallery() {
+      // Asegurar que los datos de galería estén inicializados
+      initData();
+      
+      // Verificar si ya se han renderizado los talleres
+      const grid = document.getElementById('adminTalleresGrid');
+      if (!grid || grid.children.length === 0) {
+        renderAdminTalleres();
+      }
+      
+      // Asegurar que las vistas estén en el estado correcto
+      document.getElementById('adminTalleresView').style.display = 'block';
+      document.getElementById('adminGalleryView').style.display = 'none';
+    }
+    
+    // GALERÍA - Funciones para mostrar talleres
+    function renderAdminTalleres() {
+      const talleres = [
+        { id: 'general', name: 'Página Principal', icon: 'fa-home', color: '#0033A0' },
+        { id: 'computec', name: 'Computec', icon: 'fa-laptop', color: '#0066CC' },
+        { id: 'artes-culinarias', name: 'Artes Culinarias', icon: 'fa-utensils', color: '#E67E22' },
+        { id: 'cosmetologia', name: 'Cosmetología', icon: 'fa-spa', color: '#9B59B6' },
+        { id: 'enfermeria', name: 'Enfermería', icon: 'fa-user-nurse', color: '#E74C3C' },
+        { id: 'mercadeo', name: 'Mercadeo', icon: 'fa-chart-line', color: '#27AE60' },
+        { id: 'elaboracion-agricolas', name: 'Elaboración Agrícola', icon: 'fa-seedling', color: '#2ECC71' },
+        { id: 'seguridad-publica', name: 'Seguridad Pública', icon: 'fa-shield-alt', color: '#34495E' }
+      ];
+      
+      const grid = document.getElementById('adminTalleresGrid');
+      grid.innerHTML = talleres.map(taller => `
+        <div class="col-md-6 col-lg-4">
+          <div class="card taller-card-admin h-100" onclick="openAdminGallery('${taller.id}')" style="cursor: pointer; border: none; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+            <div class="card-body text-center">
+              <div class="taller-icon-admin mb-3" style="width: 60px; height: 60px; background: ${taller.color}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <i class="fas ${taller.icon} fa-2x" style="color: white;"></i>
+              </div>
+              <h5 class="card-title" style="color: ${taller.color}; font-weight: 600;">${taller.name}</h5>
+              <p class="text-muted small">Click para ver imágenes</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function showTalleresAdmin() {
+      document.getElementById('adminTalleresView').style.display = 'block';
+      document.getElementById('adminGalleryView').style.display = 'none';
+      renderAdminTalleres();
+    }
+    
+    function showAdminTalleres() {
+      document.getElementById('adminTalleresView').style.display = 'block';
+      document.getElementById('adminGalleryView').style.display = 'none';
+    }
+    
+    function openAdminGallery(tallerId) {
+      currentGallerySection = tallerId;
+      const talleres = {
+        general: 'Página Principal',
+        computec: 'Computec',
+        'artes-culinarias': 'Artes Culinarias',
+        cosmetologia: 'Cosmetología',
+        enfermeria: 'Enfermería',
+        mercadeo: 'Mercadeo',
+        'elaboracion-agricolas': 'Elaboración Agrícola',
+        'seguridad-publica': 'Seguridad Pública'
+      };
+      
+      document.getElementById('adminTalleresView').style.display = 'none';
+      document.getElementById('adminGalleryView').style.display = 'block';
+      document.getElementById('adminCurrentTallerName').innerHTML = `<i class="fas fa-images me-2"></i>${talleres[tallerId] || tallerId}`;
+      
+      loadAdminGalleryImages(tallerId);
+    }
+    
+    function loadAdminGalleryImages(tallerId) {
+      const storedData = localStorage.getItem('casaAbiertaData');
+      let data = storedData ? JSON.parse(storedData) : {};
+      
+      if (!data.gallery) {
+        data.gallery = defaultData.gallery;
+      }
+      
+      const images = data.gallery[tallerId] || defaultData.gallery[tallerId] || [];
+      const grid = document.getElementById('adminGalleryGrid');
+      
+      if (images.length === 0) {
+        grid.innerHTML = '<div class="text-center text-muted p-4"><i class="fas fa-images fa-3x mb-3"></i><p>No hay imágenes para este taller</p></div>';
+        return;
+      }
+      
+      grid.innerHTML = images.map((img, idx) => {
+        const imageUrl = img.url.startsWith('data:') ? img.url : '../' + img.url;
+        return `
+        <div class="gallery-item-admin">
+          <img src="${imageUrl}" alt="${img.name}" onerror="this.src='../galeria/image.jpeg'">
+          <div class="gallery-overlay-admin">
+            <button class="btn btn-sm btn-info" onclick="viewAdminImage('${imageUrl}')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-sm btn-danger" onclick="deleteAdminImage('${tallerId}', ${idx})"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      `}).join('');
+      
+      // Configurar el evento de upload
+      setupAdminUpload(tallerId);
+    }
+    
+    function setupAdminUpload(tallerId) {
+      const dropZone = document.getElementById('adminDropZone');
+      const fileInput = document.getElementById('adminFileInput');
+      
+      if (dropZone && fileInput) {
+        dropZone.onclick = () => fileInput.click();
+        
+        fileInput.onchange = (e) => {
+          handleAdminFileUpload(e, tallerId);
+        };
+        
+        dropZone.ondragover = (e) => {
+          e.preventDefault();
+          dropZone.classList.add('dragover');
+        };
+        
+        dropZone.ondragleave = () => {
+          dropZone.classList.remove('dragover');
+        };
+        
+        dropZone.ondrop = (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('dragover');
+          handleAdminFileUpload({ target: { files: e.dataTransfer.files } }, tallerId);
+        };
+      }
+    }
+    
+    function handleAdminFileUpload(event, tallerId) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+      
+      const progress = document.getElementById('adminUploadProgress');
+      const progressBar = document.getElementById('adminProgressBar');
+      const status = document.getElementById('uploadStatus');
+      
+      if (progress) progress.style.display = 'block';
+      
+      const data = getData();
+      data.gallery = data.gallery || {};
+      data.gallery[tallerId] = data.gallery[tallerId] || [];
+      
+      let uploadedCount = 0;
+      const totalFiles = files.length;
+      
+      Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          data.gallery[tallerId].push({ name: file.name, url: e.target.result });
+          uploadedCount++;
+          
+          if (progressBar) {
+            progressBar.style.width = Math.round((uploadedCount / totalFiles) * 100) + '%';
+          }
+          
+          if (uploadedCount === totalFiles) {
+            saveData(data);
+            loadAdminGalleryImages(tallerId);
+            showToast('Imágenes subidas correctamente', 'success');
+            setTimeout(() => {
+              if (progress) progress.style.display = 'none';
+              if (progressBar) progressBar.style.width = '0%';
+            }, 1000);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    
+    function viewAdminImage(url) {
+      window.open(url, '_blank');
+    }
+    
+    function deleteAdminImage(tallerId, idx) {
+      if (!confirm('¿Eliminar esta imagen?')) return;
+      
+      const data = getData();
+      if (data.gallery?.[tallerId]) {
+        data.gallery[tallerId].splice(idx, 1);
+        saveData(data);
+        loadAdminGalleryImages(tallerId);
+        showToast('Imagen eliminada', 'success');
+      }
+    }
+    
+    // INFORMACIÓN DE CONTACTO
+    function loadContactInfo() {
+      const data = getData();
+      const contact = data.contactInfo || defaultData.contactInfo;
+      document.getElementById('contactAddress').value = contact.direccion || '';
+      document.getElementById('contactPhone').value = contact.telefono || '';
+      document.getElementById('contactEmail').value = contact.email || '';
+      document.getElementById('contactSchedule').value = contact.horario || '';
+    }
+    
+    function saveContactInfo() {
+      const data = getData();
+      data.contactInfo = {
+        direccion: document.getElementById('contactAddress').value,
+        telefono: document.getElementById('contactPhone').value,
+        email: document.getElementById('contactEmail').value,
+        horario: document.getElementById('contactSchedule').value
+      };
+      saveData(data);
+      showToast('Información de contacto guardada', 'success');
+    }
+    
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast-notification toast-${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><span>${message}</span>`;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+    
+    // Inicializar
+    document.addEventListener('DOMContentLoaded', () => {
+      initData();
+      if (!checkAuth()) return;
+      setupNavigation();
+      document.getElementById('currentDate').textContent = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      loadDashboardStats();
+    });
+  </script>
+  <script>
+    (function() {
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const body = document.body;
+
+      if (!themeToggle || !themeIcon) return;
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+      }
+
+      themeToggle.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains("dark-mode");
+
+        if (isDark) {
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Galería - Casa Abierta PCB</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0033A0;
+      --secondary-color: #0066CC;
+      --accent-color: #27AE60;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #E3F2FD 0%, #F8F9FA 100%);
+      min-height: 100vh;
+    }
+    
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+      box-shadow: 0 4px 20px rgba(0,51,160,0.2);
+    }
+    
+    /* Taller Cards */
+    .taller-card {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .taller-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,51,160,0.2);
+    }
+    
+    .taller-card .card-img-top {
+      height: 150px;
+      object-fit: cover;
+    }
+    
+    .taller-card .card-body {
+      text-align: center;
+    }
+    
+    .taller-card .card-title {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    
+    .taller-card .badge-count {
+      background: var(--accent-color);
+      color: white;
+      font-size: 0.8rem;
+    }
+    
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .gallery-item {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+    
+    /* Hover Overlay */
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+    
+    .gallery-overlay .btn {
+      margin: 0 5px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+    }
+    
+    /* Upload Area */
+    .upload-area {
+      border: 3px dashed var(--primary-color);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      background: rgba(0,51,160,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .upload-area:hover {
+      background: rgba(0,51,160,0.1);
+      border-color: var(--accent-color);
+    }
+    
+    .upload-area.dragover {
+      background: rgba(39,174,96,0.1);
+      border-color: var(--accent-color);
+    }
+    
+    /* Progress Bar */
+    .upload-progress {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .upload-progress.active {
+      display: block;
+    }
+    
+    .progress-bar {
+      background: linear-gradient(135deg, var(--accent-color), #2ECC71);
+    }
+    
+    /* Lightbox Custom */
+    .lightbox-nav {
+      z-index: 10000;
+    }
+    
+    /* Loading Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    
+    /* Back Button */
+    .btn-back {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-back:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,51,160,0.3);
+      color: white;
+    }
+    
+    /* Section Header */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    /* Modal Custom */
+    .modal-content {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .modal-header {
+      border-bottom: 1px solid #eee;
+      border-radius: 20px 20px 0 0;
+    }
+    
+    .modal-footer {
+      border-top: 1px solid #eee;
+      border-radius: 0 0 20px 20px;
+    }
+    
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 10000;
+      transform: translateX(150%);
+      transition: transform 0.3s ease;
+    }
+    
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+    
+    .toast-success {
+      background: var(--accent-color);
+    }
+    
+    .toast-error {
+      background: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="admin/login.html"><i class="fas fa-cog me-1"></i>Admin</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" id="theme-toggle" type="button">
+              <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container py-5">
+    <!-- Vista de Talleres -->
+    <div id="talleresView">
+      <div class="section-header">
+        <div>
+          <h2 class="mb-1"><i class="fas fa-images me-2"></i>Galería por Talleres</h2>
+          <p class="text-muted">Selecciona un taller para ver sus imágenes</p>
+        </div>
+        <a href="index.html" class="btn-back">
+          <i class="fas fa-arrow-left"></i>Volver
+        </a>
+      </div>
+      
+      <div class="row g-4" id="talleresGrid">
+        <!-- Taller cards will be rendered here -->
+      </div>
+    </div>
+    
+    <!-- Vista de Galería del Taller -->
+    <div id="galleryView" style="display: none;">
+      <div class="section-header">
+        <div>
+          <button class="btn-back mb-3" onclick="showTalleresView()">
+            <i class="fas fa-arrow-left"></i>Volver a Talleres
+          </button>
+          <h2 class="mb-1" id="currentTallerName"><i class="fas fa-folder me-2"></i></h2>
+          <p class="text-muted" id="currentTallerCount"></p>
+        </div>
+        <button class="btn btn-success" onclick="openUploadModal()">
+          <i class="fas fa-plus me-2"></i>Agregar Foto
+        </button>
+      </div>
+      
+      <!-- Upload Area with Drag & Drop -->
+      <div class="upload-area mb-4" id="dropZone">
+        <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+        <h5>Arrastra imágenes aquí o haz clic para seleccionar</h5>
+        <p class="text-muted">Puedes subir múltiples imágenes a la vez</p>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display: none">
+        
+        <!-- Progress Bar -->
+        <div class="upload-progress" id="uploadProgress">
+          <div class="progress" style="height: 25px; border-radius: 15px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%; border-radius: 15px;">
+              <span id="progressText">0%</span>
+            </div>
+          </div>
+          <p class="mt-2 text-muted" id="uploadStatus"></p>
+        </div>
+      </div>
+      
+      <!-- Gallery Grid -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Images will be rendered here with lazy loading -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Image -->
+  <div class="modal fade" id="editImageModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Editar Imagen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editImageId">
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" class="form-control" id="editImageTitle">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" id="editImageDescription" rows="3"></textarea>
+          </div>
+          <div class="text-center">
+            <img id="editImagePreview" src="" alt="Preview" style="max-width: 100%; border-radius: 10px;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveImageEdit()">
+            <i class="fas fa-save me-2"></i>Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Delete -->
+  <div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar esta imagen?</p>
+          <p class="text-muted small">Esta acción no se puede deshacer.</p>
+          <div class="text-center my-3">
+            <img id="deleteImagePreview" src="" alt="Preview" style="max-width: 150px; border-radius: 10px;">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+            <i class="fas fa-trash me-2"></i>Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Replace Image -->
+  <div class="modal fade" id="replaceModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-exchange-alt me-2"></i>Cambiar Imagen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="replaceImageId">
+          <div class="mb-3">
+            <label class="form-label">Seleccionar nueva imagen</label>
+            <input type="file" class="form-control" id="replaceFileInput" accept="image/*">
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <p class="text-muted small mb-1">Actual:</p>
+              <img id="currentImagePreview" src="" alt="Current" style="max-width: 100%; border-radius: 10px;">
+            </div>
+            <div class="col-6">
+              <p class="text-muted small mb-1">Nueva:</p>
+              <img id="newImagePreview" src="" alt="New" style="max-width: 100%; border-radius: 10px; display: none;">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" onclick="saveImageReplace()">
+            <i class="fas fa-check me-2"></i>Confirmar Cambio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+  
+  <script>
+    // ==========================================
+    // DATA STRUCTURE - Talleres y Galería
+    // ==========================================
+    const talleresData = {
+      general: {
+        id: 'general',
+        name: 'Página Principal',
+        icon: 'fa-home',
+        color: '#0033A0',
+        images: []
+      },
+      computec: {
+        id: 'computec',
+        name: 'Computec',
+        icon: 'fa-laptop',
+        color: '#0066CC',
+        images: []
+      },
+      'artes-culinarias': {
+        id: 'artes-culinarias',
+        name: 'Artes Culinarias',
+        icon: 'fa-utensils',
+        color: '#E67E22',
+        images: []
+      },
+      cosmetologia: {
+        id: 'cosmetologia',
+        name: 'Cosmetología',
+        icon: 'fa-spa',
+        color: '#9B59B6',
+        images: []
+      },
+      enfermeria: {
+        id: 'enfermeria',
+        name: 'Enfermería',
+        icon: 'fa-user-nurse',
+        color: '#E74C3C',
+        images: []
+      },
+      mercadeo: {
+        id: 'mercadeo',
+        name: 'Mercadeo',
+        icon: 'fa-chart-line',
+        color: '#27AE60',
+        images: []
+      },
+      'elaboracion-agricolas': {
+        id: 'elaboracion-agricolas',
+        name: 'Elaboración Agrícola',
+        icon: 'fa-seedling',
+        color: '#2ECC71',
+        images: []
+      },
+      'seguridad-publica': {
+        id: 'seguridad-publica',
+        name: 'Seguridad Pública',
+        icon: 'fa-shield-alt',
+        color: '#34495E',
+        images: []
+      }
+    };
+
+    // Load images from disk into data structure
+    function loadImagesFromDisk() {
+      const imageMappings = {
+        general: [
+          { name: 'Escuela', url: 'galeria/image.jpeg' },
+          { name: 'Estudiantes', url: 'galeria/image1.jpeg' },
+          { name: 'Actividad', url: 'galeria/image2.jpeg' },
+          { name: 'Evento', url: 'galeria/image3.jpeg' },
+          { name: 'Imagen 4', url: 'galeria/image4.jpeg' },
+          { name: 'Imagen 5', url: 'galeria/image5.jpeg' },
+          { name: 'Imagen 6', url: 'galeria/image6.jpeg' },
+          { name: 'Imagen 7', url: 'galeria/image7.jpeg' },
+          { name: 'Imagen 8', url: 'galeria/image8.jpeg' },
+          { name: 'Imagen 9', url: 'galeria/image9.jpeg' },
+          { name: 'Imagen 10', url: 'galeria/image10.jpeg' },
+          { name: 'Imagen 11', url: 'galeria/images11.jpeg' },
+          { name: 'Imagen 12', url: 'galeria/images12.jpeg' },
+          { name: 'Imagen 13', url: 'galeria/images13.jpeg' },
+          { name: 'Imagen 14', url: 'galeria/images14.jpeg' },
+          { name: 'Imagen 15', url: 'galeria/images15.jpeg' },
+          { name: 'Imagen 16', url: 'galeria/images16.jpeg' },
+          { name: 'Imagen 17', url: 'galeria/images17.jpeg' },
+          { name: 'Imagen 18', url: 'galeria/images18.jpeg' },
+          { name: 'Imagen 19', url: 'galeria/images19.jpeg' },
+          { name: 'Imagen 20', url: 'galeria/images20.jpeg' },
+          { name: 'Imagen 21', url: 'galeria/images21.jpeg' },
+          { name: 'Imagen 22', url: 'galeria/images22.jpeg' },
+          { name: 'Imagen 23', url: 'galeria/images23.jpeg' },
+          { name: 'Director PCB', url: 'galeria/directorpcb.jpeg' }
+        ],
+        computec: [
+          { name: 'Logo Computec', url: 'galeria_computec/LogoLimpio4.png' },
+          { name: 'Computec 1', url: 'galeria_computec/images17.jpeg' },
+          { name: 'Computec 2', url: 'galeria_computec/images15.jpeg' },
+          { name: 'Computec 3', url: 'galeria_computec/images13.jpeg' },
+          { name: 'Computec 4', url: 'galeria_computec/images16.jpeg' },
+          { name: 'Computec 5', url: 'galeria_computec/images12.jpeg' },
+          { name: 'Computec 6', url: 'galeria_computec/images22.jpeg' },
+          { name: 'Computec 7', url: 'galeria_computec/images23.jpeg' },
+          { name: 'Computec 8', url: 'galeria_computec/images21.jpeg' },
+          { name: 'Computec 9', url: 'galeria_computec/images20.jpeg' },
+          { name: 'Computec 10', url: 'galeria_computec/images24.jpeg' },
+          { name: 'Computec 11', url: 'galeria_computec/images25.jpeg' },
+          { name: 'Computec 12', url: 'galeria_computec/images2.jpeg' },
+          { name: 'Computec 13', url: 'galeria_computec/images19.jpeg' },
+          { name: 'Computec 14', url: 'galeria_computec/images18.jpeg' },
+          { name: 'Computec 15', url: 'galeria_computec/images11.jpeg' },
+          { name: 'Computec 16', url: 'galeria_computec/images26.jpeg' }
+        ],
+        'artes-culinarias': [
+          { name: 'Artes 1', url: 'galeria_artes_culinarias/image8.jpeg' },
+          { name: 'Artes 2', url: 'galeria_artes_culinarias/images1.jpeg' },
+          { name: 'Artes 3', url: 'galeria_artes_culinarias/images3.jpeg' },
+          { name: 'Artes 4', url: 'galeria_artes_culinarias/images4.jpeg' },
+          { name: 'Artes 5', url: 'galeria_artes_culinarias/images5.jpeg' },
+          { name: 'Artes 6', url: 'galeria_artes_culinarias/images6.jpeg' },
+          { name: 'Artes 7', url: 'galeria_artes_culinarias/images7.jpeg' },
+          { name: 'Artes 8', url: 'galeria_artes_culinarias/images8.jpg' },
+          { name: 'Artes 9', url: 'galeria_artes_culinarias/images11.jpg' },
+          { name: 'Artes 10', url: 'galeria_artes_culinarias/images12.jpg' },
+          { name: 'Artes 11', url: 'galeria_artes_culinarias/images13.jpg' },
+          { name: 'Artes 12', url: 'galeria_artes_culinarias/images14.jpg' },
+          { name: 'Artes 13', url: 'galeria_artes_culinarias/images15.jpg' },
+          { name: 'Artes 14', url: 'galeria_artes_culinarias/images16.jpg' },
+          { name: 'Artes 15', url: 'galeria_artes_culinarias/images17.jpg' },
+          { name: 'Artes 16', url: 'galeria_artes_culinarias/images18.jpg' },
+          { name: 'Artes 17', url: 'galeria_artes_culinarias/images19.jpg' },
+          { name: 'Artes 18', url: 'galeria_artes_culinarias/images20.jpg' },
+          { name: 'Artes 19', url: 'galeria_artes_culinarias/images21.jpg' },
+          { name: 'Artes 20', url: 'galeria_artes_culinarias/images22.jpg' },
+          { name: 'Artes 21', url: 'galeria_artes_culinarias/images23.jpg' },
+          { name: 'Artes 22', url: 'galeria_artes_culinarias/images24.jpg' },
+          { name: 'Artes 23', url: 'galeria_artes_culinarias/images25.jpg' },
+          { name: 'Artes 24', url: 'galeria_artes_culinarias/images26.jpg' },
+          { name: 'Artes 25', url: 'galeria_artes_culinarias/images27.jpg' },
+          { name: 'Artes 26', url: 'galeria_artes_culinarias/images2.jpg' }
+        ],
+        cosmetologia: [
+          { name: 'Cosmetología 1', url: 'galeria_cosmetologia/images3.jpeg' },
+          { name: 'Cosmetología 2', url: 'galeria_cosmetologia/images1.jpeg' },
+          { name: 'Cosmetología 3', url: 'galeria_cosmetologia/images4.jpeg' },
+          { name: 'Cosmetología 4', url: 'galeria_cosmetologia/images6.jpeg' },
+          { name: 'Cosmetología 5', url: 'galeria_cosmetologia/images7.jpeg' },
+          { name: 'Cosmetología 6', url: 'galeria_cosmetologia/images8.jpeg' },
+          { name: 'Cosmetología 7', url: 'galeria_cosmetologia/images9.jpeg' },
+          { name: 'Cosmetología 8', url: 'galeria_cosmetologia/images10.jpeg' },
+          { name: 'Cosmetología 9', url: 'galeria_cosmetologia/images13.jpeg' },
+          { name: 'Cosmetología 10', url: 'galeria_cosmetologia/images14.jpeg' },
+          { name: 'Cosmetología 11', url: 'galeria_cosmetologia/images30.jpeg' },
+          { name: 'Cosmetología 12', url: 'galeria_cosmetologia/images31.jpeg' },
+          { name: 'Cosmetología 13', url: 'galeria_cosmetologia/images32.jpeg' },
+          { name: 'Cosmetología 14', url: 'galeria_cosmetologia/images33.jpeg' },
+          { name: 'Cosmetología 15', url: 'galeria_cosmetologia/images34.jpeg' },
+          { name: 'Cosmetología 16', url: 'galeria_cosmetologia/images5.jpeg' },
+          { name: 'Cosmetología 17', url: 'galeria_cosmetologia/images1.png' },
+          { name: 'Cosmetología 18', url: 'galeria_cosmetologia/images2.jpg' },
+          { name: 'Cosmetología 19', url: 'galeria_cosmetologia/images11.jpg' },
+          { name: 'Cosmetología 20', url: 'galeria_cosmetologia/images12.jpg' }
+        ],
+        enfermeria: [
+          { name: 'Enfermería 1', url: 'galeria_enfermeria/image.jpeg' },
+          { name: 'Enfermería 2', url: 'galeria_enfermeria/image1.jpeg' },
+          { name: 'Enfermería 3', url: 'galeria_enfermeria/image2.jpeg' },
+          { name: 'Enfermería 4', url: 'galeria_enfermeria/image3.jpeg' },
+          { name: 'Enfermería 5', url: 'galeria_enfermeria/image4.jpeg' },
+          { name: 'Enfermería 6', url: 'galeria_enfermeria/image5.jpeg' },
+          { name: 'Enfermería 7', url: 'galeria_enfermeria/image6.jpeg' },
+          { name: 'Enfermería 8', url: 'galeria_enfermeria/image7.jpeg' },
+          { name: 'Enfermería 9', url: 'galeria_enfermeria/image8.jpeg' },
+          { name: 'Enfermería 10', url: 'galeria_enfermeria/image9.jpeg' },
+          { name: 'Enfermería 11', url: 'galeria_enfermeria/image10.jpeg' }
+        ],
+        mercadeo: [
+          { name: 'Mercadeo 1', url: 'galeria_mercadeo/images1.PNG' },
+          { name: 'Mercadeo 2', url: 'galeria_mercadeo/images2.PNG' },
+          { name: 'Mercadeo 3', url: 'galeria_mercadeo/images3.JPG' },
+          { name: 'Mercadeo 4', url: 'galeria_mercadeo/images4.JPG' },
+          { name: 'Mercadeo 5', url: 'galeria_mercadeo/images5.JPG' },
+          { name: 'Mercadeo 6', url: 'galeria_mercadeo/images6.JPG' },
+          { name: 'Mercadeo 7', url: 'galeria_mercadeo/images7.JPG' },
+          { name: 'Mercadeo 8', url: 'galeria_mercadeo/images8.JPG' },
+          { name: 'Mercadeo 9', url: 'galeria_mercadeo/images1.JPG' },
+          { name: 'Mercadeo 10', url: 'galeria_mercadeo/images2.JPG' },
+          { name: 'Mercadeo 11', url: 'galeria_mercadeo/image10.jpeg' },
+          { name: 'Mercadeo Logo', url: 'galeria_mercadeo/imageslogo.png' }
+        ],
+        'elaboracion-agricolas': [
+          { name: 'Agrícola 1', url: 'galeria_agricolas/images1.jpeg' },
+          { name: 'Agrícola 2', url: 'galeria_agricolas/images2.jpeg' },
+          { name: 'Agrícola 3', url: 'galeria_agricolas/images3.jpeg' },
+          { name: 'Agrícola 4', url: 'galeria_agricolas/images4.jpeg' },
+          { name: 'Agrícola 5', url: 'galeria_agricolas/images5.jpeg' },
+          { name: 'Agrícola 6', url: 'galeria_agricolas/images6.jpeg' },
+          { name: 'Agrícola 7', url: 'galeria_agricolas/images12.jpeg' },
+          { name: 'Agrícola 8', url: 'galeria_agricolas/images30.jpeg' },
+          { name: 'Agrícola 9', url: 'galeria_agricolas/images31.jpeg' },
+          { name: 'Agrícola 10', url: 'galeria_agricolas/images32.jpeg' },
+          { name: 'Agrícola 11', url: 'galeria_agricolas/images33.jpeg' },
+          { name: 'Agrícola 12', url: 'galeria_agricolas/images34.jpeg' },
+          { name: 'Agrícola 13', url: 'galeria_agricolas/images35.jpeg' },
+          { name: 'Agrícola 14', url: 'galeria_agricolas/images36.jpeg' },
+          { name: 'Agrícola 15', url: 'galeria_agricolas/images38.jpeg' },
+          { name: 'Agrícola 16', url: 'galeria_agricolas/images39.jpeg' },
+          { name: 'Agrícola 17', url: 'galeria_agricolas/images40.jpeg' },
+          { name: 'Agrícola 18', url: 'galeria_agricolas/images41.jpeg' },
+          { name: 'Agrícola 19', url: 'galeria_agricolas/images90.jpeg' },
+          { name: 'Agrícola 20', url: 'galeria_agricolas/image7.jpeg' },
+          { name: 'Agrícola 21', url: 'galeria_agricolas/images1.jpg' },
+          { name: 'Agrícola 22', url: 'galeria_agricolas/images2.jpg' },
+          { name: 'Agrícola 23', url: 'galeria_agricolas/images3.jpg' },
+          { name: 'Agrícola 24', url: 'galeria_agricolas/images4.jpg' },
+          { name: 'Agrícola 25', url: 'galeria_agricolas/images10.jpg' },
+          { name: 'Agrícola 26', url: 'galeria_agricolas/images11.jpg' },
+          { name: 'Agrícola Logo', url: 'galeria_agricolas/imageslogo.jpg' }
+        ],
+        'seguridad-publica': [
+          { name: 'Seguridad 1', url: 'galeria_seguridad/seguridad-1.jpg' },
+          { name: 'Seguridad 2', url: 'galeria_seguridad/policia-1-e1616090693117.jpg' },
+          { name: 'Seguridad 3', url: 'galeria_seguridad/seguridad-publica-seguridad-ciudadana.jpg' },
+          { name: 'Academia', url: 'galeria_seguridad/Academia-Nacional-de-Seguridad-Publica.png' }
+        ]
+      };
+
+      // Load images into talleresData
+      Object.keys(imageMappings).forEach(tallerId => {
+        if (talleresData[tallerId]) {
+          talleresData[tallerId].images = imageMappings[tallerId].map((img, idx) => ({
+            id: `${tallerId}-${idx}`,
+            taller_id: tallerId,
+            title: img.name,
+            description: '',
+            url: img.url,
+            created_at: new Date().toISOString()
+          }));
+        }
+      });
+    }
+
+    // ==========================================
+    // STATE MANAGEMENT
+    // ==========================================
+    let currentTallerId = null;
+    let deleteTargetId = null;
+
+    // ==========================================
+    // VIEW FUNCTIONS
+    // ==========================================
+    function showTalleresView() {
+      document.getElementById('talleresView').style.display = 'block';
+      document.getElementById('galleryView').style.display = 'none';
+      renderTalleres();
+    }
+
+    function showGalleryView(tallerId) {
+      currentTallerId = tallerId;
+      document.getElementById('talleresView').style.display = 'none';
+      document.getElementById('galleryView').style.display = 'block';
+      
+      const taller = talleresData[tallerId];
+      document.getElementById('currentTallerName').innerHTML = `<i class="${taller.icon} me-2" style="color: ${taller.color}"></i>${taller.name}`;
+      document.getElementById('currentTallerCount').textContent = `${taller.images.length} imágenes`;
+      
+      renderGallery();
+    }
+
+    // ==========================================
+    // RENDER FUNCTIONS
+    // ==========================================
+    function renderTalleres() {
+      const grid = document.getElementById('talleresGrid');
+      grid.innerHTML = Object.values(talleresData).map(taller => {
+        const coverImage = taller.images[0]?.url || 'galeria/image.jpeg';
+        return `
+          <div class="col-md-6 col-lg-4" onclick="showGalleryView('${taller.id}')">
+            <div class="card taller-card h-100">
+              <img src="${coverImage}" class="card-img-top" alt="${taller.name}" loading="lazy" onerror="this.src='galeria/image.jpeg'">
+              <div class="card-body">
+                <h5 class="card-title"><i class="${taller.icon} me-2" style="color: ${taller.color}"></i>${taller.name}</h5>
+                <span class="badge badge-count">${taller.images.length} fotos</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      const taller = talleresData[currentTallerId];
+      
+      if (taller.images.length === 0) {
+        grid.innerHTML = `
+          <div class="col-12 text-center py-5">
+            <i class="fas fa-images fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No hay imágenes</h4>
+            <p class="text-muted">Sube la primera imagen haciendo clic en "Agregar Foto"</p>
+          </div>
+        `;
+        return;
+      }
+      
+      grid.innerHTML = taller.images.map((img, idx) => `
+        <div class="gallery-item" data-index="${idx}">
+          <img src="${img.url}" alt="${img.title}" loading="lazy" onerror="this.src='galeria/image.jpeg'" onclick="openLightbox('${img.url}', '${img.title}')">
+          <div class="gallery-overlay">
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openEditModal('${img.id}')" title="Editar">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-warning btn-sm" onclick="event.stopPropagation(); openReplaceModal('${img.id}')" title="Cambiar">
+              <i class="fas fa-exchange-alt"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); openDeleteModal('${img.id}')" title="Eliminar">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div class="position-absolute bottom-0 start-0 w-100 p-2" style="background: linear-gradient(transparent, rgba(0,0,0,0.7));">
+            <small class="text-white fw-bold">${img.title}</small>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openLightbox(url, title) {
+      lightbox.href = url;
+      lightbox.title = title;
+      lightbox.open();
+    }
+
+    // ==========================================
+    // UPLOAD FUNCTIONS
+    // ==========================================
+    function openUploadModal() {
+      document.getElementById('fileInput').click();
+    }
+
+    function handleFileUpload(files) {
+      if (!files || files.length === 0) return;
+      
+      const progressDiv = document.getElementById('uploadProgress');
+      const progressBar = progressDiv.querySelector('.progress-bar');
+      const progressText = document.getElementById('progressText');
+      const uploadStatus = document.getElementById('uploadStatus');
+      
+      progressDiv.classList.add('active');
+      
+      let uploaded = 0;
+      const total = files.length;
+      
+      Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const newImage = {
+            id: `${currentTallerId}-${Date.now()}-${Math.random()}`,
+            taller_id: currentTallerId,
+            title: file.name.replace(/\.[^/.]+$/, ''),
+            description: '',
+            url: e.target.result,
+            created_at: new Date().toISOString()
+          };
+          
+          talleresData[currentTallerId].images.push(newImage);
+          uploaded++;
+          
+          const percentage = Math.round((uploaded / total) * 100);
+          progressBar.style.width = percentage + '%';
+          progressText.textContent = percentage + '%';
+          uploadStatus.textContent = `Subiendo ${uploaded} de ${total} imágenes...`;
+          
+          if (uploaded === total) {
+            setTimeout(() => {
+              progressDiv.classList.remove('active');
+              progressBar.style.width = '0%';
+              progressText.textContent = '0%';
+              uploadStatus.textContent = '';
+              renderGallery();
+              showToast(`${total} imagen(es) subida(s) exitosamente`, 'success');
+            }, 500);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ==========================================
+    // EDIT FUNCTIONS
+    // ==========================================
+    function openEditModal(imageId) {
+      const taller = talleresData[currentTallerId];
+      const image = taller.images.find(img => img.id === imageId);
+      
+      if (!image) return;
+      
+      document.getElementById('editImageId').value = imageId;
+      document.getElementById('editImageTitle').value = image.title;
+      document.getElementById('editImageDescription').value = image.description || '';
+      document.getElementById('editImagePreview').src = image.url;
+      
+      new bootstrap.Modal(document.getElementById('editImageModal')).show();
+    }
+
+    function saveImageEdit() {
+      const imageId = document.getElementById('editImageId').value;
+      const taller = talleresData[currentTallerId];
+      const image = taller.images.find(img => img.id === imageId);
+      
+      if (image) {
+        image.title = document.getElementById('editImageTitle').value;
+        image.description = document.getElementById('editImageDescription').value;
+        
+        bootstrap.Modal.getInstance(document.getElementById('editImageModal')).hide();
+        renderGallery();
+        showToast('Imagen actualizada correctamente', 'success');
+      }
+    }
+
+    // ==========================================
+    // REPLACE FUNCTIONS
+    // ==========================================
+    function openReplaceModal(imageId) {
+      const taller = talleresData[currentTallerId];
+      const image = taller.images.find(img => img.id === imageId);
+      
+      if (!image) return;
+      
+      document.getElementById('replaceImageId').value = imageId;
+      document.getElementById('currentImagePreview').src = image.url;
+      document.getElementById('newImagePreview').style.display = 'none';
+      document.getElementById('replaceFileInput').value = '';
+      
+      // Preview new file
+      document.getElementById('replaceFileInput').onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            document.getElementById('newImagePreview').src = evt.target.result;
+            document.getElementById('newImagePreview').style.display = 'block';
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      
+      new bootstrap.Modal(document.getElementById('replaceModal')).show();
+    }
+
+    function saveImageReplace() {
+      const imageId = document.getElementById('replaceImageId').value;
+      const newFile = document.getElementById('replaceFileInput').files[0];
+      
+      if (!newFile) {
+        showToast('Por favor selecciona una imagen', 'error');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const taller = talleresData[currentTallerId];
+        const image = taller.images.find(img => img.id === imageId);
+        
+        if (image) {
+          image.url = e.target.result;
+          
+          bootstrap.Modal.getInstance(document.getElementById('replaceModal')).hide();
+          renderGallery();
+          showToast('Imagen reemplazada correctamente', 'success');
+        }
+      };
+      reader.readAsDataURL(newFile);
+    }
+
+    // ==========================================
+    // DELETE FUNCTIONS
+    // ==========================================
+    function openDeleteModal(imageId) {
+      const taller = talleresData[currentTallerId];
+      const image = taller.images.find(img => img.id === imageId);
+      
+      if (!image) return;
+      
+      deleteTargetId = imageId;
+      document.getElementById('deleteImagePreview').src = image.url;
+      
+      document.getElementById('confirmDeleteBtn').onclick = function() {
+        if (deleteTargetId) {
+          talleresData[currentTallerId].images = taller.images.filter(img => img.id !== deleteTargetId);
+          bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+          renderGallery();
+          document.getElementById('currentTallerCount').textContent = `${talleresData[currentTallerId].images.length} imágenes`;
+          showToast('Imagen eliminada correctamente', 'success');
+          deleteTargetId = null;
+        }
+      };
+      
+      new bootstrap.Modal(document.getElementById('deleteModal')).show();
+    }
+
+    // ==========================================
+    // TOAST NOTIFICATIONS
+    // ==========================================
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast-notification toast-${type}`;
+      toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // ==========================================
+    // DRAG & DROP
+    // ==========================================
+    function setupDragAndDrop() {
+      const dropZone = document.getElementById('dropZone');
+      const fileInput = document.getElementById('fileInput');
+      
+      dropZone.addEventListener('click', () => fileInput.click());
+      
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      });
+      
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+      });
+      
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        handleFileUpload(e.dataTransfer.files);
+      });
+      
+      fileInput.addEventListener('change', (e) => {
+        handleFileUpload(e.target.files);
+        fileInput.value = '';
+      });
+    }
+
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      loadImagesFromDisk();
+      setupDragAndDrop();
+      showTalleresView();
+      
+      // Configure lightbox
+      lightbox.option({
+        'resizeDuration': 200,
+        'wrapAround': true,
+        'showImageNumberLabel': true,
+        'alwaysShowNavOnTouchDevices': true
+      });
+    });
+  </script>
+  <script>
+    (function() {
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
+      const body = document.body;
+
+      if (!themeToggle || !themeIcon) return;
+
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        themeIcon.classList.remove("fa-moon");
+        themeIcon.classList.add("fa-sun");
+      }
+
+      themeToggle.addEventListener("click", function() {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains("dark-mode");
+
+        if (isDark) {
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+          localStorage.setItem("theme", "dark");
+        } else {
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+          localStorage.setItem("theme", "light");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
