@@ -272,9 +272,17 @@
             <h2 id="director-name">Israel López Rivera</h2>
             <p class="director-title" id="director-title">Director Escolar</p>
 
-            <p class="director-message" id="director-message">
-              Bienvenidos a Casa Abierta PCB.
-            </p>
+            <p class="director-message" id="director-message">Querido estudiante y querida familia:
+
+Bienvenidos a la Casa Abierta de la Escuela Superior Vocacional Pablo Colón Berdecia. Hoy no vienen solo a conocer una escuela: vienen a descubrir el lugar donde sus sueños empiezan a tomar forma.
+
+Aquí creemos en el talento de cada joven. En nuestros talleres las manos aprenden, la mente se transforma y el corazón descubre su propósito. Quien cruza nuestros portones encuentra maestros comprometidos, oportunidades reales y una familia que cree en su potencial.
+
+No importa de dónde vengas, importa hacia dónde quieres llegar. Atrévete a soñar en grande, a trabajar con pasión y a nunca rendirte. El futuro no se espera: se construye, y aquí te damos las herramientas para construirlo.
+
+¡Te esperamos con los brazos abiertos!
+
+La vieja marcando la diferencia.</p>
 
             <div class="director-signature">
               <i class="fas fa-signature"></i>
@@ -331,7 +339,7 @@
               <i class="fas fa-map-marker-alt"></i>
               <p>
                 <strong>Dirección:</strong>
-                <span id="contact-address">Cargando...</span>
+                <span id="contact-address">Calle Barceló Final Sector Nuevo, 00794</span>
               </p>
             </div>
 
@@ -339,7 +347,7 @@
               <i class="fas fa-phone"></i>
               <p>
                 <strong>Teléfono:</strong>
-                <a href="#" class="contact-link" id="contact-phone">Cargando...</a>
+                <a href="tel:7878572897" class="contact-link" id="contact-phone">787-857-2897</a>
               </p>
             </div>
 
@@ -347,7 +355,7 @@
               <i class="fas fa-envelope"></i>
               <p>
                 <strong>Email:</strong>
-                <span id="contact-email">Cargando...</span>
+                <a href="mailto:d20560@de.pr.gov" class="contact-link" id="contact-email">d20560@de.pr.gov</a>
               </p>
             </div>
 
@@ -355,7 +363,7 @@
               <i class="fas fa-clock"></i>
               <p>
                 <strong>Horario:</strong>
-                <span id="contact-hours">Cargando...</span>
+                <span id="contact-hours">7:30 AM a 2:30 PM</span>
               </p>
             </div>
 
@@ -410,16 +418,22 @@
         .eq("id", 1)
         .single();
 
-      if (error) {
+      if (error || !data) {
         console.error("Error cargando contacto:", error);
-        return;
+        return; // se quedan los datos escritos en la página
       }
 
-      document.getElementById("contact-address").textContent = data.address;
-      document.getElementById("contact-phone").textContent = data.phone;
-      document.getElementById("contact-phone").href = "tel:" + data.phone.replace(/\D/g, "");
-      document.getElementById("contact-email").textContent = data.email;
-      document.getElementById("contact-hours").textContent = data.schedule;
+      // Solo reemplaza los campos que tengan valor en el Panel de Administración
+      if (data.address) document.getElementById("contact-address").textContent = data.address;
+      if (data.phone) {
+        document.getElementById("contact-phone").textContent = data.phone;
+        document.getElementById("contact-phone").href = "tel:" + data.phone.replace(/\D/g, "");
+      }
+      if (data.email) {
+        document.getElementById("contact-email").textContent = data.email;
+        document.getElementById("contact-email").href = "mailto:" + data.email;
+      }
+      if (data.schedule) document.getElementById("contact-hours").textContent = data.schedule;
     }
 
     async function cargarTextosInstitucionales() {
@@ -438,7 +452,10 @@
       document.getElementById("about-text").textContent = data.about_open_house;
       document.getElementById("director-name").textContent = data.director_name;
       document.getElementById("director-title").textContent = data.director_title;
-      document.getElementById("director-message").textContent = data.director_message;
+      // El mensaje escrito en la página solo se reemplaza si el admin guardó uno
+      if (data.director_message && data.director_message.trim()) {
+        document.getElementById("director-message").textContent = data.director_message.trim();
+      }
       document.getElementById("director-signature").textContent = data.director_name;
     }
 
