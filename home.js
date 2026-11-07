@@ -480,7 +480,48 @@
     }
   }
 
+  /* ---------- Cuenta regresiva (Próximas Casas Abiertas) ---------- */
+  function initCountdown() {
+    const box = document.getElementById("casa-countdown");
+    if (!box) return;
+    const target = new Date(box.dataset.target).getTime();
+    if (!isFinite(target)) return;
+    const els = {};
+    box.querySelectorAll("[data-cd]").forEach((el) => { els[el.dataset.cd] = el; });
+    const done = box.querySelector(".x-cd-done");
+    const pad = (n) => String(n).padStart(2, "0");
+    let timer = null;
+
+    function set(key, val) {
+      const el = els[key];
+      if (!el || el.textContent === val) return;
+      el.textContent = val;
+      el.classList.remove("is-tick");
+      void el.offsetWidth;
+      el.classList.add("is-tick");
+    }
+
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        box.classList.add("is-done");
+        if (done) done.hidden = false;
+        clearInterval(timer);
+        return;
+      }
+      const s = Math.floor(diff / 1000);
+      set("d", pad(Math.floor(s / 86400)));
+      set("h", pad(Math.floor((s % 86400) / 3600)));
+      set("m", pad(Math.floor((s % 3600) / 60)));
+      set("s", pad(s % 60));
+    }
+
+    tick();
+    timer = setInterval(tick, 1000);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    initCountdown();
     initUI();
     initHero();
     renderTicker();

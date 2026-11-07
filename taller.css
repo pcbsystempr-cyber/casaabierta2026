@@ -1128,6 +1128,93 @@ body.dark-mode .t-more-info .fa-arrow-right {
 .t-page.has-ai .x-to-top { bottom: 112px; right: 41px; }
 body.dark-mode .ai-chat-tooltip { color: #333 !important; }
 
+
+/* ==========================================================
+   MODO CLARO (hero, galería y "otros talleres")
+   ========================================================== */
+body.t-page:not(.dark-mode) {
+  --t-deep: color-mix(in srgb, var(--t-a) 55%, #03122e);
+  --t-l-bg: #f3f7ff;
+}
+
+/* Botones con el color del taller */
+body.t-page:not(.dark-mode) .x-btn-primary {
+  background: linear-gradient(135deg, var(--t-a), var(--t-b));
+  color: var(--t-ink) !important;
+  box-shadow: 0 10px 28px rgba(var(--t-rgb), .35);
+}
+body.t-page:not(.dark-mode) .x-btn-primary:hover { color: var(--t-ink) !important; }
+body.t-page:not(.dark-mode) .x-btn-ghost:hover { color: var(--t-deep) !important; border-color: var(--t-a); }
+body.t-page:not(.dark-mode) .t-head .x-eyebrow,
+body.t-page:not(.dark-mode) .t-gallery .t-head .x-eyebrow,
+body.t-page:not(.dark-mode) .t-more .t-head .x-eyebrow { color: var(--t-deep) !important; }
+body.t-page:not(.dark-mode) .x-to-top { background: linear-gradient(135deg, var(--t-a), var(--t-b)); }
+
+/* Hero */
+body.t-page:not(.dark-mode) .t-hero { background: var(--t-l-bg); color: #0b1a3d; }
+body.t-page:not(.dark-mode) .t-hero-bg { filter: blur(50px) brightness(1.15) saturate(1.3); opacity: .55; }
+body.t-page:not(.dark-mode) .t-hero::before {
+  background:
+    radial-gradient(ellipse 60% 55% at 15% 30%, rgba(var(--t-rgb), .18), transparent 70%),
+    radial-gradient(ellipse 50% 50% at 90% 85%, color-mix(in srgb, var(--t-b) 16%, transparent), transparent 70%),
+    linear-gradient(180deg, rgba(243, 247, 255, .7), rgba(243, 247, 255, .92) 92%);
+}
+body.t-page:not(.dark-mode) .t-hero::after {
+  background-image:
+    linear-gradient(rgba(var(--t-rgb), .1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--t-rgb), .1) 1px, transparent 1px);
+}
+body.t-page:not(.dark-mode) .t-crumbs { color: #4a5a7a; }
+body.t-page:not(.dark-mode) .t-crumbs a { color: #4a5a7a !important; }
+body.t-page:not(.dark-mode) .t-crumbs a:hover,
+body.t-page:not(.dark-mode) .t-crumbs span { color: var(--t-deep) !important; }
+body.t-page:not(.dark-mode) .t-kicker { color: #0b1a3d; background: rgba(255, 255, 255, .8); border-color: rgba(var(--t-rgb), .45); }
+body.t-page:not(.dark-mode) .t-title { color: #0b1a3d; }
+body.t-page:not(.dark-mode) .t-title small { color: #4a5a7a; }
+body.t-page:not(.dark-mode) .t-grad {
+  background: linear-gradient(110deg, #0b1a3d 0%, var(--t-deep) 45%, color-mix(in srgb, var(--t-b) 60%, #03122e) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: none;
+}
+body.t-page:not(.dark-mode) .t-sub { color: #33415c; }
+body.t-page:not(.dark-mode) .t-typing { background: rgba(255, 255, 255, .85); border-color: rgba(var(--t-rgb), .4); }
+body.t-page:not(.dark-mode) .t-typing i { color: var(--t-deep) !important; }
+body.t-page:not(.dark-mode) .t-typed { color: #0b1a3d !important; }
+body.t-page:not(.dark-mode) .t-chips li { color: #1c2b52; background: rgba(255, 255, 255, .8); border-color: rgba(0, 51, 160, .12); }
+body.t-page:not(.dark-mode) .t-chips li i { color: var(--t-deep) !important; }
+body.t-page:not(.dark-mode) .t-chips li:hover { background: #fff; }
+body.t-page:not(.dark-mode) .t-frame { box-shadow: 0 30px 70px rgba(0, 51, 160, .2), 0 0 60px rgba(var(--t-rgb), .2); }
+body.t-page:not(.dark-mode) .t-stat { background: rgba(255, 255, 255, .88); border-color: rgba(var(--t-rgb), .3); box-shadow: 0 12px 30px rgba(0, 51, 160, .08); }
+body.t-page:not(.dark-mode) .t-stat strong { color: #0b1a3d; }
+body.t-page:not(.dark-mode) .t-stat span { color: #4a5a7a !important; }
+body.t-page:not(.dark-mode) .t-stat i.t-stat-ico { color: var(--t-deep) !important; }
+body.t-page:not(.dark-mode) .t-hero .x-scroll-cue { border-color: rgba(0, 51, 160, .3); }
+body.t-page:not(.dark-mode) .fx-steam { background: radial-gradient(ellipse at center, rgba(var(--t-rgb), .18), transparent 70%); }
+
+/* Galería */
+body.t-page:not(.dark-mode) .t-gallery {
+  color: #0b1a3d;
+  background:
+    radial-gradient(ellipse 50% 40% at 0% 0%, rgba(var(--t-rgb), .12), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 100% 100%, color-mix(in srgb, var(--t-b) 12%, transparent), transparent 70%),
+    #e8f0ff;
+}
+body.t-page:not(.dark-mode) .t-gallery .t-head h2 { color: #0b1a3d !important; }
+body.t-page:not(.dark-mode) .t-gallery .t-head p { color: #4a5a7a !important; }
+body.t-page:not(.dark-mode) .t-gal-thumb { background: #dfe8fa; opacity: .65; }
+body.t-page:not(.dark-mode) .t-gal-thumb.is-active { opacity: 1; }
+
+/* Otros talleres */
+body.t-page:not(.dark-mode) .t-more { background: #e8f0ff; color: #0b1a3d; }
+body.t-page:not(.dark-mode) .t-more .t-head h2 { color: #0b1a3d !important; }
+body.t-page:not(.dark-mode) .t-more .t-head p { color: #4a5a7a !important; }
+body.t-page:not(.dark-mode) .t-more-card { border-color: rgba(0, 51, 160, .12); box-shadow: 0 14px 34px rgba(0, 51, 160, .12); }
+
+/* Contenido: en modo claro hay que separar las tarjetas del fondo */
+body.t-page:not(.dark-mode) .t-main { background-color: var(--t-l-bg); }
+
 /* ==========================================================
    RESPONSIVE
    ========================================================== */
