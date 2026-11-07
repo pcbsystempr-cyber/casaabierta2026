@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Casa Abierta - "¡Acho, la Pablo es otra cosa!"</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/favicon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <meta name="description" content="Casa Abierta 2026 de la Escuela Superior Vocacional Pablo Colón Berdecia. Descubre tu futuro hoy.">
   <meta name="theme-color" content="#050b1f">
   <script>document.documentElement.classList.add("x-js");</script>
@@ -484,20 +488,26 @@ La vieja marcando la diferencia.</p>
 
     async function cargarProximasCasas() {
       const grid = document.getElementById("proximas-grid");
+      // Si las fechas no cargan, no se muestra ningún mensaje de error
       if (!supabaseClient) {
-        grid.innerHTML = '<p class="text-center text-white">No se pudieron cargar las fechas.</p>';
+        grid.innerHTML = "";
         return;
       }
 
-      const { data, error } = await supabaseClient
-        .from("open_house_dates")
-        .select("*")
-        .eq("is_active", true)
-        .order("event_date", { ascending: true });
+      let data, error;
+      try {
+        ({ data, error } = await supabaseClient
+          .from("open_house_dates")
+          .select("*")
+          .eq("is_active", true)
+          .order("event_date", { ascending: true }));
+      } catch (err) {
+        error = err;
+      }
 
       if (error) {
         console.error("Error cargando fechas:", error);
-        grid.innerHTML = '<p class="text-center text-white">Error cargando fechas.</p>';
+        grid.innerHTML = "";
         return;
       }
 
