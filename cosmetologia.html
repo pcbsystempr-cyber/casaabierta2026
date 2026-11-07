@@ -4,41 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cosmetología - Casa Abierta</title>
+  <meta name="description" content="Curso de Cosmetología — Belleza y Cuidado Personal Profesional. Taller vocacional de la Escuela Superior Vocacional Pablo Colón Berdecia.">
+  <meta name="theme-color" content="#050b1f">
+  <script>document.documentElement.classList.add("x-js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <link href="modern.css" rel="stylesheet">
+  <link href="taller.css" rel="stylesheet">
+  <link rel="preload" as="image" href="galeria/2026/web/cosmetologia.webp">
 </head>
-<body>
+
+<body class="x-page t-page" data-taller="cosmetologia">
+
+  <div class="x-scroll-progress" id="scroll-progress"></div>
+
   <!-- Navbar -->
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark x-nav" id="main-nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">
-        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+        <span class="x-brand-dot"></span>Casa Abierta <span class="x-brand-accent">PCB</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menú">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html#inicio"><i class="fas fa-home me-2"></i>Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Servicios</a></li>
+          <li class="nav-item"><a class="nav-link is-current" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Talleres</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#videos"><i class="fas fa-play me-2"></i>Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#contacto"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
+
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-bars me-2"></i>Más
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="index.html#galeria"><i class="fas fa-images me-2"></i>Galería</a></li>
-              <li><hr class="dropdown-divider"></li>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#proximas-casas"><i class="fas fa-calendar-alt me-2"></i>Próximas Casas Abiertas</a></li>
               <li><a class="dropdown-item" href="admin-login.html"><i class="fas fa-cog me-2"></i>Panel de Administración</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item btn btn-primary" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio"><i class="fas fa-arrow-left me-2"></i>Regresar a PCB System</a></li>
+              <li>
+                <a class="dropdown-item" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
+                  <i class="fas fa-arrow-left me-2"></i>Regresar a PCB System
+                </a>
+              </li>
             </ul>
           </li>
+
           <li class="nav-item">
-            <button class="nav-link" id="theme-toggle" type="button">
+            <button class="nav-link" id="theme-toggle" type="button" aria-label="Cambiar tema">
               <i class="fas fa-moon" id="theme-icon"></i>
             </button>
           </li>
@@ -47,148 +68,230 @@
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1><i class="fas fa-spa me-3"></i>Curso de Cosmetología</h1>
-      <p class="lead">Belleza y Cuidado Personal Profesional</p>
-      <button class="btn btn-outline-primary">3 años académicos de Cosmetología</button>
+  <!-- ================= HERO DEL TALLER ================= -->
+  <section class="t-hero" id="inicio" aria-label="Curso de Cosmetología">
+    <div class="t-hero-bg" id="taller-bg" style="background-image:url('galeria/2026/web/cosmetologia.webp')" aria-hidden="true"></div>
+    <div class="t-fx" data-fx="sparkle" aria-hidden="true"></div>
+
+    <div class="container-xxl t-hero-inner">
+      <div class="t-hero-copy" data-reveal>
+        <nav class="t-crumbs" aria-label="Ruta">
+          <a href="index.html">Inicio</a><i class="fas fa-chevron-right"></i>
+          <a href="index.html#servicios">Talleres</a><i class="fas fa-chevron-right"></i>
+          <span>Cosmetología</span>
+        </nav>
+
+        <span class="t-kicker"><span class="t-kicker-icon"><i class="fas fa-spa"></i></span>Taller vocacional · PCB 2026</span>
+
+        <h1 class="t-title"><small>Curso de</small><span class="t-grad">Cosmetología</span></h1>
+        <p class="t-sub">Belleza y Cuidado Personal Profesional</p>
+
+        <p class="t-typing" data-words="Crea|Estiliza|Transforma|Inspira" aria-label="Crea, Estiliza, Transforma, Inspira">
+          <i class="fas fa-wand-magic-sparkles"></i><span class="t-typed"></span><span class="t-caret"></span>
+        </p>
+
+        <ul class="t-chips" aria-label="Características del taller">
+          <li><i class="fas fa-scissors"></i>Corte y peinado</li>
+          <li><i class="fas fa-palette"></i>Colorimetría</li>
+          <li><i class="fas fa-wand-magic-sparkles"></i>Maquillaje</li>
+          <li><i class="fas fa-hand-sparkles"></i>Manicura y pedicura</li>
+          <li><i class="fas fa-spa"></i>Faciales</li>
+          <li><i class="fas fa-store"></i>Gestión de salón</li>
+        </ul>
+
+        <div class="t-cta">
+          <a href="#programa" class="x-btn x-btn-primary"><i class="fas fa-rocket me-2"></i>Conoce el programa</a>
+          <a href="index.html#contacto" class="x-btn x-btn-ghost"><i class="fas fa-paper-plane me-2"></i>Solicitar información</a>
+        </div>
+      </div>
+
+      <div class="t-hero-stage" data-reveal>
+        <div class="x-frame t-frame">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-frame-blur" id="taller-blur" style="background-image:url('galeria/2026/web/cosmetologia.webp')" aria-hidden="true"></div>
+          <img src="galeria/2026/web/cosmetologia.webp" alt="Cosmetología — Casa Abierta 2026" class="t-frame-img" id="taller-img" fetchpriority="high">
+          <div class="t-scan" aria-hidden="true"></div>
+          <span class="t-corner tl" aria-hidden="true"></span>
+          <span class="t-corner tr" aria-hidden="true"></span>
+          <span class="t-corner bl" aria-hidden="true"></span>
+          <span class="t-corner br" aria-hidden="true"></span>
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> COSM // 2026</span>
+            <span class="x-hud-count">TALLER 04 / 07</span>
+          </div>
+        </div>
+
+        <div class="t-stats">
+          <div class="t-stat">
+            <i class="fas fa-calendar t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="3">3</strong>
+            <span>años académicos</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-clock t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="1000">1,000</strong>
+            <span>horas de práctica</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-user-graduate t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="20">20</strong>
+            <span>años de experiencia de la maestra</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#galeria" class="x-scroll-cue" aria-label="Bajar"><span></span></a>
+  </section>
+
+  <!-- ================= GALERÍA DEL TALLER ================= -->
+  <section class="t-gallery" id="galeria" aria-label="Galería de fotos de Cosmetología">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Galería</span>
+        <h2>Vive el taller</h2>
+        <p>Momentos reales de nuestros estudiantes en Cosmetología.</p>
+      </header>
+
+      <div class="t-gal" data-reveal>
+        <div class="x-frame t-frame t-gal-stage" id="gal-stage" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de Cosmetología">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-gal-slides" id="gal-slides"></div>
+
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> GALERÍA · COSM</span>
+            <span class="x-hud-count" id="gal-count">01 / 01</span>
+          </div>
+
+          <button class="x-arrow x-arrow-prev" id="gal-prev" type="button" aria-label="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="x-arrow x-arrow-next" id="gal-next" type="button" aria-label="Foto siguiente"><i class="fas fa-chevron-right"></i></button>
+
+          <div class="x-frame-bottom">
+            <p class="x-caption" id="gal-caption"></p>
+            <div class="t-gal-btns">
+              <button class="x-play-toggle" id="gal-pause" type="button" aria-label="Pausar presentación"><i class="fas fa-pause"></i></button>
+              <button class="x-play-toggle" id="gal-full" type="button" aria-label="Pantalla completa"><i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+          <div class="t-gal-progress" aria-hidden="true"><span id="gal-progress"></span></div>
+        </div>
+
+        <div class="t-gal-thumbs" id="gal-thumbs" aria-label="Miniaturas"></div>
+      </div>
     </div>
   </section>
 
-  <!-- Content -->
-  <div class="container content-section">
-    <!-- Descripción -->
-    <div class="info-card">
-      <h3><i class="fas fa-info-circle"></i>Descripción del Programa</h3>
-      <p>Abarca la enseñanza y el aprendizaje de todos los conocimientos teóricos
-prácticos a la par de las destrezas y valores como: especialista de la belleza. de conformidad con los principios y conceptos establecidos a través de los estándares y competencias que sirven de fundamento para la ocupación.
-Por tal razón, el curso está dirigido a que el estudiante logre el dominio pleno de las destrezas académicas y ocupacionales. </p>
+  <!-- ================= PROGRAMA ================= -->
+  <main class="t-main" id="programa">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Programa 2026</span>
+        <h2>Conoce el taller</h2>
+        <p>Todo lo que necesitas saber sobre Cosmetología: qué aprenderás, requisitos y oportunidades.</p>
+      </header>
 
-<p>El mismo responde a los requerimientos de la Junta Examinadora de
-Especialistas en belleza para lograr revalidación y licenciatura en la ocupación.</p>
-Al finalizar el curso, el estudiante completa un certificado de horas trabajadas además de su diploma de cuarto año.</p>
-
-  <h3><i class="fas fa-info-circle"></i>Duración del Curso</h3>
-<p>El curso está diseñado para ofrecerse durante los grados 10mo, 11mo y 12mo donde el estudiante acumula 1,000 horas. El curso integra a estudiantes de Educación Especial.</p>
-    </div>
-
-     <!-- Requisitos -->
-    <div class="info-card">
-      <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
-      <ul class="feature-list">
-        <li><i class="fas fa-graduation-cap"></i>Promedio: 2.00 o más y debe completar el 8vo grado.</li>
-        <li><i class="fas fa-birthday-cake"></i>Interés en aprender sobre cosmetología.</li>
-        <li><i class="fas fa-handshake"></i>Entrevista de admisión.</li>
-      </ul>
-    </div>
-
-    <!-- Información del Maestro -->
-    <div class="info-card">
-      <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
-      <p><strong>Nombre:</strong> Nivia Ortiz Montesino</p>
-      <p><strong>Años de experiencia:</strong> 20 años</p>
-      <p><strong>Correo electrónico:</strong> d20560@de.pr.gov</p>
-    </div>
-
-    <!-- Cursos Principales -->
-    <div class="info-card">
-      <h3><i class="fas fa-book"></i>Cursos Principales</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-cut"></i>Corte y peinado profesional</li>
-            <li><i class="fas fa-palette"></i>Colorimetría y técnicas de tinte</li>
-            <li><i class="fas fa-hand-sparkles"></i>Manicura y pedicura</li>
-            <li><i class="fas fa-magic"></i>Maquillaje artístico</li>
-            <li><i class="fas fa-smile"></i>Cuidado de la piel</li>
-          </ul>
+      <div class="t-grid">
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-circle-info"></i>Descripción del Programa</h3>
+        <p>Abarca la enseñanza y el aprendizaje de todos los conocimientos teóricos prácticos a la par de las destrezas y valores como especialista de la belleza, de conformidad con los principios y conceptos establecidos a través de los estándares y competencias que sirven de fundamento para la ocupación. Por tal razón, el curso está dirigido a que el estudiante logre el dominio pleno de las destrezas académicas y ocupacionales.</p>
+        <p>El mismo responde a los requerimientos de la Junta Examinadora de Especialistas en Belleza para lograr revalidación y licenciatura en la ocupación. Al finalizar el curso, el estudiante completa un certificado de horas trabajadas además de su diploma de cuarto año.</p>
+        <h3 class="t-sub-h"><i class="fas fa-hourglass-half"></i>Duración del Curso</h3>
+        <p>El curso está diseñado para ofrecerse durante los grados 10mo, 11mo y 12mo donde el estudiante acumula 1,000 horas. El curso integra a estudiantes de Educación Especial.</p>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
+        <ul class="feature-list t-list-1">
+          <li><i class="fas fa-graduation-cap"></i>Promedio: 2.00 o más y debe completar el 8vo grado.</li>
+          <li><i class="fas fa-lightbulb"></i>Interés en aprender sobre cosmetología.</li>
+          <li><i class="fas fa-handshake"></i>Entrevista de admisión.</li>
+        </ul>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
+        <div class="t-teacher">
+          <div class="t-avatar"><i class="fas fa-chalkboard-user"></i></div>
+          <div class="t-teacher-data">
+            <p class="t-name">Nivia Ortiz Montesino</p>
+            <div class="t-teacher-meta">
+              <span><i class="fas fa-award"></i>Años de experiencia: 20 años</span>
+              <a href="mailto:d20560@de.pr.gov"><i class="fas fa-envelope"></i>d20560@de.pr.gov</a>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-spa"></i>Tratamientos faciales</li>
-            <li><i class="fas fa-store"></i>Gestión de salón de belleza</li>
-            <li><i class="fas fa-user-friends"></i>Atención al cliente</li>
-            <li><i class="fas fa-tags"></i>Marketing para salones</li>
-            <li><i class="fas fa-shield-alt"></i>Higiene y seguridad</li>
-          </ul>
-        </div>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-book"></i>Cursos Principales</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-scissors"></i>Corte y peinado profesional</li>
+          <li><i class="fas fa-palette"></i>Colorimetría y técnicas de tinte</li>
+          <li><i class="fas fa-hand-sparkles"></i>Manicura y pedicura</li>
+          <li><i class="fas fa-wand-magic-sparkles"></i>Maquillaje artístico</li>
+          <li><i class="fas fa-face-smile"></i>Cuidado de la piel</li>
+          <li><i class="fas fa-spa"></i>Tratamientos faciales</li>
+          <li><i class="fas fa-store"></i>Gestión de salón de belleza</li>
+          <li><i class="fas fa-user-group"></i>Atención al cliente</li>
+          <li><i class="fas fa-tags"></i>Marketing para salones</li>
+          <li><i class="fas fa-shield-halved"></i>Higiene y seguridad</li>
+        </ul>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-user"></i>Estilista profesional</li>
+          <li><i class="fas fa-brush"></i>Maquillador/a artístico</li>
+          <li><i class="fas fa-hand"></i>Técnico en manicura</li>
+          <li><i class="fas fa-leaf"></i>Especialista en tratamientos</li>
+          <li><i class="fas fa-crown"></i>Gerente de salón</li>
+          <li><i class="fas fa-bag-shopping"></i>Consultor de belleza</li>
+          <li><i class="fas fa-camera"></i>Maquillador para eventos</li>
+          <li><i class="fas fa-graduation-cap"></i>Instructor de cosmetología</li>
+        </ul>
+      </article>
+      <div class="highlight-box t-wide" data-reveal>
+        <h4><i class="fas fa-star"></i>¿Por qué elegir Cosmetología?</h4>
+        <p>La belleza es una industria en crecimiento constante. Nuestro programa te prepara para ser un profesional creativo y técnico, capaz de transformar la apariencia de las personas y hacerlas sentir seguras y hermosas.</p>
+      </div>
       </div>
     </div>
+  </main>
 
-    <!-- Oportunidades de Empleo -->
-    <div class="info-card">
-      <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-user"></i>Estilista profesional</li>
-            <li><i class="fas fa-brush"></i>Maquillador/a artístico</li>
-            <li><i class="fas fa-hand-paper"></i>Técnico en manicura</li>
-            <li><i class="fas fa-leaf"></i>Especialista en tratamientos</li>
-          </ul>
-        </div>
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-crown"></i>Gerente de salón</li>
-            <li><i class="fas fa-shopping-bag"></i>Consultor de belleza</li>
-            <li><i class="fas fa-camera"></i>Maquillador para eventos</li>
-            <li><i class="fas fa-graduation-cap"></i>Instructor de cosmetología</li>
-          </ul>
-        </div>
+  <!-- ================= OTROS TALLERES ================= -->
+  <section class="t-more" aria-label="Otros talleres">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Sigue explorando</span>
+        <h2>Otros talleres vocacionales</h2>
+        <p>Descubre todos los caminos que tiene la Pablo para ti.</p>
+      </header>
+      <div class="t-more-grid" id="more-talleres"></div>
+      <div class="t-back">
+        <a href="index.html" class="x-btn x-btn-ghost"><i class="fas fa-arrow-left me-2"></i>Volver al Inicio</a>
       </div>
     </div>
+  </section>
 
-    <!-- Highlight Box -->
-    <div class="highlight-box">
-      <h4><i class="fas fa-star"></i>¿Por qué elegir Cosmetología?</h4>
-      <p>La belleza es una industria en crecimiento constante. Nuestro programa te prepara para ser un profesional creativo y técnico, capaz de transformar la apariencia de las personas y hacerlas sentir seguras y hermosas.</p>
+  <footer class="x-footer footer">
+    <div class="x-footer-line" aria-hidden="true"></div>
+    <img src="LOGO6.png" alt="" class="x-footer-logo">
+    <h3>Casa Abierta</h3>
+    <p>Un espacio donde la educación y la comunidad se unen para crear oportunidades ilimitadas.</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Computec® Todos los derechos reservados.</p>
     </div>
+  </footer>
 
-   
+  <a href="#inicio" class="x-to-top" id="to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
-    <!-- Back Button -->
-    <div class="text-center">
-      <a href="index.html" class="btn-back">
-        <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
-      </a>
-    </div>
-  </div>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="media-config.js"></script>
   <script>
-    (function() {
-      const themeToggle = document.getElementById("theme-toggle");
-      const themeIcon = document.getElementById("theme-icon");
-      const body = document.body;
-
-      if (!themeToggle || !themeIcon) return;
-
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun");
-      }
-
-      themeToggle.addEventListener("click", function() {
-        body.classList.toggle("dark-mode");
-        const isDark = body.classList.contains("dark-mode");
-
-        if (isDark) {
-          themeIcon.classList.remove("fa-moon");
-          themeIcon.classList.add("fa-sun");
-          localStorage.setItem("theme", "dark");
-        } else {
-          themeIcon.classList.remove("fa-sun");
-          themeIcon.classList.add("fa-moon");
-          localStorage.setItem("theme", "light");
-        }
-      });
-    })();
+    const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z2FzbG1jZXlmb2hpeGx2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzMzNjYsImV4cCI6MjA5MjcwOTM2Nn0.FRoH_Lf_i1FlZX8zxxagLycLbdjxd5foehhoNCPsePA";
+    const supabaseClient = (window.supabase && supabase.createClient)
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
   </script>
+  <script src="taller.js"></script>
 </body>
 </html>
-
-
-

@@ -4,62 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Casa Abierta - "¡Acho, la Pablo es otra cosa!"</title>
+  <meta name="description" content="Casa Abierta 2026 de la Escuela Superior Vocacional Pablo Colón Berdecia. Descubre tu futuro hoy.">
+  <meta name="theme-color" content="#050b1f">
+  <script>document.documentElement.classList.add("x-js");</script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <link href="modern.css" rel="stylesheet">
+  <link rel="preload" as="image" href="galeria/2026/web/casa-abierta-ia.webp">
 </head>
 
-<body>
+<body class="x-page">
+
+  <div class="x-scroll-progress" id="scroll-progress"></div>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark x-nav" id="main-nav">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+      <a class="navbar-brand" href="#inicio">
+        <span class="x-brand-dot"></span>Casa Abierta <span class="x-brand-accent">PCB</span>
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menú">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#inicio">
-              <i class="fas fa-home me-2"></i>Inicio
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#servicios">
-              <i class="fas fa-cogs me-2"></i>Servicios
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#nosotros">
-              <i class="fas fa-users me-2"></i>Nosotros
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#contacto">
-              <i class="fas fa-envelope me-2"></i>Contacto
-            </a>
-          </li>
+          <li class="nav-item"><a class="nav-link" href="#inicio"><i class="fas fa-home me-2"></i>Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#servicios"><i class="fas fa-cogs me-2"></i>Talleres</a></li>
+          <li class="nav-item"><a class="nav-link" href="#videos"><i class="fas fa-play me-2"></i>Videos</a></li>
+          <li class="nav-item"><a class="nav-link" href="#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contacto"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
               <i class="fas fa-bars me-2"></i>Más
             </a>
-
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="admin-login.html">
-                  <i class="fas fa-cog me-2"></i>Panel de Administración
-                </a>
-              </li>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#proximas-casas"><i class="fas fa-calendar-alt me-2"></i>Próximas Casas Abiertas</a></li>
+              <li><a class="dropdown-item" href="admin-login.html"><i class="fas fa-cog me-2"></i>Panel de Administración</a></li>
               <li><hr class="dropdown-divider"></li>
               <li>
                 <a class="dropdown-item" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
@@ -67,11 +55,10 @@
                 </a>
               </li>
             </ul>
-
           </li>
 
           <li class="nav-item">
-            <button class="nav-link" id="theme-toggle" type="button">
+            <button class="nav-link" id="theme-toggle" type="button" aria-label="Cambiar tema">
               <i class="fas fa-moon" id="theme-icon"></i>
             </button>
           </li>
@@ -80,102 +67,133 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero" id="inicio">
-    <div class="container">
-      <img src="LOGO6.png" alt="Logo CompuTec" class="header-gif">
-      <h1>"Acho, la Pablo es otra cosa..."</h1>
-      <h1>¡Casa Abierta PCB!</h1>
-      <p>“Descubre tu futuro hoy" ¡Ven y visítanos!</p>
+  <!-- ================= HERO SLIDER ================= -->
+  <section class="x-hero" id="inicio" aria-label="Presentación">
+    <div class="x-hero-bg" id="hero-bg" aria-hidden="true"></div>
+    <div class="x-hero-grid" aria-hidden="true"></div>
+    <div class="x-orb x-orb-1" aria-hidden="true"></div>
+    <div class="x-orb x-orb-2" aria-hidden="true"></div>
+
+    <div class="container-xxl x-hero-inner">
+      <div class="x-hero-copy" data-reveal>
+        <img src="LOGO6.png" alt="Logo Casa Abierta PCB" class="header-gif x-hero-logo">
+        <span class="x-kicker"><span class="x-live-dot"></span>Escuela Superior Vocacional Pablo Colón Berdecia</span>
+        <h1 class="x-hero-title">
+          <span class="x-quote">"Acho, la Pablo es otra cosa..."</span>
+          <span class="x-gradient-text">¡Casa Abierta PCB!</span>
+        </h1>
+        <p class="x-hero-sub">“Descubre tu futuro hoy” ¡Ven y visítanos!</p>
+
+        <div class="x-hero-cta">
+          <a href="#servicios" class="x-btn x-btn-primary"><i class="fas fa-rocket me-2"></i>Explorar talleres</a>
+          <a href="#videos" class="x-btn x-btn-ghost"><i class="fas fa-play me-2"></i>Ver videos</a>
+        </div>
+
+        <a href="#proximas-casas" class="x-next-event" id="hero-next-event" hidden>
+          <i class="fas fa-calendar-check"></i>
+          <span>
+            <small>Próxima Casa Abierta</small>
+            <strong id="hero-next-date"></strong>
+          </span>
+          <span class="x-countdown" id="hero-countdown"></span>
+        </a>
+      </div>
+
+      <div class="x-hero-stage" data-reveal>
+        <div class="x-frame" id="hero-slider" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de Casa Abierta 2026">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="x-slides" id="hero-slides"></div>
+
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> CASA ABIERTA 2026</span>
+            <span class="x-hud-count" id="hero-count">01 / 01</span>
+          </div>
+
+          <button class="x-arrow x-arrow-prev" id="hero-prev" type="button" aria-label="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="x-arrow x-arrow-next" id="hero-next" type="button" aria-label="Foto siguiente"><i class="fas fa-chevron-right"></i></button>
+
+          <div class="x-frame-bottom">
+            <p class="x-caption" id="hero-caption"></p>
+            <button class="x-play-toggle" id="hero-pause" type="button" aria-label="Pausar presentación"><i class="fas fa-pause"></i></button>
+          </div>
+        </div>
+        <div class="x-progress-bars" id="hero-bars" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <a href="#servicios" class="x-scroll-cue" aria-label="Bajar"><span></span></a>
+  </section>
+
+  <!-- Cinta de talleres -->
+  <div class="x-ticker" aria-hidden="true">
+    <div class="x-ticker-track" id="ticker-track"></div>
+  </div>
+
+  <!-- ================= TALLERES ================= -->
+  <section class="x-section x-talleres" id="servicios">
+    <div class="container-xxl">
+      <header class="x-section-head" data-reveal>
+        <span class="x-eyebrow">Programas 2026</span>
+        <h2 class="x-section-title">Talleres Vocacionales</h2>
+        <p class="x-section-lead">Siete caminos para descubrir tu vocación. Toca un taller para conocerlo.</p>
+      </header>
+
+      <div class="x-taller-stage" id="taller-stage" data-reveal>
+        <div class="x-taller-media">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="x-taller-slides" id="taller-slides"></div>
+          <button class="x-arrow x-arrow-prev" id="taller-prev" type="button" aria-label="Taller anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="x-arrow x-arrow-next" id="taller-next" type="button" aria-label="Taller siguiente"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="x-taller-info">
+          <div>
+            <span class="x-taller-num" id="taller-num">01</span>
+            <h3 class="x-taller-name" id="taller-name"></h3>
+            <p class="x-taller-tagline" id="taller-tagline"></p>
+          </div>
+          <a class="x-btn x-btn-primary" id="taller-link" href="#">Explorar taller <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+      </div>
+
+      <div class="x-taller-tabs" id="taller-tabs" role="tablist" data-reveal></div>
     </div>
   </section>
 
-  <!-- Servicios -->
-  <section class="services" id="servicios">
-    <div class="container">
-      <h2>Talleres Vocacionales</h2>
+  <!-- ================= VIDEOS ================= -->
+  <section class="x-section x-videos" id="videos">
+    <div class="container-xxl">
+      <header class="x-section-head" data-reveal>
+        <span class="x-eyebrow">PCB en movimiento</span>
+        <h2 class="x-section-title">Vive la Experiencia</h2>
+        <p class="x-section-lead">Momentos reales de nuestra Casa Abierta. Toca un video para verlo en pantalla completa.</p>
+      </header>
 
-      <div id="talleresCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="0" class="active"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="1"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="2"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="3"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="4"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="5"></button>
-          <button type="button" data-bs-target="#talleresCarousel" data-bs-slide-to="6"></button>
-        </div>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <a href="computec.html" class="d-block w-100">
-              <img src="galeria_computec/images2.jpeg" class="d-block w-100 talleres-carousel-img" alt="Computec">
-            </a>
-            <div class="carousel-caption">
-              <h5>Computec</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="mercadeo.html" class="d-block w-100">
-              <img src="galeria_mercadeo/15eb8f1b-2b2e-4880-a0b6-84fef1af550c.jpg" class="d-block w-100 talleres-carousel-img" alt="Mercadeo">
-            </a>
-            <div class="carousel-caption">
-              <h5>Mercadeo</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="enfermeria.html" class="d-block w-100">
-              <img src="galeria_enfermeria/image.jpeg" class="d-block w-100 talleres-carousel-img" alt="Enfermería">
-            </a>
-            <div class="carousel-caption">
-              <h5>Enfermería</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="cosmetologia.html" class="d-block w-100">
-              <img src="galeria_cosmetologia/images6.jpeg" class="d-block w-100 talleres-carousel-img" alt="Cosmetología">
-            </a>
-            <div class="carousel-caption">
-              <h5>Cosmetología</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="artes-culinarias.html" class="d-block w-100">
-              <img src="galeria_artes_culinarias/images2.jpg" class="d-block w-100 talleres-carousel-img" alt="Artes Culinarias">
-            </a>
-            <div class="carousel-caption">
-              <h5>Artes Culinarias</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="elaboracion-agricolas.html" class="d-block w-100">
-              <img src="galeria_agricolas/images40.jpeg" class="d-block w-100 talleres-carousel-img" alt="Elaboración de Productos Agrícolas">
-            </a>
-            <div class="carousel-caption">
-              <h5>Elaboración de Productos Agrícolas</h5>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <a href="seguridad-publica.html" class="d-block w-100">
-              <img src="galeria_seguridad/seguridad-1.jpg" class="d-block w-100 talleres-carousel-img" alt="Seguridad Pública">
-            </a>
-            <div class="carousel-caption">
-              <h5>Seguridad Pública</h5>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#talleresCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-          <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#talleresCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-          <span class="visually-hidden">Siguiente</span>
-        </button>
+      <div class="x-reels-wrap" data-reveal>
+        <button class="x-reels-nav x-reels-prev" id="reels-prev" type="button" aria-label="Videos anteriores"><i class="fas fa-chevron-left"></i></button>
+        <div class="x-reels" id="reels"></div>
+        <button class="x-reels-nav x-reels-next" id="reels-next" type="button" aria-label="Más videos"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
   </section>
 
-  <!-- Próximas Casas Abiertas -->
+  <!-- Reproductor de video (lightbox) -->
+  <div class="x-player" id="player" role="dialog" aria-modal="true" aria-label="Reproductor de video" hidden>
+    <div class="x-player-backdrop" data-close></div>
+    <div class="x-player-box">
+      <div class="x-player-top">
+        <div>
+          <strong id="player-title"></strong>
+          <small id="player-meta"></small>
+        </div>
+        <button class="x-player-close" type="button" data-close aria-label="Cerrar"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="x-player-media" id="player-media"></div>
+      <button class="x-arrow x-arrow-prev" id="player-prev" type="button" aria-label="Video anterior"><i class="fas fa-chevron-left"></i></button>
+      <button class="x-arrow x-arrow-next" id="player-next" type="button" aria-label="Video siguiente"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Próximas Casas Abiertas (efecto parallax original intacto) -->
   <section class="proximas-casas" id="proximas-casas">
     <div class="container">
       <h2>Próximas Casas Abiertas</h2>
@@ -186,33 +204,51 @@
   </section>
 
   <!-- About -->
-  <section class="about" id="nosotros">
+  <section class="about x-about" id="nosotros">
     <div class="container">
-      <h2>Sobre Casa Abierta</h2>
+      <span class="x-eyebrow" data-reveal>Nuestra esencia</span>
+      <h2 data-reveal>Sobre Casa Abierta</h2>
 
-      <p id="about-text">
+      <p id="about-text" data-reveal>
         La Casa Abierta de la Escuela Superior Ocupacional Pablo Colón Berdecia es una experiencia única diseñada para mostrar la excelencia académica y las oportunidades que ofrece nuestra institución.
       </p>
 
-      <p>"Descubre tu futuro hoy: ¡Ven a nuestra Casa Abierta!"</p>
+      <p class="x-about-quote" data-reveal>"Descubre tu futuro hoy: ¡Ven a nuestra Casa Abierta!"</p>
+
+      <div class="x-pillars">
+        <div class="x-pillar" data-reveal>
+          <i class="fas fa-hand-sparkles"></i>
+          <h4>Aprende haciendo</h4>
+          <p>Talleres prácticos donde desarrollas tu talento desde el primer día.</p>
+        </div>
+        <div class="x-pillar" data-reveal>
+          <i class="fas fa-microchip"></i>
+          <h4>Innova y crea</h4>
+          <p>Tecnología y creatividad aplicadas a cada programa vocacional.</p>
+        </div>
+        <div class="x-pillar" data-reveal>
+          <i class="fas fa-flag-checkered"></i>
+          <h4>Prepárate para tu futuro</h4>
+          <p>Habilidades reales para el mundo laboral y para seguir estudiando.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-
-
   <!-- Director -->
   <section class="director-section" id="director">
-    <div class="container">
+    <div class="x-hero-grid" aria-hidden="true"></div>
+    <div class="container position-relative">
       <div class="row align-items-center justify-content-center">
 
-        <div class="col-lg-4 col-md-5 text-center mb-4 mb-md-0">
-          <div class="director-photo">
+        <div class="col-lg-4 col-md-5 text-center mb-4 mb-md-0" data-reveal>
+          <div class="director-photo x-director-photo">
             <img src="galeria/imagesdirector1.JPG" alt="Director Escolar" class="img-fluid">
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-7">
-          <div class="director-info">
+        <div class="col-lg-6 col-md-7" data-reveal>
+          <div class="director-info x-director-info">
             <h3>Mensaje del Director</h3>
             <h2 id="director-name">Israel López Rivera</h2>
             <p class="director-title" id="director-title">Director Escolar</p>
@@ -233,12 +269,12 @@
   </section>
 
   <!-- Contacto -->
-  <section class="contact" id="contacto">
+  <section class="contact x-contact" id="contacto">
     <div class="container">
-      <h2>Contáctanos</h2>
+      <h2 data-reveal>Contáctanos</h2>
 
       <div class="row">
-        <div class="col-lg-5 col-md-10">
+        <div class="col-lg-5 col-md-10" data-reveal>
           <div class="contact-form">
 
             <form id="contact-form">
@@ -269,7 +305,7 @@
           </div>
         </div>
 
-        <div class="col-lg-5 col-md-10">
+        <div class="col-lg-5 col-md-10" data-reveal>
           <div class="contact-info">
 
             <div class="contact-item">
@@ -311,7 +347,9 @@
   </section>
 
   <!-- Footer -->
-  <footer>
+  <footer class="x-footer">
+    <div class="x-footer-line" aria-hidden="true"></div>
+    <img src="LOGO6.png" alt="" class="x-footer-logo">
     <h3>Casa Abierta</h3>
     <p>Un espacio donde la educación y la comunidad se unen para crear oportunidades ilimitadas.</p>
 
@@ -320,22 +358,33 @@
     </div>
   </footer>
 
+  <a href="#inicio" class="x-to-top" id="to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+
   <!-- LIBRERÍAS -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="media-config.js"></script>
 
   <!-- CONFIGURACIÓN SUPABASE -->
   <script>
     const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z2FzbG1jZXlmb2hpeGx2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzMzNjYsImV4cCI6MjA5MjcwOTM2Nn0.FRoH_Lf_i1FlZX8zxxagLycLbdjxd5foehhoNCPsePA";
 
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = (window.supabase && supabase.createClient)
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
   </script>
 
-  <!-- CÓDIGO PRINCIPAL -->
+  <!-- MEDIA: hero slider, talleres, videos -->
+  <script src="home.js"></script>
+
+  <!-- CÓDIGO PRINCIPAL (contacto, textos, fechas, formulario, tema) -->
   <script>
+    const esc = window.PCB_UTILS.esc;
+
     async function cargarContacto() {
+      if (!supabaseClient) return;
       const { data, error } = await supabaseClient
         .from("contact_info")
         .select("*")
@@ -355,6 +404,7 @@
     }
 
     async function cargarTextosInstitucionales() {
+      if (!supabaseClient) return;
       const { data, error } = await supabaseClient
         .from("institutional_texts")
         .select("*")
@@ -373,8 +423,35 @@
       document.getElementById("director-signature").textContent = data.director_name;
     }
 
+    const MESES = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+
+    function parseFecha(str) {
+      const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(str || "");
+      return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+    }
+
+    function mostrarProximaEnHero(casas) {
+      const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+      const proxima = casas
+        .map(c => ({ c, d: parseFecha(c.event_date) }))
+        .filter(x => x.d && x.d >= hoy)
+        .sort((a, b) => a.d - b.d)[0];
+      if (!proxima) return;
+
+      const dias = Math.round((proxima.d - hoy) / 86400000);
+      document.getElementById("hero-next-date").textContent =
+        proxima.d.toLocaleDateString("es-PR", { weekday: "long", day: "numeric", month: "long" });
+      document.getElementById("hero-countdown").textContent =
+        dias === 0 ? "¡HOY!" : dias === 1 ? "¡Mañana!" : "Faltan " + dias + " días";
+      document.getElementById("hero-next-event").hidden = false;
+    }
+
     async function cargarProximasCasas() {
       const grid = document.getElementById("proximas-grid");
+      if (!supabaseClient) {
+        grid.innerHTML = '<p class="text-center text-white">No se pudieron cargar las fechas.</p>';
+        return;
+      }
 
       const { data, error } = await supabaseClient
         .from("open_house_dates")
@@ -396,30 +473,30 @@
       grid.innerHTML = "";
 
       data.forEach(function(casa) {
+        const d = parseFecha(casa.event_date);
         const div = document.createElement("div");
         div.className = "casa-fecha";
 
         div.innerHTML = `
-          <div class="fecha">${casa.event_date}</div>
-          <div class="titulo">${casa.title}</div>
-          <div class="ubicacion">${casa.event_time || ""}</div>
-          <p>${casa.description || ""}</p>
+          ${d ? `<div class="x-fecha-badge"><span class="x-fecha-dia">${d.getDate()}</span><span class="x-fecha-mes">${MESES[d.getMonth()]} ${d.getFullYear()}</span></div>`
+              : `<div class="fecha">${esc(casa.event_date)}</div>`}
+          <div class="titulo">${esc(casa.title)}</div>
+          <div class="ubicacion"><i class="fas fa-location-dot me-1"></i>${esc(casa.event_time || "")}</div>
+          <p>${esc(casa.description || "")}</p>
           <a href="#contacto" class="btn-inscribirse">Más información</a>
         `;
 
         grid.appendChild(div);
       });
+
+      mostrarProximaEnHero(data);
     }
 
-
-
-    document.addEventListener("DOMContentLoaded", async function() {
-      await cargarContacto();
-      await cargarTextosInstitucionales();
-      await cargarProximasCasas();
+    document.addEventListener("DOMContentLoaded", function() {
+      Promise.allSettled([cargarContacto(), cargarTextosInstitucionales(), cargarProximasCasas()]);
     });
 
-    emailjs.init("mDtiMAcklOZwMjVPL");
+    if (window.emailjs) emailjs.init("mDtiMAcklOZwMjVPL");
 
     document.getElementById("contact-form").addEventListener("submit", function(event) {
       event.preventDefault();
@@ -455,6 +532,7 @@
         });
     });
 
+    // Tema claro / oscuro
     const themeToggle = document.getElementById("theme-toggle");
     const themeIcon = document.getElementById("theme-icon");
     const body = document.body;

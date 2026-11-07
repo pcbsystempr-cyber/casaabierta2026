@@ -4,185 +4,293 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Computec - Casa Abierta</title>
+  <meta name="description" content="Programa de Computec — Tecnología de la Información y Computación. Taller vocacional de la Escuela Superior Vocacional Pablo Colón Berdecia.">
+  <meta name="theme-color" content="#050b1f">
+  <script>document.documentElement.classList.add("x-js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <link href="modern.css" rel="stylesheet">
+  <link href="taller.css" rel="stylesheet">
+  <link rel="preload" as="image" href="galeria/2026/web/computec.webp">
 </head>
-<body>
+
+<body class="x-page t-page" data-taller="computec">
+
+  <div class="x-scroll-progress" id="scroll-progress"></div>
+
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark x-nav" id="main-nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">
-        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+        <span class="x-brand-dot"></span>Casa Abierta <span class="x-brand-accent">PCB</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menú">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html#inicio"><i class="fas fa-home me-2"></i>Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Servicios</a></li>
+          <li class="nav-item"><a class="nav-link is-current" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Talleres</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#videos"><i class="fas fa-play me-2"></i>Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#contacto"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
+
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-bars me-2"></i>Más
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="index.html#galeria"><i class="fas fa-images me-2"></i>Galería</a></li>
-              <li><hr class="dropdown-divider"></li>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#proximas-casas"><i class="fas fa-calendar-alt me-2"></i>Próximas Casas Abiertas</a></li>
               <li><a class="dropdown-item" href="admin-login.html"><i class="fas fa-cog me-2"></i>Panel de Administración</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item btn btn-primary" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio"><i class="fas fa-arrow-left me-2"></i>Regresar a PCB System</a></li>
+              <li>
+                <a class="dropdown-item" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
+                  <i class="fas fa-arrow-left me-2"></i>Regresar a PCB System
+                </a>
+              </li>
             </ul>
           </li>
+
           <li class="nav-item">
-            <button class="nav-link" id="theme-toggle" type="button">
+            <button class="nav-link" id="theme-toggle" type="button" aria-label="Cambiar tema">
               <i class="fas fa-moon" id="theme-icon"></i>
             </button>
           </li>
-          </ul>
-        </div>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1><i class="fas fa-laptop me-3"></i>Programa de Computec</h1>
-      <p class="lead">Tecnología de la Información y Computación</p>
-      <button class="btn btn-outline-primary">3 años académicos de Computec</button>
-    </div>
-  </section>
+  <!-- ================= HERO DEL TALLER ================= -->
+  <section class="t-hero" id="inicio" aria-label="Programa de Computec">
+    <div class="t-hero-bg" id="taller-bg" style="background-image:url('galeria/2026/web/computec.webp')" aria-hidden="true"></div>
+    <div class="t-fx" data-fx="circuit" aria-hidden="true"></div>
 
-  <!-- Content -->
-  <div class="container content-section">
-    <!-- Descripción -->
-    <div class="info-card">
-      <h3><i class="fas fa-info-circle"></i>Descripción del Programa</h3>
-       <p>El curso de COMPUTEC se especializa principalmente en diagnóstico, reparación y mantenimiento de computadoras. Incluye administración de redes, resolución de problemas tecnológicos incluyendo conexión a internet, impresoras, recuperación de datos, etc. Conceptos sobre computación en nube y programación básica en lenguajes de alta demanda en el campo laboral implementando los objetivos de nuestra organización profesional SkillsuSA.</p>
-       <p>Adicional, integramos una introducción a la Inteligencia Artificial y su buen uso en el aprendizaje. El "Cybersecurity" y la Ingeniería Social que son prioridad en la seguridad informática ya que estamos cada día más vulnerables a fraudes, fundamentos de impresora 3D y aprendizaje inmersivo mediante la realidad virtual y los principios del metaverso.</p>
+    <div class="container-xxl t-hero-inner">
+      <div class="t-hero-copy" data-reveal>
+        <nav class="t-crumbs" aria-label="Ruta">
+          <a href="index.html">Inicio</a><i class="fas fa-chevron-right"></i>
+          <a href="index.html#servicios">Talleres</a><i class="fas fa-chevron-right"></i>
+          <span>Computec</span>
+        </nav>
 
-<p>Todos estos conceptos los integramos para poder así enseñar el manejo de la tecnología de una manera actualizada y funcional en el diario vivir y en la demanda</p>
-    </div>
+        <span class="t-kicker"><span class="t-kicker-icon"><i class="fas fa-laptop-code"></i></span>Taller vocacional · PCB 2026</span>
 
-    <!-- Requisitos -->
-    <div class="info-card">
-      <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
-      <ul class="feature-list">
-        <li><i class="fas fa-graduation-cap"></i>Promedio: 2.50 en adelante</li>
-        <li><i class="fas fa-birthday-cake"></i>Interés en aprender tecnología</li>
-        <li><i class="fas fa-handshake"></i>Entrevista de admisión</li>
-      </ul>
-    </div>
+        <h1 class="t-title"><small>Programa de</small><span class="t-grad">Computec</span></h1>
+        <p class="t-sub">Tecnología de la Información y Computación</p>
 
-    <!-- Información del Maestro -->
-    <div class="info-card">
-      <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
-      <p><strong>Nombre:</strong> Roberto Vázquez Vázquez</p>
-      <p><strong>Años de experiencia:</strong> 17 años</p>
-      <p><strong>Correo electrónico:</strong> de167766@miescuela.pr</p>
-    </div>
+        <p class="t-typing" data-words="Diagnostica|Repara|Programa|Protege|Innova" aria-label="Diagnostica, Repara, Programa, Protege, Innova">
+          <i class="fas fa-terminal"></i><span class="t-typed"></span><span class="t-caret"></span>
+        </p>
 
-    <!-- Cursos Principales -->
-    <div class="info-card">
-      <h3><i class="fas fa-book"></i>Cursos Principales</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-tools"></i>Reparación de computadoras y administración de redes.</li>
-            <li><i class="fas fa-bolt"></i>Electricidad basica tecnicos de computadora.</li>
-            <li><i class="fas fa-database"></i>Data Recovery</li>
-            <li><i class="fas fa-cloud"></i>Cloud computing</li>
-            <li><i class="fas fa-shield-alt"></i>Cybersecurity</li>
-            <li><i class="fas fa-code"></i>Programación básica</li>
-            <li><i class="fas fa-robot"></i>Inteligencia Artificial</li>
-            <li><i class="fas fa-gamepad"></i>Gaming</li>
-            <li><i class="fas fa-print"></i>3D printer</li>
-            <li><i class="fas fa-vr-cardboard"></i>Realidad virtual</li>
-          </ul>
+        <ul class="t-chips" aria-label="Características del taller">
+          <li><i class="fas fa-network-wired"></i>Redes</li>
+          <li><i class="fas fa-shield-halved"></i>Ciberseguridad</li>
+          <li><i class="fas fa-robot"></i>Inteligencia Artificial</li>
+          <li><i class="fas fa-cloud"></i>Cloud</li>
+          <li><i class="fas fa-cube"></i>Impresión 3D</li>
+          <li><i class="fas fa-vr-cardboard"></i>Realidad virtual</li>
+        </ul>
+
+        <div class="t-cta">
+          <a href="#programa" class="x-btn x-btn-primary"><i class="fas fa-rocket me-2"></i>Conoce el programa</a>
+          <a href="index.html#contacto" class="x-btn x-btn-ghost"><i class="fas fa-paper-plane me-2"></i>Solicitar información</a>
         </div>
-       
-    <!-- Oportunidades de Empleo -->
-    <div class="info-card">
-      <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-user-tie"></i>Desarrollador de software</li>
-            <li><i class="fas fa-headset"></i>Técnico en soporte informático</li>
-            <li><i class="fas fa-server"></i>Administrador de redes</li>
-            <li><i class="fas fa-lock"></i>Especialista en ciberseguridad</li>
-          </ul>
+      </div>
+
+      <div class="t-hero-stage" data-reveal>
+        <div class="x-frame t-frame">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-frame-blur" id="taller-blur" style="background-image:url('galeria/2026/web/computec.webp')" aria-hidden="true"></div>
+          <img src="galeria/2026/web/computec.webp" alt="Computec — Casa Abierta 2026" class="t-frame-img" id="taller-img" fetchpriority="high">
+          <div class="t-scan" aria-hidden="true"></div>
+          <span class="t-corner tl" aria-hidden="true"></span>
+          <span class="t-corner tr" aria-hidden="true"></span>
+          <span class="t-corner bl" aria-hidden="true"></span>
+          <span class="t-corner br" aria-hidden="true"></span>
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> CTEC // 2026</span>
+            <span class="x-hud-count">TALLER 01 / 07</span>
+          </div>
         </div>
-        <div class="col-md-6">
-          <ul class="feature-list">
-            <li><i class="fas fa-laptop-code"></i>Desarrollador web</li>
-            <li><i class="fas fa-robot"></i>Programador de aplicaciones</li>
-            <li><i class="fas fa-tools"></i>Técnico en mantenimiento</li>
-            <li><i class="fas fa-chart-line"></i>Analista de sistemas</li>
-          </ul>
+
+        <div class="t-stats">
+          <div class="t-stat">
+            <i class="fas fa-calendar t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="3">3</strong>
+            <span>años académicos</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-microchip t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="10">10</strong>
+            <span>áreas de estudio</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-user-graduate t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="17">17</strong>
+            <span>años de experiencia del maestro</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Highlight Box -->
-    <div class="highlight-box">
-      <h4><i class="fas fa-star"></i>¿Por qué elegir Computec?</h4>
-      <p>En un mundo cada vez más digital, las habilidades en tecnología de la información son esenciales. Nuestro programa te prepara para una carrera exitosa en el sector tecnológico con prácticas reales y profesores experimentados.</p>
+    <a href="#galeria" class="x-scroll-cue" aria-label="Bajar"><span></span></a>
+  </section>
+
+  <!-- ================= GALERÍA DEL TALLER ================= -->
+  <section class="t-gallery" id="galeria" aria-label="Galería de fotos de Computec">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Galería</span>
+        <h2>Vive el taller</h2>
+        <p>Momentos reales de nuestros estudiantes en Computec.</p>
+      </header>
+
+      <div class="t-gal" data-reveal>
+        <div class="x-frame t-frame t-gal-stage" id="gal-stage" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de Computec">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-gal-slides" id="gal-slides"></div>
+
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> GALERÍA · CTEC</span>
+            <span class="x-hud-count" id="gal-count">01 / 01</span>
+          </div>
+
+          <button class="x-arrow x-arrow-prev" id="gal-prev" type="button" aria-label="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="x-arrow x-arrow-next" id="gal-next" type="button" aria-label="Foto siguiente"><i class="fas fa-chevron-right"></i></button>
+
+          <div class="x-frame-bottom">
+            <p class="x-caption" id="gal-caption"></p>
+            <div class="t-gal-btns">
+              <button class="x-play-toggle" id="gal-pause" type="button" aria-label="Pausar presentación"><i class="fas fa-pause"></i></button>
+              <button class="x-play-toggle" id="gal-full" type="button" aria-label="Pantalla completa"><i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+          <div class="t-gal-progress" aria-hidden="true"><span id="gal-progress"></span></div>
+        </div>
+
+        <div class="t-gal-thumbs" id="gal-thumbs" aria-label="Miniaturas"></div>
+      </div>
     </div>
+  </section>
 
-    
+  <!-- ================= PROGRAMA ================= -->
+  <main class="t-main" id="programa">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Programa 2026</span>
+        <h2>Conoce el taller</h2>
+        <p>Todo lo que necesitas saber sobre Computec: qué aprenderás, requisitos y oportunidades.</p>
+      </header>
 
-    <!-- Back Button -->
-    <div class="text-center">
-      <a href="index.html" class="btn-back">
-        <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
-      </a>
+      <div class="t-grid">
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-circle-info"></i>Descripción del Programa</h3>
+        <p>El curso de COMPUTEC se especializa principalmente en diagnóstico, reparación y mantenimiento de computadoras. Incluye administración de redes, resolución de problemas tecnológicos incluyendo conexión a internet, impresoras, recuperación de datos, etc. Conceptos sobre computación en nube y programación básica en lenguajes de alta demanda en el campo laboral implementando los objetivos de nuestra organización profesional SkillsUSA.</p>
+        <p>Adicional, integramos una introducción a la Inteligencia Artificial y su buen uso en el aprendizaje. El "Cybersecurity" y la Ingeniería Social que son prioridad en la seguridad informática ya que estamos cada día más vulnerables a fraudes, fundamentos de impresora 3D y aprendizaje inmersivo mediante la realidad virtual y los principios del metaverso.</p>
+        <p>Todos estos conceptos los integramos para poder así enseñar el manejo de la tecnología de una manera actualizada y funcional en el diario vivir y en la demanda.</p>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
+        <ul class="feature-list t-list-1">
+          <li><i class="fas fa-graduation-cap"></i>Promedio: 2.50 en adelante</li>
+          <li><i class="fas fa-lightbulb"></i>Interés en aprender tecnología</li>
+          <li><i class="fas fa-handshake"></i>Entrevista de admisión</li>
+        </ul>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
+        <div class="t-teacher">
+          <div class="t-avatar"><i class="fas fa-chalkboard-user"></i></div>
+          <div class="t-teacher-data">
+            <p class="t-name">Roberto Vázquez Vázquez</p>
+            <div class="t-teacher-meta">
+              <span><i class="fas fa-award"></i>Años de experiencia: 17 años</span>
+              <a href="mailto:de167766@miescuela.pr"><i class="fas fa-envelope"></i>de167766@miescuela.pr</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-book"></i>Cursos Principales</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-screwdriver-wrench"></i>Reparación de computadoras y administración de redes</li>
+          <li><i class="fas fa-bolt"></i>Electricidad básica para técnicos de computadora</li>
+          <li><i class="fas fa-database"></i>Data Recovery</li>
+          <li><i class="fas fa-cloud"></i>Cloud computing</li>
+          <li><i class="fas fa-shield-halved"></i>Cybersecurity</li>
+          <li><i class="fas fa-code"></i>Programación básica</li>
+          <li><i class="fas fa-robot"></i>Inteligencia Artificial</li>
+          <li><i class="fas fa-gamepad"></i>Gaming</li>
+          <li><i class="fas fa-print"></i>3D printer</li>
+          <li><i class="fas fa-vr-cardboard"></i>Realidad virtual</li>
+        </ul>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-user-tie"></i>Desarrollador de software</li>
+          <li><i class="fas fa-headset"></i>Técnico en soporte informático</li>
+          <li><i class="fas fa-server"></i>Administrador de redes</li>
+          <li><i class="fas fa-lock"></i>Especialista en ciberseguridad</li>
+          <li><i class="fas fa-laptop-code"></i>Desarrollador web</li>
+          <li><i class="fas fa-mobile-screen"></i>Programador de aplicaciones</li>
+          <li><i class="fas fa-screwdriver-wrench"></i>Técnico en mantenimiento</li>
+          <li><i class="fas fa-chart-line"></i>Analista de sistemas</li>
+        </ul>
+      </article>
+      <div class="highlight-box t-wide" data-reveal>
+        <h4><i class="fas fa-star"></i>¿Por qué elegir Computec?</h4>
+        <p>En un mundo cada vez más digital, las habilidades en tecnología de la información son esenciales. Nuestro programa te prepara para una carrera exitosa en el sector tecnológico con prácticas reales y profesores experimentados.</p>
+      </div>
+      </div>
     </div>
-  </div>
+  </main>
 
+  <!-- ================= OTROS TALLERES ================= -->
+  <section class="t-more" aria-label="Otros talleres">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Sigue explorando</span>
+        <h2>Otros talleres vocacionales</h2>
+        <p>Descubre todos los caminos que tiene la Pablo para ti.</p>
+      </header>
+      <div class="t-more-grid" id="more-talleres"></div>
+      <div class="t-back">
+        <a href="index.html" class="x-btn x-btn-ghost"><i class="fas fa-arrow-left me-2"></i>Volver al Inicio</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="x-footer footer">
+    <div class="x-footer-line" aria-hidden="true"></div>
+    <img src="LOGO6.png" alt="" class="x-footer-logo">
+    <h3>Casa Abierta</h3>
+    <p>Un espacio donde la educación y la comunidad se unen para crear oportunidades ilimitadas.</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Computec® Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <a href="#inicio" class="x-to-top" id="to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="media-config.js"></script>
   <script>
-    (function() {
-      const themeToggle = document.getElementById("theme-toggle");
-      const themeIcon = document.getElementById("theme-icon");
-      const body = document.body;
-
-      if (!themeToggle || !themeIcon) return;
-
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun");
-      }
-
-      themeToggle.addEventListener("click", function() {
-        body.classList.toggle("dark-mode");
-        const isDark = body.classList.contains("dark-mode");
-
-        if (isDark) {
-          themeIcon.classList.remove("fa-moon");
-          themeIcon.classList.add("fa-sun");
-          localStorage.setItem("theme", "dark");
-        } else {
-          themeIcon.classList.remove("fa-sun");
-          themeIcon.classList.add("fa-moon");
-          localStorage.setItem("theme", "light");
-        }
-      });
-    })();
+    const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z2FzbG1jZXlmb2hpeGx2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzMzNjYsImV4cCI6MjA5MjcwOTM2Nn0.FRoH_Lf_i1FlZX8zxxagLycLbdjxd5foehhoNCPsePA";
+    const supabaseClient = (window.supabase && supabase.createClient)
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
   </script>
+  <script src="taller.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

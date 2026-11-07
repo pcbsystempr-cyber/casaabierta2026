@@ -6,8 +6,9 @@
   <title>Panel de Administración - Casa Abierta PCB</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <link href="admin-media.css" rel="stylesheet">
 </head>
 <body>
 
@@ -109,6 +110,19 @@
                   <h5 class="card-title">Fechas de Casas Abiertas</h5>
                   <p class="card-text">Agregar o eliminar fechas de próximas Casas Abiertas.</p>
                   <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#fechasModal">Administrar Fechas</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card h-100 adm-feature-card">
+                <div class="card-body text-center">
+                  <i class="fas fa-photo-film fa-3x mb-3 adm-feature-icon"></i>
+                  <h5 class="card-title">Contenido Visual de la Página Principal</h5>
+                  <p class="card-text">Cambia y edita las fotos del slider principal, las imágenes de los Talleres Vocacionales, los videos de “Vive la Experiencia” y la galería de fotos de cada taller.</p>
+                  <button type="button" class="btn adm-btn-neon" data-bs-toggle="modal" data-bs-target="#mediaModal">
+                    <i class="fas fa-wand-magic-sparkles me-2"></i>Administrar Contenido Visual
+                  </button>
                 </div>
               </div>
             </div>
@@ -388,6 +402,199 @@
     </div>
   </div>
 
+  <!-- Modal contenido visual (hero, talleres, videos) -->
+  <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mediaModalLabel"><i class="fas fa-photo-film me-2"></i>Contenido Visual del Sitio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <ul class="nav nav-pills mb-4 adm-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-hero" type="button" role="tab">
+                <i class="fas fa-images me-2"></i>Slider principal
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-talleres" type="button" role="tab">
+                <i class="fas fa-cogs me-2"></i>Talleres vocacionales
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-videos" type="button" role="tab">
+                <i class="fas fa-film me-2"></i>Videos
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-galerias" type="button" role="tab">
+                <i class="fas fa-photo-film me-2"></i>Galerías de talleres
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <!-- HERO -->
+            <div class="tab-pane fade show active" id="tab-hero" role="tabpanel">
+              <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-3">
+                <p class="text-muted mb-0">Fotos que rotan automáticamente en la parte superior del sitio. Se muestran en el orden en que se agregaron.</p>
+                <label class="btn btn-primary mb-0">
+                  <i class="fas fa-plus me-2"></i>Agregar foto
+                  <input type="file" accept="image/*" id="hero-file" hidden>
+                </label>
+              </div>
+              <div id="hero-admin"></div>
+            </div>
+
+            <!-- TALLERES -->
+            <div class="tab-pane fade" id="tab-talleres" role="tabpanel">
+              <p class="text-muted">Imagen principal de cada taller en la sección “Talleres Vocacionales”. Puedes cambiarla por otra, editarla (recortar, rotar, brillo, etc.) o restaurar la original.</p>
+              <div id="talleres-admin" class="row g-3"></div>
+            </div>
+
+            <!-- VIDEOS -->
+            <div class="tab-pane fade" id="tab-videos" role="tabpanel">
+              <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-plus-circle me-2"></i>Agregar video</div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label" for="video-title">Título</label>
+                      <input type="text" class="form-control" id="video-title" placeholder="Ej: Casa Abierta 2026">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="video-date">Fecha o detalle (opcional)</label>
+                      <input type="text" class="form-control" id="video-date" placeholder="Ej: 3 nov 2026">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label" for="video-url">Enlace del video (YouTube, YouTube Shorts o archivo .mp4)</label>
+                      <div class="input-group">
+                        <input type="url" class="form-control" id="video-url" placeholder="https://youtube.com/shorts/... o https://.../video.mp4">
+                        <button class="btn btn-success" type="button" id="video-add-url"><i class="fas fa-link me-2"></i>Agregar enlace</button>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label" for="video-file">…o sube un archivo de video desde tu dispositivo</label>
+                      <div class="input-group">
+                        <input type="file" class="form-control" id="video-file" accept="video/mp4,video/webm,video/quicktime">
+                        <button class="btn btn-primary" type="button" id="video-upload"><i class="fas fa-upload me-2"></i>Subir video</button>
+                      </div>
+                      <small class="text-muted">Se guarda en Supabase Storage (bucket “galeria”). Máximo recomendado: 50 MB.</small>
+                      <div class="progress mt-2 d-none" id="video-progress"><div class="progress-bar progress-bar-striped progress-bar-animated" style="width:100%">Subiendo…</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="videos-admin"></div>
+            </div>
+
+            <!-- GALERÍAS DE TALLERES -->
+            <div class="tab-pane fade" id="tab-galerias" role="tabpanel">
+              <p class="text-muted">Fotos del slider <strong>“Vive el taller”</strong> que aparece en la página de cada taller. Elige un taller para agregar, cambiar, editar, ordenar (flechas ← →), ocultar o quitar fotos.</p>
+              <div class="d-flex flex-wrap gap-2 align-items-end mb-3">
+                <div class="flex-grow-1" style="min-width:220px">
+                  <label class="form-label" for="gal-taller">Taller</label>
+                  <select class="form-select" id="gal-taller"></select>
+                </div>
+                <label class="btn btn-primary mb-0">
+                  <i class="fas fa-plus me-2"></i>Agregar fotos
+                  <input type="file" accept="image/*" id="gal-files" multiple hidden>
+                </label>
+                <a class="btn btn-outline-primary" id="gal-view" target="_blank"><i class="fas fa-external-link-alt me-2"></i>Ver página</a>
+              </div>
+              <small class="text-muted d-block mb-3"><i class="fas fa-circle-info me-1"></i>Si eliges <strong>una</strong> foto se abre el editor (recortar, rotar, filtros). Si eliges <strong>varias</strong>, se optimizan y se suben de una vez; luego puedes editarlas una por una.</small>
+              <div class="progress mb-3 d-none" id="gal-progress"><div class="progress-bar progress-bar-striped progress-bar-animated" id="gal-progress-bar" style="width:0%"></div></div>
+              <div id="galerias-admin"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <a href="index.html" target="_blank" class="btn btn-outline-primary me-auto"><i class="fas fa-external-link-alt me-2"></i>Ver sitio</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor de imágenes -->
+  <div class="ed-overlay" id="img-editor" hidden>
+    <div class="ed-box" role="dialog" aria-modal="true" aria-labelledby="ed-heading">
+      <div class="ed-head">
+        <h5 id="ed-heading"><i class="fas fa-sliders me-2"></i>Editor de imagen</h5>
+        <button type="button" class="btn-close btn-close-white" id="ed-close" aria-label="Cerrar"></button>
+      </div>
+      <div class="ed-body">
+        <div class="ed-canvas-wrap">
+          <canvas id="ed-canvas"></canvas>
+          <div class="ed-loading" id="ed-loading"><div class="spinner-border text-info"></div></div>
+        </div>
+        <div class="ed-controls">
+          <label class="form-label" for="ed-title">Título / texto</label>
+          <input type="text" class="form-control form-control-sm mb-3" id="ed-title">
+
+          <div class="ed-group">
+            <span class="ed-label">Transformar</span>
+            <div class="btn-group w-100" role="group">
+              <button type="button" class="btn btn-sm btn-outline-light" data-ed="rotl" title="Rotar a la izquierda"><i class="fas fa-rotate-left"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-light" data-ed="rotr" title="Rotar a la derecha"><i class="fas fa-rotate-right"></i></button>
+              <button type="button" class="btn btn-sm btn-outline-light" data-ed="flip" title="Voltear horizontal"><i class="fas fa-left-right"></i></button>
+            </div>
+          </div>
+
+          <div class="ed-group">
+            <label class="ed-label" for="ed-aspect">Recorte</label>
+            <select class="form-select form-select-sm" id="ed-aspect">
+              <option value="orig">Original</option>
+              <option value="1.7778">16:9 (banner)</option>
+              <option value="1.3333">4:3</option>
+              <option value="1">1:1 (cuadrado)</option>
+              <option value="0.5625">9:16 (vertical)</option>
+            </select>
+          </div>
+
+          <div class="ed-group">
+            <label class="ed-label">Zoom <output id="ed-zoom-v">100%</output></label>
+            <input type="range" class="form-range" id="ed-zoom" min="1" max="3" step="0.01" value="1">
+            <label class="ed-label">Mover ↔</label>
+            <input type="range" class="form-range" id="ed-px" min="-1" max="1" step="0.01" value="0">
+            <label class="ed-label">Mover ↕</label>
+            <input type="range" class="form-range" id="ed-py" min="-1" max="1" step="0.01" value="0">
+          </div>
+
+          <div class="ed-group">
+            <label class="ed-label">Brillo <output id="ed-b-v">100%</output></label>
+            <input type="range" class="form-range" id="ed-b" min="50" max="150" value="100">
+            <label class="ed-label">Contraste <output id="ed-c-v">100%</output></label>
+            <input type="range" class="form-range" id="ed-c" min="50" max="150" value="100">
+            <label class="ed-label">Saturación <output id="ed-s-v">100%</output></label>
+            <input type="range" class="form-range" id="ed-s" min="0" max="200" value="100">
+          </div>
+
+          <div class="ed-group">
+            <span class="ed-label">Filtros rápidos</span>
+            <div class="d-flex flex-wrap gap-1">
+              <button type="button" class="btn btn-sm btn-outline-info" data-preset="100,100,100">Normal</button>
+              <button type="button" class="btn btn-sm btn-outline-info" data-preset="108,115,140">Vívido</button>
+              <button type="button" class="btn btn-sm btn-outline-info" data-preset="105,90,85">Suave</button>
+              <button type="button" class="btn btn-sm btn-outline-info" data-preset="100,120,0">B/N</button>
+            </div>
+          </div>
+          <small class="ed-size" id="ed-size"></small>
+        </div>
+      </div>
+      <div class="ed-foot">
+        <button type="button" class="btn btn-outline-light btn-sm" id="ed-reset"><i class="fas fa-undo me-1"></i>Restablecer</button>
+        <div class="ms-auto d-flex gap-2">
+          <button type="button" class="btn btn-secondary" id="ed-cancel">Cancelar</button>
+          <button type="button" class="btn adm-btn-neon" id="ed-save"><i class="fas fa-save me-2"></i>Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer py-4">
     <div class="container text-center">
       <p>&copy; 2026 Casa Abierta PCB. Todos los derechos reservados.</p>
@@ -397,6 +604,8 @@
   <!-- Librerías -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="media-config.js"></script>
 
   <!-- Configuración Supabase -->
   <script>
@@ -544,6 +753,7 @@
       }
 
       grid.innerHTML = "";
+      workshopImagesCache = data;
 
       data.forEach((img) => {
         const col = document.createElement("div");
@@ -553,6 +763,9 @@
             <img src="${img.image_url}" class="card-img-top" alt="${img.title || 'Imagen'}" style="height: 150px; object-fit: cover;">
             <div class="card-body p-2 text-center">
               <small class="d-block mb-2">${img.title || img.section}</small>
+              <button class="btn btn-sm btn-primary me-1" onclick="editWorkshopImage(${img.id})" title="Editar imagen">
+                <i class="fas fa-sliders"></i>
+              </button>
               <button class="btn btn-sm ${img.is_visible ? 'btn-danger' : 'btn-success'}" onclick="toggleImageVisibility(${img.id}, ${img.is_visible})">
                 ${img.is_visible ? 'Ocultar' : 'Mostrar'}
               </button>
@@ -563,6 +776,25 @@
           </div>
         `;
         grid.appendChild(col);
+      });
+    }
+
+    let workshopImagesCache = [];
+
+    function editWorkshopImage(id) {
+      const img = workshopImagesCache.find((x) => x.id === id);
+      if (!img || !window.PCBEditor) return;
+      window.PCBEditor.open({
+        src: img.image_url,
+        title: img.title || "",
+        onSave: async function(url, title) {
+          const { error } = await supabaseClient
+            .from("gallery_images")
+            .update({ image_url: url, title: title })
+            .eq("id", id);
+          if (error) throw error;
+          await loadWorkshopImages(img.section);
+        }
       });
     }
 
@@ -854,6 +1086,7 @@
       await checkAuthentication();
     }, 5 * 60 * 1000);
   </script>
+  <script src="admin-media.js"></script>
   <script>
     (function() {
       const themeToggle = document.getElementById("theme-toggle");

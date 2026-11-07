@@ -4,118 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mercadeo - Casa Abierta</title>
+  <meta name="description" content="Programa de Administración de Empresas — Especialidad: Representante de Ventas y Servicios Empresariales. Taller vocacional de la Escuela Superior Vocacional Pablo Colón Berdecia.">
+  <meta name="theme-color" content="#050b1f">
+  <script>document.documentElement.classList.add("x-js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <link href="modern.css" rel="stylesheet">
+  <link href="taller.css" rel="stylesheet">
+  <link rel="preload" as="image" href="galeria/2026/web/mercadeo-deca.webp">
   <style>
     /* Botón flotante de IA */
     .ai-chat-button {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 1000;
-      text-decoration: none;
-      animation: pulse 2s infinite;
+      position: fixed; bottom: 30px; right: 30px; width: 70px; height: 70px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(255, 181, 71, .4); cursor: pointer; transition: all .3s ease;
+      z-index: 1000; text-decoration: none; animation: aiPulse 2s infinite;
     }
-
-    .ai-chat-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-    }
-
-    .ai-chat-button i {
-      font-size: 32px;
-      color: white;
-    }
-
+    .ai-chat-button:hover { transform: scale(1.1); }
+    .ai-chat-button i { font-size: 32px; }
     .ai-chat-tooltip {
-      position: absolute;
-      right: 80px;
-      background: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      white-space: nowrap;
-      font-size: 14px;
-      font-weight: 500;
-      color: #333;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
+      position: absolute; right: 80px; background: white; padding: 10px 15px; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.1); white-space: nowrap; font-size: 14px; font-weight: 500;
+      color: #333; opacity: 0; pointer-events: none; transition: opacity .3s ease;
     }
-
-    .ai-chat-button:hover .ai-chat-tooltip {
-      opacity: 1;
+    .ai-chat-button:hover .ai-chat-tooltip { opacity: 1; }
+    @keyframes aiPulse {
+      0%, 100% { box-shadow: 0 4px 15px rgba(255, 181, 71, .4); }
+      50% { box-shadow: 0 4px 30px rgba(255, 107, 107, .7); }
     }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-      }
-      50% {
-        box-shadow: 0 4px 25px rgba(102, 126, 234, 0.7);
-      }
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .ai-chat-button {
-        width: 60px;
-        height: 60px;
-        bottom: 20px;
-        right: 20px;
-      }
-
-      .ai-chat-button i {
-        font-size: 28px;
-      }
-
-      .ai-chat-tooltip {
-        display: none;
-      }
+      .ai-chat-button { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+      .ai-chat-button i { font-size: 28px; }
+      .ai-chat-tooltip { display: none; }
     }
   </style>
 </head>
-<body>
+
+<body class="x-page t-page has-ai" data-taller="mercadeo">
+
+  <div class="x-scroll-progress" id="scroll-progress"></div>
+
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark x-nav" id="main-nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">
-        <i class="fas fa-home me-2"></i>Casa Abierta - PCB
+        <span class="x-brand-dot"></span>Casa Abierta <span class="x-brand-accent">PCB</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menú">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html#inicio"><i class="fas fa-home me-2"></i>Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Servicios</a></li>
+          <li class="nav-item"><a class="nav-link is-current" href="index.html#servicios"><i class="fas fa-cogs me-2"></i>Talleres</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#videos"><i class="fas fa-play me-2"></i>Videos</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#nosotros"><i class="fas fa-users me-2"></i>Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="index.html#contacto"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="#" data-bs-toggle="dropdown">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-bars me-2"></i>Más
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="index.html#galeria"><i class="fas fa-images me-2"></i>Galería</a></li>
-              <li><hr class="dropdown-divider"></li>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="index.html#proximas-casas"><i class="fas fa-calendar-alt me-2"></i>Próximas Casas Abiertas</a></li>
               <li><a class="dropdown-item" href="admin-login.html"><i class="fas fa-cog me-2"></i>Panel de Administración</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item btn btn-primary" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio"><i class="fas fa-arrow-left me-2"></i>Regresar a PCB System</a></li>
+              <li>
+                <a class="dropdown-item" href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio">
+                  <i class="fas fa-arrow-left me-2"></i>Regresar a PCB System
+                </a>
+              </li>
             </ul>
           </li>
+
           <li class="nav-item">
-            <button class="nav-link" id="theme-toggle" type="button">
+            <button class="nav-link" id="theme-toggle" type="button" aria-label="Cambiar tema">
               <i class="fas fa-moon" id="theme-icon"></i>
             </button>
           </li>
@@ -124,155 +94,255 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1><i class="fas fa-chart-line me-3"></i>Programa de Administración de Empresas</h1>
-      <p class="lead">Especialidad: Representante de Ventas y Servicios Empresariales</p>
-      <button class="btn btn-outline-primary">3 años académicos de Mercadeo</button>
+  <!-- ================= HERO DEL TALLER ================= -->
+  <section class="t-hero" id="inicio" aria-label="Programa de Administración de Empresas">
+    <div class="t-hero-bg" id="taller-bg" style="background-image:url('galeria/2026/web/mercadeo-deca.webp')" aria-hidden="true"></div>
+    <div class="t-fx" data-fx="chart" aria-hidden="true"></div>
+
+    <div class="container-xxl t-hero-inner">
+      <div class="t-hero-copy" data-reveal>
+        <nav class="t-crumbs" aria-label="Ruta">
+          <a href="index.html">Inicio</a><i class="fas fa-chevron-right"></i>
+          <a href="index.html#servicios">Talleres</a><i class="fas fa-chevron-right"></i>
+          <span>Mercadeo</span>
+        </nav>
+
+        <span class="t-kicker"><span class="t-kicker-icon"><i class="fas fa-chart-line"></i></span>Taller vocacional · PCB 2026</span>
+
+        <h1 class="t-title"><small>Programa de</small><span class="t-grad">Administración de Empresas</span></h1>
+        <p class="t-sub">Especialidad: Representante de Ventas y Servicios Empresariales</p>
+
+        <p class="t-typing" data-words="Vende|Promueve|Lidera|Emprende" aria-label="Vende, Promueve, Lidera, Emprende">
+          <i class="fas fa-arrow-trend-up"></i><span class="t-typed"></span><span class="t-caret"></span>
+        </p>
+
+        <ul class="t-chips" aria-label="Características del taller">
+          <li><i class="fas fa-handshake"></i>Ventas</li>
+          <li><i class="fas fa-mobile-screen"></i>Mercadeo digital</li>
+          <li><i class="fas fa-bullhorn"></i>Publicidad</li>
+          <li><i class="fas fa-calculator"></i>Finanzas</li>
+          <li><i class="fas fa-trophy"></i>DECA</li>
+          <li><i class="fas fa-people-group"></i>Cooperativa Juvenil</li>
+        </ul>
+
+        <div class="t-cta">
+          <a href="#programa" class="x-btn x-btn-primary"><i class="fas fa-rocket me-2"></i>Conoce el programa</a>
+          <a href="index.html#contacto" class="x-btn x-btn-ghost"><i class="fas fa-paper-plane me-2"></i>Solicitar información</a>
+        </div>
+      </div>
+
+      <div class="t-hero-stage" data-reveal>
+        <div class="x-frame t-frame">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-frame-blur" id="taller-blur" style="background-image:url('galeria/2026/web/mercadeo-deca.webp')" aria-hidden="true"></div>
+          <img src="galeria/2026/web/mercadeo-deca.webp" alt="Mercadeo — Casa Abierta 2026" class="t-frame-img" id="taller-img" fetchpriority="high">
+          <div class="t-scan" aria-hidden="true"></div>
+          <span class="t-corner tl" aria-hidden="true"></span>
+          <span class="t-corner tr" aria-hidden="true"></span>
+          <span class="t-corner bl" aria-hidden="true"></span>
+          <span class="t-corner br" aria-hidden="true"></span>
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> DECA // 2026</span>
+            <span class="x-hud-count">TALLER 02 / 07</span>
+          </div>
+        </div>
+
+        <div class="t-stats">
+          <div class="t-stat">
+            <i class="fas fa-calendar t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="3">3</strong>
+            <span>años académicos</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-layer-group t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="11">11</strong>
+            <span>áreas de adiestramiento</span>
+          </div>
+          <div class="t-stat">
+            <i class="fas fa-user-graduate t-stat-ico" aria-hidden="true"></i>
+            <strong data-count="20">20</strong>
+            <span>años de experiencia de la maestra</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#galeria" class="x-scroll-cue" aria-label="Bajar"><span></span></a>
+  </section>
+
+  <!-- ================= GALERÍA DEL TALLER ================= -->
+  <section class="t-gallery" id="galeria" aria-label="Galería de fotos de Mercadeo">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Galería</span>
+        <h2>Vive el taller</h2>
+        <p>Momentos reales de nuestros estudiantes en Mercadeo.</p>
+      </header>
+
+      <div class="t-gal" data-reveal>
+        <div class="x-frame t-frame t-gal-stage" id="gal-stage" tabindex="0" aria-roledescription="carrusel" aria-label="Fotos de Mercadeo">
+          <div class="x-frame-glow" aria-hidden="true"></div>
+          <div class="t-gal-slides" id="gal-slides"></div>
+
+          <div class="x-frame-hud">
+            <span class="x-hud-tag"><i class="fas fa-circle"></i> GALERÍA · DECA</span>
+            <span class="x-hud-count" id="gal-count">01 / 01</span>
+          </div>
+
+          <button class="x-arrow x-arrow-prev" id="gal-prev" type="button" aria-label="Foto anterior"><i class="fas fa-chevron-left"></i></button>
+          <button class="x-arrow x-arrow-next" id="gal-next" type="button" aria-label="Foto siguiente"><i class="fas fa-chevron-right"></i></button>
+
+          <div class="x-frame-bottom">
+            <p class="x-caption" id="gal-caption"></p>
+            <div class="t-gal-btns">
+              <button class="x-play-toggle" id="gal-pause" type="button" aria-label="Pausar presentación"><i class="fas fa-pause"></i></button>
+              <button class="x-play-toggle" id="gal-full" type="button" aria-label="Pantalla completa"><i class="fas fa-expand"></i></button>
+            </div>
+          </div>
+          <div class="t-gal-progress" aria-hidden="true"><span id="gal-progress"></span></div>
+        </div>
+
+        <div class="t-gal-thumbs" id="gal-thumbs" aria-label="Miniaturas"></div>
+      </div>
     </div>
   </section>
 
-  <!-- Contenido -->
-  <div class="container content-section">
+  <!-- ================= PROGRAMA ================= -->
+  <main class="t-main" id="programa">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Programa 2026</span>
+        <h2>Conoce el taller</h2>
+        <p>Todo lo que necesitas saber sobre Mercadeo: qué aprenderás, requisitos y oportunidades.</p>
+      </header>
 
-    <!-- Descripción -->
-    <div class="info-card">
-      <h3><i class="fas fa-info-circle"></i>Descripción del Programa</h3>
-      <p><strong><i class="fas fa-bullseye"></i> Misión:</strong> Formar estudiantes con las competencias necesarias para desempeñarse con excelencia en ventas, servicio al cliente y áreas relacionadas al mercadeo, fomentando liderazgo, iniciativa, ética profesional y responsabilidad.</p>
-      <p><strong><i class="fas fa-lightbulb"></i> Visión:</strong> Ser un programa líder en la preparación de estudiantes técnicos altamente competentes, capaces de integrarse al mercado laboral o continuar estudios en áreas empresariales con una base sólida en mercadeo, ventas y servicio.</p>
-      <p><i class="fas fa-hands-helping"></i> Fortalecer el espíritu de servicio y la conciencia cívica del estudiante para que sea más sensible y solidario con los demás.</p>
+      <div class="t-grid">
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-circle-info"></i>Descripción del Programa</h3>
+        <p><strong>Misión:</strong> Formar estudiantes con las competencias necesarias para desempeñarse con excelencia en ventas, servicio al cliente y áreas relacionadas al mercadeo, fomentando liderazgo, iniciativa, ética profesional y responsabilidad.</p>
+        <p><strong>Visión:</strong> Ser un programa líder en la preparación de estudiantes técnicos altamente competentes, capaces de integrarse al mercado laboral o continuar estudios en áreas empresariales con una base sólida en mercadeo, ventas y servicio.</p>
+        <p>Fortalecer el espíritu de servicio y la conciencia cívica del estudiante para que sea más sensible y solidario con los demás.</p>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
+        <ul class="feature-list t-list-1">
+          <li><i class="fas fa-graduation-cap"></i>Promedio general mínimo de 2.00</li>
+          <li><i class="fas fa-user-check"></i>Buena conducta y disposición para el trabajo en equipo</li>
+          <li><i class="fas fa-clipboard-list"></i>Interés en ventas, servicio al cliente o negocios</li>
+          <li><i class="fas fa-door-open"></i>Ingresar al programa desde noveno grado</li>
+        </ul>
+      </article>
+      <article class="info-card" data-reveal>
+        <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
+        <div class="t-teacher">
+          <div class="t-avatar"><i class="fas fa-chalkboard-user"></i></div>
+          <div class="t-teacher-data">
+            <p class="t-name">Ada J. Rivera Alejandro</p>
+            <div class="t-teacher-meta">
+              <span><i class="fas fa-award"></i>Años de experiencia: 20 años</span>
+              <a href="mailto:de155982@miescuela.pr"><i class="fas fa-envelope"></i>de155982@miescuela.pr</a>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-book"></i>Áreas de adiestramiento</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-handshake"></i>Ventas y Servicio al Cliente</li>
+          <li><i class="fas fa-cart-shopping"></i>Compras</li>
+          <li><i class="fas fa-calculator"></i>Finanzas</li>
+          <li><i class="fas fa-rectangle-ad"></i>Publicidad</li>
+          <li><i class="fas fa-users"></i>Relaciones Públicas</li>
+          <li><i class="fas fa-box"></i>Empaque</li>
+          <li><i class="fas fa-gears"></i>Operaciones de Negocios</li>
+          <li><i class="fas fa-chart-line"></i>Promoción de Ventas</li>
+          <li><i class="fas fa-palette"></i>Envoltura Artística</li>
+          <li><i class="fas fa-cash-register"></i>Manejo de Caja Registradora</li>
+          <li><i class="fas fa-mobile-screen"></i>Mercadeo Digital</li>
+        </ul>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
+        <p><strong>Estudiantes que completan esta especialidad pueden desempeñarse en áreas como:</strong></p>
+        <ul class="feature-list">
+          <li><i class="fas fa-handshake"></i>Representante de ventas</li>
+          <li><i class="fas fa-headset"></i>Asociado de servicio al cliente</li>
+          <li><i class="fas fa-cash-register"></i>Cajero/a</li>
+          <li><i class="fas fa-bullhorn"></i>Promotor o merchandiser</li>
+          <li><i class="fas fa-users"></i>Auxiliar de oficina o asistente de mercadeo</li>
+          <li><i class="fas fa-store"></i>Empleos en tiendas por departamento, supermercados y empresas de servicios</li>
+          <li><i class="fas fa-boxes-stacked"></i>Posiciones iniciales en publicidad, inventario y ventas digitales</li>
+        </ul>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-star"></i>¿Por qué elegir Mercadeo?</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-bolt"></i>Es un taller dinámico, práctico y centrado en experiencias reales</li>
+          <li><i class="fas fa-briefcase"></i>Desarrolla destrezas esenciales que buscan todos los patronos</li>
+          <li><i class="fas fa-comments"></i>Fortalece la comunicación, seguridad personal y liderazgo</li>
+          <li><i class="fas fa-trophy"></i>Prepara para competencias y certificaciones a través de DECA</li>
+          <li><i class="fas fa-people-group"></i>Permite participar activamente en la Cooperativa Juvenil</li>
+          <li><i class="fas fa-graduation-cap"></i>Amplía las oportunidades de empleo y estudios universitarios</li>
+          <li><i class="fas fa-lightbulb"></i>Forma estudiantes creativos, proactivos y preparados para el mundo laboral</li>
+        </ul>
+      </article>
+      <article class="info-card t-wide" data-reveal>
+        <h3><i class="fas fa-share-nodes"></i>Redes Sociales</h3>
+        <p>Síguenos en nuestras redes sociales para más información y actualizaciones:</p>
+        <div class="t-social">
+          <a href="https://www.facebook.com/profile.php?id=100086953602999" target="_blank" rel="noopener"><i class="fab fa-facebook"></i>Facebook</a>
+          <a href="https://www.instagram.com/deca.pcb" target="_blank" rel="noopener"><i class="fab fa-instagram"></i>Instagram</a>
+        </div>
+      </article>
+      </div>
     </div>
+  </main>
 
-    <!-- Requisitos -->
-    <div class="info-card">
-      <h3><i class="fas fa-clipboard-check"></i>Requisitos de Admisión</h3>
-      <ul class="feature-list">
-        <li><i class="fas fa-graduation-cap"></i>Promedio general mínimo de 2.00</li>
-        <li><i class="fas fa-chart-line"></i>Buena conducta y disposición para el trabajo en equipo</li>
-        <li><i class="fas fa-clipboard-list"></i>Interés en ventas, servicio al cliente o negocios</li>
-        <li><i class="fas fa-comments"></i> Ingresar al programa desde noveno grado</li>
-        
-      </ul>
+  <!-- ================= OTROS TALLERES ================= -->
+  <section class="t-more" aria-label="Otros talleres">
+    <div class="container-xxl">
+      <header class="t-head" data-reveal>
+        <span class="x-eyebrow">Sigue explorando</span>
+        <h2>Otros talleres vocacionales</h2>
+        <p>Descubre todos los caminos que tiene la Pablo para ti.</p>
+      </header>
+      <div class="t-more-grid" id="more-talleres"></div>
+      <div class="t-back">
+        <a href="index.html" class="x-btn x-btn-ghost"><i class="fas fa-arrow-left me-2"></i>Volver al Inicio</a>
+      </div>
     </div>
+  </section>
 
-    <!-- Maestro -->
-    <div class="info-card">
-      <h3><i class="fas fa-user-graduate"></i>Información del Maestro</h3>
-      <p><strong><i class="fas fa-user"></i> Nombre:</strong> Ada J. Rivera Alejandro</p>
-      <p><strong><i class="fas fa-briefcase"></i> Años de experiencia:</strong> 20 años</p>
-      <p><strong><i class="fas fa-envelope"></i> Correo electrónico:</strong> de155982@miescuela.pr</p>
+  <footer class="x-footer footer">
+    <div class="x-footer-line" aria-hidden="true"></div>
+    <img src="LOGO6.png" alt="" class="x-footer-logo">
+    <h3>Casa Abierta</h3>
+    <p>Un espacio donde la educación y la comunidad se unen para crear oportunidades ilimitadas.</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Computec® Todos los derechos reservados.</p>
     </div>
+  </footer>
 
-    <!-- Cursos Principales -->
-    <div class="info-card">
-      <h3><i class="fas fa-book"></i>Áreas de adiestramiento</h3>
-      <ul class="feature-list text-center">
-        <li><i class="fas fa-handshake"></i>Ventas y Servicio al Cliente</li>
-        <li><i class="fas fa-shopping-cart"></i>Compras</li>
-        <li><i class="fas fa-calculator"></i>Finanzas</li>
-        <li><i class="fas fa-ad"></i>Publicidad</li>
-        <li><i class="fas fa-users"></i>Relaciones Públicas</li>
-        <li><i class="fas fa-box"></i>Empaque</li>
-        <li><i class="fas fa-cogs"></i>Operaciones de Negocios</li>
-        <li><i class="fas fa-chart-line"></i>Promoción de Ventas</li>
-        <li><i class="fas fa-palette"></i>Envoltura Artística</li>
-        <li><i class="fas fa-cash-register"></i>Manejo de Caja Registradora</li>
-        <li><i class="fas fa-mobile-alt"></i>Mercadeo Digital</li>
-      </ul>
-    </div>
-
-    <!-- Empleo -->
-    <div class="info-card">
-      <h3><i class="fas fa-briefcase"></i>Oportunidades de Empleo</h3>
-<p><strong>Estudiantes que completan esta especialidad pueden desempeñarse en áreas como:</strong> </p>
-      <ul class="feature-list text-center">
-        <li><i class="fas fa-handshake"></i>Representante de ventas</li>
-        <li><i class="fas fa-shopping-cart"></i>Asociado de servicio al cliente</li>
-        <li><i class="fas fa-calculator"></i>Cajero/a</li>
-        <li><i class="fas fa-ad"></i>Promotor o merchandiser</li>
-        <li><i class="fas fa-users"></i>Auxiliar de oficina o asistente de mercadeo</li>
-        <li><i class="fas fa-box"></i>Empleos en tiendas por departamento, supermercados y empresas de servicios</li>
-        <li><i class="fas fa-cogs"></i>Posiciones iniciales en publicidad, inventario y ventas digitales</li>
-      </ul>
-    </div>
-
-       <!-- Cursos Principales -->
-    <div class="info-card">
-      <h3><i class="fas fa-book"></i>¿Por qué elegir Mercadeo?</h3>
-      <ul class="feature-list text-center">
-        <li><i class="fas fa-handshake"></i>Es un taller dinámico, práctico y centrado en experiencias reales</li>
-        <li><i class="fas fa-shopping-cart"></i>Desarrolla destrezas esenciales que buscan todos los patrones</li>
-        <li><i class="fas fa-calculator"></i>Fortalece la comunicación, seguridad personal y liderazgo</li>
-        <li><i class="fas fa-ad"></i>Prepara para competencias y certificaciones a través de DECA</li>
-        <li><i class="fas fa-users"></i>Permite participar activamente en la Cooperativa Juvenil</li>
-        <li><i class="fas fa-box"></i>Amplía las oportunidades de empleo y estudios universitarios</li>
-         <li><i class="fas fa-cogs"></i>Forma estudiantes creativos, proactivos y preparados para el mundo laboral</li>
-       </ul>
-     </div>
-
-    <!-- Redes Sociales -->
-    <div class="info-card">
-      <h3><i class="fas fa-share-alt"></i>Redes Sociales</h3>
-      <p>Síguenos en nuestras redes sociales para más información y actualizaciones:</p>
-      <ul class="feature-list">
-        <li><a href="https://www.facebook.com/profile.php?id=100086953602999" target="_blank"><i class="fab fa-facebook"></i> Facebook</a></li>
-            <li><a href="https://www.instagram.com/deca.pcb" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
-
-      </ul>
-    </div>
-
-    <!-- Volver -->
-    <div class="text-center">
-      <a href="index.html" class="btn-back">
-        <i class="fas fa-arrow-left me-2"></i>Volver al Inicio
-      </a>
-    </div>
-  </div>
+  <a href="#inicio" class="x-to-top" id="to-top" aria-label="Volver arriba"><i class="fas fa-arrow-up"></i></a>
 
   <!-- Botón flotante de IA -->
   <a href="https://chatgpt.com/g/g-69846cf9e5488191a673f07dedddb4f9-ia-de-mercadeo-pcb"
-     target="_blank"
+     target="_blank" rel="noopener"
      class="ai-chat-button"
      aria-label="Chatear con IA de Mercadeo">
     <span class="ai-chat-tooltip">¿Preguntas? Habla con nuestra IA</span>
     <i class="fas fa-robot"></i>
   </a>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="media-config.js"></script>
   <script>
-    (function() {
-      const themeToggle = document.getElementById("theme-toggle");
-      const themeIcon = document.getElementById("theme-icon");
-      const body = document.body;
-
-      if (!themeToggle || !themeIcon) return;
-
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        themeIcon.classList.remove("fa-moon");
-        themeIcon.classList.add("fa-sun");
-      }
-
-      themeToggle.addEventListener("click", function() {
-        body.classList.toggle("dark-mode");
-        const isDark = body.classList.contains("dark-mode");
-
-        if (isDark) {
-          themeIcon.classList.remove("fa-moon");
-          themeIcon.classList.add("fa-sun");
-          localStorage.setItem("theme", "dark");
-        } else {
-          themeIcon.classList.remove("fa-sun");
-          themeIcon.classList.add("fa-moon");
-          localStorage.setItem("theme", "light");
-        }
-      });
-    })();
+    const SUPABASE_URL = "https://svgaslmceyfohixlvgiv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN2Z2FzbG1jZXlmb2hpeGx2Z2l2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcxMzMzNjYsImV4cCI6MjA5MjcwOTM2Nn0.FRoH_Lf_i1FlZX8zxxagLycLbdjxd5foehhoNCPsePA";
+    const supabaseClient = (window.supabase && supabase.createClient)
+      ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
   </script>
+  <script src="taller.js"></script>
 </body>
 </html>
-
-
-
