@@ -1,0 +1,459 @@
+/* ==========================================================
+   prefs.css — Pop-up de bienvenida: tema (claro / oscuro) e
+   idioma (Español / English). Usa la misma estética futurista
+   del sitio (Orbitron + Outfit, neón cian / verde / violeta).
+   ========================================================== */
+
+@property --pp-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.pp-root {
+  --pp-cyan: #00d4ff;
+  --pp-green: #2ef2a0;
+  --pp-violet: #7c5cff;
+  --pp-text: #eaf6ff;
+  --pp-muted: rgba(234, 246, 255, .72);
+  --pp-card: rgba(8, 18, 52, .82);
+  --pp-opt: rgba(255, 255, 255, .05);
+  --pp-opt-line: rgba(127, 231, 255, .22);
+  --pp-ease: cubic-bezier(.2, .8, .2, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  font-family: "Outfit", "Segoe UI", Tahoma, sans-serif;
+  color: var(--pp-text);
+}
+.pp-root[hidden] { display: none !important; }
+
+body:not(.dark-mode) .pp-root {
+  --pp-text: #06204f;
+  --pp-muted: rgba(6, 32, 79, .72);
+  --pp-card: rgba(255, 255, 255, .9);
+  --pp-opt: rgba(0, 51, 160, .05);
+  --pp-opt-line: rgba(0, 102, 204, .25);
+}
+
+/* ---------- Fondo: vidrio + rejilla + partículas ---------- */
+.pp-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 50% 45%, rgba(0, 212, 255, .18), transparent 70%),
+    rgba(3, 8, 24, .72);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+  backdrop-filter: blur(10px) saturate(1.3);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+body:not(.dark-mode) .pp-backdrop {
+  background:
+    radial-gradient(60% 50% at 50% 45%, rgba(0, 102, 204, .2), transparent 70%),
+    rgba(220, 234, 255, .6);
+}
+.pp-backdrop::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, .09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, .09) 1px, transparent 1px);
+  background-size: 46px 46px;
+  transform: perspective(600px) rotateX(58deg) translateY(0);
+  animation: pp-grid 9s linear infinite;
+  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent);
+  mask-image: radial-gradient(closest-side, #000 30%, transparent);
+}
+@keyframes pp-grid { to { transform: perspective(600px) rotateX(58deg) translateY(46px); } }
+
+.pp-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.pp-particles span {
+  position: absolute;
+  bottom: -10px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--pp-cyan);
+  box-shadow: 0 0 10px var(--pp-cyan);
+  opacity: 0;
+  animation: pp-rise linear infinite;
+}
+.pp-particles span:nth-child(3n) { background: var(--pp-green); box-shadow: 0 0 10px var(--pp-green); }
+.pp-particles span:nth-child(4n) { background: var(--pp-violet); box-shadow: 0 0 10px var(--pp-violet); }
+@keyframes pp-rise {
+  0% { transform: translateY(0) scale(.6); opacity: 0; }
+  15% { opacity: .9; }
+  100% { transform: translateY(-105vh) scale(1.2); opacity: 0; }
+}
+
+/* ---------- Tarjeta: se "despliega" desde una línea de luz ---------- */
+.pp-card {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: calc(100svh - 32px);
+  overflow: auto;
+  border-radius: 26px;
+  padding: 2px; /* borde animado */
+  background: conic-gradient(from var(--pp-angle), var(--pp-cyan), var(--pp-green), var(--pp-violet), var(--pp-cyan));
+  animation: pp-spin 6s linear infinite;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45), 0 0 60px rgba(0, 212, 255, .25);
+  transform: scaleY(.006) scaleX(.2);
+  opacity: 0;
+  scrollbar-width: none;
+}
+.pp-card::-webkit-scrollbar { display: none; }
+@keyframes pp-spin { to { --pp-angle: 360deg; } }
+
+.pp-inner {
+  position: relative;
+  border-radius: 24px;
+  padding: 30px 28px 26px;
+  background: var(--pp-card);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  overflow: hidden;
+  transition: background .5s ease;
+}
+/* Barrido holográfico */
+.pp-inner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -40%;
+  height: 40%;
+  background: linear-gradient(180deg, transparent, rgba(127, 231, 255, .16), transparent);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.pp-root.is-open .pp-backdrop { opacity: 1; }
+.pp-root.is-open .pp-card { animation: pp-unfold .9s var(--pp-ease) forwards, pp-spin 6s linear infinite; }
+.pp-root.is-open .pp-inner::after { animation: pp-scan 1.4s .55s ease-out 1 forwards; }
+
+@keyframes pp-unfold {
+  0% { transform: scaleY(.006) scaleX(.2); opacity: 0; filter: brightness(3); }
+  35% { transform: scaleY(.006) scaleX(1); opacity: 1; filter: brightness(3); }
+  70% { transform: scaleY(1.03) scaleX(1); filter: brightness(1.2); }
+  100% { transform: none; opacity: 1; filter: none; }
+}
+@keyframes pp-scan {
+  0% { top: -40%; opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+
+/* Salida: se pliega de nuevo en una línea y se desvanece */
+.pp-root.is-closing .pp-card { animation: pp-fold .55s var(--pp-ease) forwards; }
+.pp-root.is-closing .pp-backdrop { opacity: 0; transition-delay: .25s; }
+@keyframes pp-fold {
+  0% { transform: none; opacity: 1; }
+  45% { transform: scaleY(.006) scaleX(1); opacity: 1; filter: brightness(3); }
+  100% { transform: scaleY(.006) scaleX(0); opacity: 0; }
+}
+
+/* Entrada escalonada del contenido */
+.pp-stagger > * { opacity: 0; transform: translateY(14px); }
+.pp-root.is-open .pp-stagger > * { animation: pp-in .55s var(--pp-ease) forwards; }
+.pp-root.is-open .pp-stagger > *:nth-child(1) { animation-delay: .55s; }
+.pp-root.is-open .pp-stagger > *:nth-child(2) { animation-delay: .65s; }
+.pp-root.is-open .pp-stagger > *:nth-child(3) { animation-delay: .75s; }
+.pp-root.is-open .pp-stagger > *:nth-child(4) { animation-delay: .85s; }
+.pp-root.is-open .pp-stagger > *:nth-child(5) { animation-delay: .95s; }
+.pp-root.is-open .pp-stagger > *:nth-child(6) { animation-delay: 1.05s; }
+@keyframes pp-in { to { opacity: 1; transform: none; } }
+
+/* ---------- Logo con anillos en órbita ---------- */
+.pp-logo {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+}
+.pp-logo img { width: 66px; height: 66px; object-fit: contain; filter: drop-shadow(0 0 14px rgba(0, 212, 255, .55)); position: relative; z-index: 1; }
+.pp-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--pp-cyan);
+  border-right-color: rgba(0, 212, 255, .25);
+  animation: pp-orbit 3s linear infinite;
+}
+.pp-ring.r2 {
+  inset: -9px;
+  border-top-color: var(--pp-green);
+  border-left-color: rgba(46, 242, 160, .25);
+  border-right-color: transparent;
+  animation-duration: 4.5s;
+  animation-direction: reverse;
+}
+.pp-ring.r3 {
+  inset: 9px;
+  border: 1px dashed rgba(124, 92, 255, .6);
+  animation-duration: 12s;
+}
+@keyframes pp-orbit { to { transform: rotate(360deg); } }
+
+/* ---------- Textos ---------- */
+.pp-kicker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+  margin-bottom: 6px;
+}
+.pp-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pp-green);
+  box-shadow: 0 0 10px var(--pp-green);
+  animation: pp-blink 1.4s ease-in-out infinite;
+}
+@keyframes pp-blink { 50% { opacity: .25; } }
+
+.pp-title {
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.35rem, 5vw, 1.9rem);
+  text-align: center;
+  margin: 0 0 6px;
+  line-height: 1.15;
+  background: linear-gradient(90deg, var(--pp-cyan), var(--pp-green), var(--pp-violet), var(--pp-cyan));
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pp-shine 5s linear infinite;
+}
+body:not(.dark-mode) .pp-title {
+  background-image: linear-gradient(90deg, #0033A0, #0066CC, #7c5cff, #0033A0);
+}
+@keyframes pp-shine { to { background-position: 250% 0; } }
+
+.pp-lead { text-align: center; color: var(--pp-muted); margin: 0 auto 20px; max-width: 40ch; font-size: .98rem; }
+
+.pp-group { margin-bottom: 16px; border: 0; padding: 0; min-width: 0; }
+.pp-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--pp-muted);
+  margin-bottom: 9px;
+  padding: 0;
+}
+.pp-label i { color: var(--pp-cyan); }
+body:not(.dark-mode) .pp-label i { color: #0066CC; }
+
+.pp-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.pp-opt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--pp-opt-line);
+  background: var(--pp-opt);
+  color: var(--pp-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .25s var(--pp-ease), border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.pp-opt:hover { transform: translateY(-2px); border-color: var(--pp-cyan); }
+.pp-opt:focus-visible { outline: 2px solid var(--pp-cyan); outline-offset: 3px; }
+.pp-opt[aria-pressed="true"] {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--pp-card), var(--pp-card)) padding-box,
+    linear-gradient(120deg, var(--pp-cyan), var(--pp-green)) border-box;
+  border: 2px solid transparent;
+  padding: 12px 13px;
+  box-shadow: 0 0 0 4px rgba(0, 212, 255, .12), 0 10px 26px rgba(0, 212, 255, .2);
+}
+.pp-ico {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  background: rgba(0, 212, 255, .12);
+  color: var(--pp-cyan);
+}
+.pp-opt[data-theme="light"] .pp-ico { background: rgba(255, 193, 7, .16); color: #f5a400; }
+.pp-opt[data-theme="dark"] .pp-ico { background: rgba(124, 92, 255, .18); color: #a996ff; }
+.pp-flag { font-family: "Orbitron", "Segoe UI", sans-serif; font-weight: 900; font-size: .9rem; letter-spacing: .04em; }
+.pp-opt[data-lang="es"] .pp-ico { background: rgba(46, 242, 160, .16); color: #12b981; }
+.pp-opt[data-lang="en"] .pp-ico { background: rgba(0, 212, 255, .14); color: #00a8d6; }
+.pp-opt strong { display: block; font-weight: 700; font-size: 1rem; }
+.pp-opt small { display: block; color: var(--pp-muted); font-size: .8rem; }
+.pp-check {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: .7rem;
+  color: #03122e;
+  background: linear-gradient(120deg, var(--pp-cyan), var(--pp-green));
+  transform: scale(0);
+  transition: transform .35s cubic-bezier(.3, 1.6, .5, 1);
+}
+.pp-opt[aria-pressed="true"] .pp-check { transform: scale(1); }
+
+/* Ondas al tocar una opción */
+.pp-opt .pp-wave {
+  position: absolute;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  background: rgba(0, 212, 255, .35);
+  pointer-events: none;
+  animation: pp-wave .6s ease-out forwards;
+}
+@keyframes pp-wave { to { transform: scale(18); opacity: 0; } }
+
+/* Iconos animados */
+.pp-opt[data-theme="light"][aria-pressed="true"] .pp-ico i { animation: pp-sun 6s linear infinite; }
+.pp-opt[data-theme="dark"][aria-pressed="true"] .pp-ico i { animation: pp-moon 2.4s ease-in-out infinite; }
+@keyframes pp-sun { to { transform: rotate(360deg); } }
+@keyframes pp-moon { 50% { transform: rotate(-18deg) scale(1.1); } }
+
+/* ---------- Botón Entrar ---------- */
+.pp-go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 999px;
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-weight: 800;
+  letter-spacing: .08em;
+  font-size: .95rem;
+  color: #03122e;
+  background: linear-gradient(120deg, var(--pp-cyan), var(--pp-green));
+  box-shadow: 0 10px 30px rgba(0, 212, 255, .35);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s var(--pp-ease), box-shadow .25s ease;
+}
+body:not(.dark-mode) .pp-go { color: #fff; background: linear-gradient(120deg, #0033A0, #0066CC); box-shadow: 0 10px 30px rgba(0, 51, 160, .35); }
+.pp-go:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0, 212, 255, .5); }
+.pp-go:focus-visible { outline: 2px solid var(--pp-cyan); outline-offset: 3px; }
+.pp-go::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transform: skewX(-20deg);
+  animation: pp-glint 3s ease-in-out 1.6s infinite;
+}
+@keyframes pp-glint { 0%, 60% { left: -50%; } 100% { left: 130%; } }
+.pp-go i { transition: transform .25s ease; }
+.pp-go:hover i { transform: translateX(4px); }
+
+.pp-note { text-align: center; color: var(--pp-muted); font-size: .78rem; margin: 12px 0 0; }
+
+/* Texto que se "decodifica" al cambiar de idioma */
+.pp-decode { font-variant-ligatures: none; }
+
+/* ---------- Transición de tema: círculo que se expande ---------- */
+.pp-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 2999;
+  pointer-events: none;
+  clip-path: circle(0 at var(--x, 50%) var(--y, 50%));
+  animation: pp-wipe .7s var(--pp-ease) forwards;
+}
+.pp-wipe.to-dark { background: #050b1f; }
+.pp-wipe.to-light { background: #eaf3ff; }
+@keyframes pp-wipe {
+  0% { clip-path: circle(0 at var(--x) var(--y)); opacity: .9; }
+  70% { clip-path: circle(150vmax at var(--x) var(--y)); opacity: .9; }
+  100% { clip-path: circle(150vmax at var(--x) var(--y)); opacity: 0; }
+}
+
+/* ---------- Botón de idioma en la barra de navegación ---------- */
+.navbar .x-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  background: none;
+  border: 0;
+}
+.navbar .x-lang-btn i { font-size: .95rem; }
+
+@media (max-width: 480px) {
+  .pp-inner { padding: 24px 16px 20px; }
+  .pp-options { gap: 8px; }
+  .pp-opt { padding: 11px 10px; gap: 9px; }
+  .pp-opt[aria-pressed="true"] { padding: 10px 9px; }
+  .pp-ico { width: 36px; height: 36px; font-size: 1rem; }
+  .pp-opt small { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pp-card, .pp-root.is-open .pp-card, .pp-root.is-closing .pp-card { animation: none; transform: none; opacity: 1; }
+  .pp-root.is-closing .pp-card { opacity: 0; transition: opacity .2s; }
+  .pp-stagger > *, .pp-root.is-open .pp-stagger > * { animation: none; opacity: 1; transform: none; }
+  .pp-backdrop::before, .pp-particles, .pp-ring, .pp-go::before, .pp-title { animation: none; }
+  .pp-wipe { display: none; }
+}
+
+/* styles.css pone todo el texto blanco con !important en modo oscuro:
+   devolver los colores propios del pop-up */
+body.dark-mode .pp-root .pp-title { color: transparent !important; -webkit-text-fill-color: transparent; }
+.pp-title { -webkit-text-fill-color: transparent; }
+body.dark-mode .pp-root .pp-lead,
+body.dark-mode .pp-root .pp-kicker,
+body.dark-mode .pp-root .pp-label,
+body.dark-mode .pp-root .pp-label span,
+body.dark-mode .pp-root .pp-opt small,
+body.dark-mode .pp-root .pp-note,
+body.dark-mode .pp-root .pp-note span { color: var(--pp-muted) !important; }
+body.dark-mode .pp-root .pp-opt strong { color: var(--pp-text) !important; }
+body.dark-mode .pp-root .pp-label i { color: var(--pp-cyan) !important; }
+body.dark-mode .pp-root .pp-opt[data-theme="light"] .pp-ico { color: #ffc93c !important; }
+body.dark-mode .pp-root .pp-opt[data-theme="dark"] .pp-ico { color: #a996ff !important; }
+body.dark-mode .pp-root .pp-opt[data-lang="es"] .pp-ico { color: #2ef2a0 !important; }
+body.dark-mode .pp-root .pp-opt[data-lang="en"] .pp-ico { color: #7fe7ff !important; }
+body.dark-mode .pp-root .pp-check,
+body.dark-mode .pp-root .pp-go,
+body.dark-mode .pp-root .pp-go span { color: #03122e !important; }
