@@ -12,6 +12,8 @@
   const esc = U.esc;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (id) => document.getElementById(id);
+  const EN = (document.documentElement.lang || "").slice(0, 2) === "en";
+  const L = (es, en) => (EN ? en : es);
 
   /* ---------- Slider genérico (crossfade + autoplay + swipe) ---------- */
   function createSlider(opts) {
@@ -91,7 +93,7 @@
     ).join("");
 
     bars.innerHTML = heroItems.map((it, i) =>
-      `<button type="button" class="x-bar${i === 0 ? " is-active" : ""}" data-i="${i}" aria-label="Ir a la foto ${i + 1}"><span></span></button>`
+      `<button type="button" class="x-bar${i === 0 ? " is-active" : ""}" data-i="${i}" aria-label="${L("Ir a la foto", "Go to photo")} ${i + 1}"><span></span></button>`
     ).join("");
     bars.style.setProperty("--dur", HERO_INTERVAL + "ms");
 
@@ -141,7 +143,7 @@
     $("hero-pause").addEventListener("click", function () {
       hero.setPaused(!hero.paused);
       this.innerHTML = hero.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
-      this.setAttribute("aria-label", hero.paused ? "Reanudar presentación" : "Pausar presentación");
+      this.setAttribute("aria-label", hero.paused ? L("Reanudar presentación", "Resume slideshow") : L("Pausar presentación", "Pause slideshow"));
       $("hero-bars").classList.toggle("is-held", hero.paused);
     });
 
@@ -173,7 +175,7 @@
 
   function renderTalleres() {
     $("taller-slides").innerHTML = talleres.map((t, i) => `
-      <a class="x-taller-slide${i === 0 ? " is-active" : ""}" href="${esc(t.href)}" aria-label="Ver taller de ${esc(t.name)}" tabindex="${i === 0 ? 0 : -1}">
+      <a class="x-taller-slide${i === 0 ? " is-active" : ""}" href="${esc(t.href)}" aria-label="${L("Ver taller de", "View workshop:")} ${esc(t.name)}" tabindex="${i === 0 ? 0 : -1}">
         <div class="x-slide-blur" style="background-image:url('${esc(t.src)}')"></div>
         <img src="${esc(t.src)}" alt="${esc(t.name)}" loading="lazy" decoding="async">
       </a>`).join("");
@@ -261,7 +263,7 @@
         ? `<img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="" loading="lazy">`
         : `<video src="${esc(v.src)}#t=0.5" muted loop playsinline preload="metadata"></video>`;
       return `
-        <button type="button" class="x-reel" data-i="${i}" aria-label="Reproducir video: ${esc(v.title || "Video")}">
+        <button type="button" class="x-reel" data-i="${i}" aria-label="${L("Reproducir video", "Play video")}: ${esc(v.title || "Video")}">
           <div class="x-reel-media">${media}</div>
           <div class="x-reel-shade"></div>
           <span class="x-reel-badge">${yt ? '<i class="fab fa-youtube"></i> YouTube' : '<i class="fas fa-film"></i> Reel'}</span>
@@ -333,7 +335,7 @@
       : `<video src="${esc(v.src)}" controls autoplay playsinline></video>`;
     media.classList.toggle("is-yt", !!yt);
     $("player-title").textContent = v.title || "Video";
-    $("player-meta").textContent = (v.date ? v.date + " · " : "") + (playerIndex + 1) + " de " + videos.length;
+    $("player-meta").textContent = (v.date ? v.date + " · " : "") + (playerIndex + 1) + L(" de ", " of ") + videos.length;
     $("player-prev").hidden = $("player-next").hidden = videos.length < 2;
 
     const p = $("player");

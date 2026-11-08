@@ -16,6 +16,8 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const rand = (a, b) => a + Math.random() * (b - a);
   const $ = (id) => document.getElementById(id);
+  const EN = (document.documentElement.lang || "").slice(0, 2) === "en";
+  const L = (es, en) => (EN ? en : es);
 
   /* ---------- Tema ---------- */
   function initTheme() {
@@ -371,19 +373,19 @@
       idx = 0;
       stop();
       if (!items.length) {
-        slidesBox.innerHTML = '<div class="t-gal-empty">Pronto añadiremos fotos de este taller.</div>';
+        slidesBox.innerHTML = '<div class="t-gal-empty">' + L("Pronto añadiremos fotos de este taller.", "We will add photos of this workshop soon.") + '</div>';
         thumbsBox.innerHTML = "";
         countEl.textContent = "00 / 00";
         captionEl.textContent = "";
         return;
       }
       slidesBox.innerHTML = items.map((it, i) => `
-        <figure class="t-gal-slide" aria-roledescription="diapositiva" aria-label="${i + 1} de ${items.length}">
+        <figure class="t-gal-slide" aria-roledescription="${L("diapositiva", "slide")}" aria-label="${i + 1} ${L("de", "of")} ${items.length}">
           <div class="t-frame-blur" aria-hidden="true"></div>
-          <img alt="${esc(it.title || "Foto del taller " + (i + 1))}" draggable="false">
+          <img alt="${esc(it.title || L("Foto del taller ", "Workshop photo ") + (i + 1))}" draggable="false">
         </figure>`).join("");
       thumbsBox.innerHTML = items.map((it, i) => `
-        <button class="t-gal-thumb" type="button" data-i="${i}" aria-label="Ver foto ${i + 1}">
+        <button class="t-gal-thumb" type="button" data-i="${i}" aria-label="${L("Ver foto", "View photo")} ${i + 1}">
           <img src="${esc(thumbOf(it.src))}" alt="" loading="lazy">
         </button>`).join("");
       thumbsBox.querySelectorAll(".t-gal-thumb").forEach((b) =>
@@ -448,7 +450,7 @@
       paused = v;
       if (pauseBtn) {
         pauseBtn.innerHTML = `<i class="fas ${v ? "fa-play" : "fa-pause"}"></i>`;
-        pauseBtn.setAttribute("aria-label", v ? "Reanudar presentación" : "Pausar presentación");
+        pauseBtn.setAttribute("aria-label", v ? L("Reanudar presentación", "Resume slideshow") : L("Pausar presentación", "Pause slideshow"));
       }
       restart();
     }
@@ -492,7 +494,7 @@
       const onFs = () => {
         const on = !!(document.fullscreenElement || document.webkitFullscreenElement);
         fullBtn.innerHTML = `<i class="fas ${on ? "fa-compress" : "fa-expand"}"></i>`;
-        fullBtn.setAttribute("aria-label", on ? "Salir de pantalla completa" : "Pantalla completa");
+        fullBtn.setAttribute("aria-label", on ? L("Salir de pantalla completa", "Exit full screen") : L("Pantalla completa", "Full screen"));
         if (on) stage.focus();
       };
       document.addEventListener("fullscreenchange", onFs);

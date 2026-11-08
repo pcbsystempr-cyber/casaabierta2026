@@ -166,6 +166,42 @@ window.PCB_MEDIA = {
   ]
 };
 
+/* Versión en inglés (páginas *-en.html con <html lang="en">) */
+(function () {
+  if ((document.documentElement.lang || "").slice(0, 2) !== "en") return;
+  var M = window.PCB_MEDIA;
+  var heroTitles = [
+    "Open House 2026 · Technology that transforms lives",
+    "Computec",
+    "Marketing · DECA",
+    "Nursing",
+    "Cosmetology",
+    "Culinary Arts",
+    "Agricultural Products Processing",
+    "Public Safety",
+    "Our students in action"
+  ];
+  M.hero.forEach(function (h, i) { if (heroTitles[i]) h.title = heroTitles[i]; });
+
+  var EN = {
+    "computec": ["Computec", "Repair · Code · Design · Innovate"],
+    "mercadeo": ["Marketing", "Sales and business services"],
+    "enfermeria": ["Nursing", "The future is yours"],
+    "cosmetologia": ["Cosmetology", "Techniques and styles that make a difference"],
+    "artes-culinarias": ["Culinary Arts", "Welcome to the creative kitchen"],
+    "elaboracion-agricolas": ["Agricultural Products", "Learn · Grow · Transform · Launch"],
+    "seguridad-publica": ["Public Safety", "Your calling to serve!"]
+  };
+  M.talleres.forEach(function (t) {
+    var e = EN[t.key];
+    if (e) { t.name = e[0]; t.tagline = e[1]; }
+    t.href = t.href.replace(/\.html$/, "-en.html");
+  });
+
+  var vids = [["Open House 2026", "Nov 3, 2026"], ["The PCB Experience", "Nov 4, 2026"], ["Open House Memories", "Nov 26, 2025"]];
+  M.videos.forEach(function (v, i) { if (vids[i]) { v.title = vids[i][0]; v.date = vids[i][1]; } });
+})();
+
 /* Utilidades compartidas */
 window.PCB_UTILS = {
   // Devuelve el ID de YouTube si la URL es de YouTube, si no null
